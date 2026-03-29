@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chief & Co. — Content Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink: #0A0A0A;
+  --ink-mid: #222;
+  --ink-soft: #444;
+  --ink-muted: #666;
+  --ink-faint: #999;
+  --ink-ghost: #bbb;
+  --rule: #E5E5E5;
+  --rule-soft: #EFEFEF;
+  --bg: #FFFFFF;
+  --bg-off: #FAFAFA;
+  --gold: #C9A84C;
+  --gold-dim: #8B6F2E;
+  --gold-bg: rgba(201,168,76,0.07);
+  --danger: #c0392b;
+  --danger-bg: #fdf3f2;
+  --success: #1a7a4a;
+  --success-bg: #f0faf5;
+}
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; }
+.screen.active { display: flex; }
+
+/* ══════════════════════════════
+   LOGIN
+══════════════════════════════ */
+#login-screen {
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 2rem;
+}
+.login-wordmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.25rem;
+}
+.login-subtitle {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+  margin-bottom: 3rem;
+}
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--rule);
+  padding: 2.5rem;
+  background: var(--bg);
+}
+.login-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.login-card p {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
+.field label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.field input {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--rule);
+  background: var(--bg-off);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.field input:focus { border-color: var(--ink); background: var(--bg); }
+.field input::placeholder { color: var(--ink-ghost); }
+.field small {
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  line-height: 1.5;
+}
+.field small a { color: var(--gold-dim); text-decoration: underline; }
+.btn-primary {
+  width: 100%;
+  padding: 0.85rem;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 0.5rem;
+}
+.btn-primary:hover { background: var(--ink-mid); }
+.btn-primary:disabled { background: var(--ink-ghost); cursor: not-allowed; }
+.error-banner {
+  display: none;
+  background: var(--danger-bg);
+  border: 1px solid #f5c6c4;
+  color: var(--danger);
+  font-size: 0.8rem;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+}
+.error-banner.visible { display: block; }
+
+/* ══════════════════════════════
+   MAIN APP
+══════════════════════════════ */
+#app-screen {
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+aside {
+  width: 220px;
+  min-width: 220px;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.aside-top {
+  padding: 1.75rem 1.25rem 1.25rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.aside-wordmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+.aside-repo {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+}
+.aside-section-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+  padding: 1.25rem 1.25rem 0.5rem;
+}
+.nav-btn-side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all 0.12s;
+  background: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  width: 100%;
+  text-align: left;
+  font-family: 'Instrument Sans', sans-serif;
+}
+.nav-btn-side:hover { color: var(--ink); background: var(--bg-off); }
+.nav-btn-side.active {
+  color: var(--ink);
+  background: var(--bg-off);
+  border-left: 2px solid var(--ink);
+  font-weight: 600;
+}
+.nav-icon { font-size: 13px; }
+.aside-footer {
+  margin-top: auto;
+  padding: 1.25rem;
+  border-top: 1px solid var(--rule-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.aside-user {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  line-height: 1.4;
+}
+.aside-user strong { color: var(--ink); display: block; font-weight: 600; margin-bottom: 2px; }
+.btn-logout {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: none;
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: all 0.12s;
+}
+.btn-logout:hover { border-color: var(--ink); color: var(--ink); }
+
+/* ── MAIN CONTENT ── */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── PANEL: LIST ── */
+#panel-list { display: flex; flex-direction: column; flex: 1; }
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--rule);
+}
+.panel-header-left h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.panel-header-left p {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+.btn-new-entry {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: background 0.15s;
+}
+.btn-new-entry:hover { background: var(--ink-mid); }
+
+.list-area {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  overflow-y: auto;
+}
+.list-loading, .list-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  gap: 0.5rem;
+  color: var(--ink-ghost);
+}
+.list-loading p, .list-empty p { font-size: 0.82rem; }
+.list-empty span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+.entry-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--rule-soft);
+  margin-bottom: 8px;
+  background: var(--bg);
+  transition: border-color 0.12s, background 0.12s;
+}
+.entry-item:hover { border-color: var(--rule); background: var(--bg-off); }
+.entry-info { flex: 1; min-width: 0; }
+.entry-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+.entry-meta {
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  display: flex;
+  gap: 12px;
+}
+.entry-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--gold-bg);
+  color: var(--gold-dim);
+  padding: 2px 8px;
+  border: 1px solid rgba(201,168,76,0.25);
+}
+.entry-actions { display: flex; gap: 8px; margin-left: 1rem; }
+.btn-sm {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--rule);
+  background: none;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  color: var(--ink-muted);
+  transition: all 0.12s;
+}
+.btn-sm:hover { border-color: var(--ink); color: var(--ink); }
+.btn-sm.danger { color: var(--danger); border-color: #f5c6c4; }
+.btn-sm.danger:hover { background: var(--danger-bg); border-color: var(--danger); }
+
+/* ── PANEL: EDITOR ── */
+#panel-editor { display: none; flex-direction: column; flex: 1; }
+.editor-topbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--rule);
+}
+.btn-back {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: none;
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: all 0.12s;
+}
+.btn-back:hover { border-color: var(--ink); color: var(--ink); }
+.editor-topbar-title {
+  flex: 1;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+.editor-topbar-title strong { color: var(--ink); }
+.btn-publish {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  padding: 0.75rem 1.75rem;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: background 0.15s;
+}
+.btn-publish:hover { background: var(--gold-dim); }
+.btn-publish:disabled { background: var(--ink-ghost); cursor: not-allowed; }
+.publish-status {
+  font-size: 0.72rem;
+  padding: 0.4rem 0.75rem;
+}
+.publish-status.success { color: var(--success); background: var(--success-bg); }
+.publish-status.error { color: var(--danger); background: var(--danger-bg); }
+
+.editor-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  overflow: hidden;
+}
+.editor-meta-panel {
+  border-right: 1px solid var(--rule);
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.meta-group { display: flex; flex-direction: column; gap: 6px; }
+.meta-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.meta-input {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--rule);
+  background: var(--bg-off);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.82rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.meta-input:focus { border-color: var(--ink); background: var(--bg); }
+.meta-input::placeholder { color: var(--ink-ghost); }
+textarea.meta-input { resize: vertical; min-height: 80px; line-height: 1.5; }
+select.meta-input { cursor: pointer; }
+
+.editor-md-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.editor-md-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 1rem 1.5rem 0.5rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+#md-editor {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--bg);
+  padding: 1.5rem;
+  resize: none;
+  overflow-y: auto;
+}
+#md-editor::placeholder { color: var(--ink-ghost); }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.85rem 1.5rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.25s;
+  pointer-events: none;
+  z-index: 9999;
+}
+.toast.visible { opacity: 1; transform: translateY(0); }
+.toast.gold { background: var(--gold); color: #fff; }
+.toast.danger { background: var(--danger); }
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="login-screen" class="screen active">
+  <div class="login-wordmark">Chief Eben Adjetey.</div>
+  <div class="login-subtitle">Content Studio</div>
+  <div class="login-card">
+    <h2>Sign in</h2>
+    <p>Use your GitHub Personal Access Token to access and manage your site content.</p>
+    <div class="field">
+      <label>GitHub Username</label>
+      <input type="text" id="gh-username" placeholder="your-github-username" autocomplete="username" />
+    </div>
+    <div class="field">
+      <label>Repository Name</label>
+      <input type="text" id="gh-repo" placeholder="your-repo-name" />
+      <small>The repo where your site lives. e.g. <strong>chief-eben-site</strong></small>
+    </div>
+    <div class="field">
+      <label>Personal Access Token</label>
+      <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="current-password" />
+      <small>Generate one at <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a> — needs <strong>repo</strong> scope.</small>
+    </div>
+    <button class="btn-primary" id="btn-login">Enter Content Studio →</button>
+    <div class="error-banner" id="login-error"></div>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app-screen" class="screen">
+
+  <!-- Sidebar -->
+  <aside>
+    <div class="aside-top">
+      <span class="aside-wordmark">Chief & Co.</span>
+      <span class="aside-repo" id="aside-repo-name">—</span>
+    </div>
+
+    <div class="aside-section-label">Content</div>
+    <button class="nav-btn-side active" data-section="perspective">
+      <span class="nav-icon">✍</span> Perspective
+    </button>
+    <button class="nav-btn-side" data-section="keynotes">
+      <span class="nav-icon">◈</span> Keynotes
+    </button>
+    <button class="nav-btn-side" data-section="projects">
+      <span class="nav-icon">◻</span> Projects
+    </button>
+
+    <div class="aside-footer">
+      <div class="aside-user">
+        <strong id="aside-username">—</strong>
+        Connected to GitHub
+      </div>
+      <button class="btn-logout" id="btn-logout">Sign out</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main>
+
+    <!-- List Panel -->
+    <div id="panel-list">
+      <div class="panel-header">
+        <div class="panel-header-left">
+          <h1 id="panel-title">Perspective</h1>
+          <p id="panel-desc">Your articles and points of view</p>
+        </div>
+        <button class="btn-new-entry" id="btn-new">+ New Entry</button>
+      </div>
+      <div class="list-area" id="list-area">
+        <div class="list-loading"><p>Select a section to load content</p></div>
+      </div>
+    </div>
+
+    <!-- Editor Panel -->
+    <div id="panel-editor">
+      <div class="editor-topbar">
+        <button class="btn-back" id="btn-back">← Back</button>
+        <div class="editor-topbar-title" id="editor-breadcrumb">New entry</div>
+        <span class="publish-status" id="publish-status"></span>
+        <button class="btn-publish" id="btn-publish">Publish to GitHub →</button>
+      </div>
+      <div class="editor-body">
+        <div class="editor-meta-panel">
+          <div class="meta-group">
+            <div class="meta-label">Title</div>
+            <input type="text" class="meta-input" id="meta-title" placeholder="Entry title…" />
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">Date</div>
+            <input type="date" class="meta-input" id="meta-date" />
+          </div>
+          <div class="meta-group" id="meta-category-group">
+            <div class="meta-label">Category</div>
+            <select class="meta-input" id="meta-category"></select>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">Excerpt / Summary</div>
+            <textarea class="meta-input" id="meta-excerpt" placeholder="A short summary shown in the card…"></textarea>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">File name (slug)</div>
+            <input type="text" class="meta-input" id="meta-slug" placeholder="my-article-slug" />
+            <small style="font-size:0.7rem;color:var(--ink-faint);margin-top:3px;">Auto-generated from title. No spaces.</small>
+          </div>
+        </div>
+        <div class="editor-md-panel">
+          <div class="editor-md-label">Body — Markdown</div>
+          <textarea id="md-editor" placeholder="Write your content in Markdown…&#10;&#10;## Heading&#10;&#10;Your paragraph here.&#10;&#10;**Bold**, *italic*, [links](https://…)"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════
+let GH = { token: '', username: '', repo: '' };
+let currentSection = 'perspective';
+let editingFile = null; // { path, sha } or null for new
+let fileCache = {};
+
+const SECTIONS = {
+  perspective: {
+    label: 'Perspective',
+    desc: 'Your articles and points of view',
+    path: 'content/perspective',
+    categories: ['brand', 'leadership', 'business', 'life', 'culture', 'strategy'],
+  },
+  keynotes: {
+    label: 'Keynotes',
+    desc: 'Talks, speeches and keynote sessions',
+    path: 'content/keynotes',
+    categories: ['leadership', 'brand', 'business', 'culture'],
+  },
+  projects: {
+    label: 'Projects',
+    desc: 'Work, engagements and case studies',
+    path: 'content/projects',
+    categories: ['brand', 'consulting', 'strategy', 'advisory'],
+  },
+};
+
+// ════════════════════════════════════════
+// GITHUB API
+// ════════════════════════════════════════
+function ghHeaders() {
+  return {
+    'Authorization': `Bearer ${GH.token}`,
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json',
+  };
+}
+const ghBase = () => `https://api.github.com/repos/${GH.username}/${GH.repo}`;
+
+async function ghGetFiles(folderPath) {
+  const r = await fetch(`${ghBase()}/contents/${folderPath}`, { headers: ghHeaders() });
+  if (r.status === 404) return [];
+  if (!r.ok) throw new Error(`GitHub error ${r.status}`);
+  return r.json();
+}
+
+async function ghGetFile(filePath) {
+  const r = await fetch(`${ghBase()}/contents/${filePath}`, { headers: ghHeaders() });
+  if (!r.ok) throw new Error(`GitHub error ${r.status}`);
+  return r.json();
+}
+
+async function ghPutFile(filePath, content, sha, message) {
+  const body = {
+    message,
+    content: btoa(unescape(encodeURIComponent(content))),
+  };
+  if (sha) body.sha = sha;
+  const r = await fetch(`${ghBase()}/contents/${filePath}`, {
+    method: 'PUT',
+    headers: ghHeaders(),
+    body: JSON.stringify(body),
+  });
+  if (!r.ok) {
+    const err = await r.json();
+    throw new Error(err.message || `GitHub error ${r.status}`);
+  }
+  return r.json();
+}
+
+async function ghDeleteFile(filePath, sha, message) {
+  const r = await fetch(`${ghBase()}/contents/${filePath}`, {
+    method: 'DELETE',
+    headers: ghHeaders(),
+    body: JSON.stringify({ message, sha }),
+  });
+  if (!r.ok) throw new Error(`GitHub error ${r.status}`);
+}
+
+// ════════════════════════════════════════
+// MARKDOWN FRONTMATTER
+// ════════════════════════════════════════
+function buildMarkdown({ title, date, category, excerpt }, body) {
+  return `---\ntitle: "${title}"\ndate: "${date}"\ncategory: "${category}"\nexcerpt: "${excerpt}"\n---\n\n${body}`;
+}
+
+function parseFrontmatter(raw) {
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!match) return { meta: {}, body: raw };
+  const meta = {};
+  match[1].split('\n').forEach(line => {
+    const m = line.match(/^(\w+):\s*"?([^"]*)"?$/);
+    if (m) meta[m[1]] = m[2];
+  });
+  return { meta, body: match[2].trim() };
+}
+
+// ════════════════════════════════════════
+// UI HELPERS
+// ════════════════════════════════════════
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast visible ' + type;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+function slugify(str) {
+  return str.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
+
+function setScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function setPanel(id) {
+  document.getElementById('panel-list').style.display = id === 'list' ? 'flex' : 'none';
+  document.getElementById('panel-editor').style.display = id === 'editor' ? 'flex' : 'none';
+}
+
+// ════════════════════════════════════════
+// LOGIN
+// ════════════════════════════════════════
+document.getElementById('btn-login').addEventListener('click', async () => {
+  const token = document.getElementById('gh-token').value.trim();
+  const username = document.getElementById('gh-username').value.trim();
+  const repo = document.getElementById('gh-repo').value.trim();
+  const errEl = document.getElementById('login-error');
+  errEl.classList.remove('visible');
+
+  if (!token || !username || !repo) {
+    errEl.textContent = 'Please fill in all fields.';
+    errEl.classList.add('visible');
+    return;
+  }
+
+  const btn = document.getElementById('btn-login');
+  btn.disabled = true;
+  btn.textContent = 'Connecting…';
+
+  GH = { token, username, repo };
+
+  try {
+    const r = await fetch(`https://api.github.com/repos/${username}/${repo}`, {
+      headers: ghHeaders()
+    });
+    if (!r.ok) throw new Error('Could not connect. Check your token and repo name.');
+    const data = await r.json();
+
+    document.getElementById('aside-username').textContent = username;
+    document.getElementById('aside-repo-name').textContent = data.name;
+
+    // Save to sessionStorage for convenience
+    sessionStorage.setItem('eben_gh', JSON.stringify(GH));
+
+    setScreen('app-screen');
+    loadSection('perspective');
+  } catch(e) {
+    errEl.textContent = e.message;
+    errEl.classList.add('visible');
+    btn.disabled = false;
+    btn.textContent = 'Enter Content Studio →';
+  }
+});
+
+// Enter key on login
+['gh-username','gh-repo','gh-token'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btn-login').click();
+  });
+});
+
+// Restore session
+const saved = sessionStorage.getItem('eben_gh');
+if (saved) {
+  try {
+    const g = JSON.parse(saved);
+    GH = g;
+    document.getElementById('gh-username').value = g.username;
+    document.getElementById('gh-repo').value = g.repo;
+    document.getElementById('gh-token').value = g.token;
+  } catch(e) {}
+}
+
+// ════════════════════════════════════════
+// LOGOUT
+// ════════════════════════════════════════
+document.getElementById('btn-logout').addEventListener('click', () => {
+  sessionStorage.removeItem('eben_gh');
+  GH = { token: '', username: '', repo: '' };
+  setScreen('login-screen');
+});
+
+// ════════════════════════════════════════
+// SIDEBAR NAV
+// ════════════════════════════════════════
+document.querySelectorAll('.nav-btn-side[data-section]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn-side').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadSection(btn.dataset.section);
+  });
+});
+
+// ════════════════════════════════════════
+// LOAD SECTION
+// ════════════════════════════════════════
+async function loadSection(section) {
+  currentSection = section;
+  setPanel('list');
+
+  const s = SECTIONS[section];
+  document.getElementById('panel-title').textContent = s.label;
+  document.getElementById('panel-desc').textContent = s.desc;
+
+  const area = document.getElementById('list-area');
+  area.innerHTML = '<div class="list-loading"><p>Loading from GitHub…</p></div>';
+
+  try {
+    const files = await ghGetFiles(s.path);
+    fileCache[section] = files.filter(f => f.name.endsWith('.md'));
+    renderList(section);
+  } catch(e) {
+    area.innerHTML = `<div class="list-empty"><span>Could not load content</span><p>${e.message}</p><p style="font-size:0.72rem;color:var(--ink-ghost);margin-top:8px;">Make sure the folder <strong>content/${section}/</strong> exists in your repo.</p></div>`;
+  }
+}
+
+function renderList(section) {
+  const files = fileCache[section] || [];
+  const area = document.getElementById('list-area');
+
+  if (!files.length) {
+    area.innerHTML = `<div class="list-empty"><span>Nothing here yet.</span><p>Create your first entry with the button above.</p></div>`;
+    return;
+  }
+
+  area.innerHTML = '';
+  files.forEach(file => {
+    const slug = file.name.replace('.md', '');
+    const div = document.createElement('div');
+    div.className = 'entry-item';
+    div.innerHTML = `
+      <div class="entry-info">
+        <div class="entry-title">${slug.replace(/-/g, ' ')}</div>
+        <div class="entry-meta">
+          <span>${file.name}</span>
+        </div>
+      </div>
+      <div class="entry-actions">
+        <button class="btn-sm" data-action="edit" data-path="${file.path}" data-sha="${file.sha}">Edit</button>
+        <button class="btn-sm danger" data-action="delete" data-path="${file.path}" data-sha="${file.sha}" data-name="${file.name}">Delete</button>
+      </div>
+    `;
+    area.appendChild(div);
+  });
+}
+
+// ════════════════════════════════════════
+// LIST ACTIONS (edit / delete)
+// ════════════════════════════════════════
+document.getElementById('list-area').addEventListener('click', async e => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+
+  if (btn.dataset.action === 'edit') {
+    await openEditor(btn.dataset.path, btn.dataset.sha);
+  }
+
+  if (btn.dataset.action === 'delete') {
+    if (!confirm(`Delete "${btn.dataset.name}"? This cannot be undone.`)) return;
+    try {
+      await ghDeleteFile(btn.dataset.path, btn.dataset.sha, `Remove ${btn.dataset.name}`);
+      showToast('Entry deleted', 'danger');
+      await loadSection(currentSection);
+    } catch(e) {
+      showToast('Delete failed: ' + e.message, 'danger');
+    }
+  }
+});
+
+// ════════════════════════════════════════
+// OPEN EDITOR
+// ════════════════════════════════════════
+async function openEditor(filePath, sha) {
+  editingFile = { path: filePath, sha };
+  setPanel('editor');
+
+  const crumb = document.getElementById('editor-breadcrumb');
+  crumb.innerHTML = `<strong>${currentSection}</strong> / ${filePath.split('/').pop()}`;
+  document.getElementById('publish-status').textContent = '';
+
+  try {
+    const fileData = await ghGetFile(filePath);
+    const raw = decodeURIComponent(escape(atob(fileData.content)));
+    const { meta, body } = parseFrontmatter(raw);
+    editingFile.sha = fileData.sha;
+
+    document.getElementById('meta-title').value = meta.title || '';
+    document.getElementById('meta-date').value = meta.date || '';
+    document.getElementById('meta-excerpt').value = meta.excerpt || '';
+    document.getElementById('meta-slug').value = filePath.split('/').pop().replace('.md', '');
+    document.getElementById('md-editor').value = body;
+    populateCategories(meta.category);
+  } catch(e) {
+    showToast('Failed to load file: ' + e.message, 'danger');
+  }
+}
+
+function openNewEditor() {
+  editingFile = null;
+  setPanel('editor');
+
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('meta-title').value = '';
+  document.getElementById('meta-date').value = today;
+  document.getElementById('meta-excerpt').value = '';
+  document.getElementById('meta-slug').value = '';
+  document.getElementById('md-editor').value = '';
+  document.getElementById('publish-status').textContent = '';
+  document.getElementById('editor-breadcrumb').innerHTML = `<strong>${currentSection}</strong> / new entry`;
+  populateCategories('');
+}
+
+function populateCategories(selected) {
+  const sel = document.getElementById('meta-category');
+  const cats = SECTIONS[currentSection].categories;
+  sel.innerHTML = cats.map(c =>
+    `<option value="${c}" ${c === selected ? 'selected' : ''}>${c.charAt(0).toUpperCase() + c.slice(1)}</option>`
+  ).join('');
+}
+
+// Auto-slug from title
+document.getElementById('meta-title').addEventListener('input', e => {
+  if (!editingFile) {
+    document.getElementById('meta-slug').value = slugify(e.target.value);
+  }
+});
+
+// ════════════════════════════════════════
+// PUBLISH
+// ════════════════════════════════════════
+document.getElementById('btn-publish').addEventListener('click', async () => {
+  const title = document.getElementById('meta-title').value.trim();
+  const date = document.getElementById('meta-date').value.trim();
+  const category = document.getElementById('meta-category').value.trim();
+  const excerpt = document.getElementById('meta-excerpt').value.trim();
+  const slug = document.getElementById('meta-slug').value.trim() || slugify(title);
+  const body = document.getElementById('md-editor').value.trim();
+
+  if (!title) { showToast('Please enter a title', 'danger'); return; }
+  if (!slug) { showToast('Please enter a slug', 'danger'); return; }
+
+  const content = buildMarkdown({ title, date, category, excerpt }, body);
+  const folderPath = SECTIONS[currentSection].path;
+  const filePath = `${folderPath}/${slug}.md`;
+
+  const statusEl = document.getElementById('publish-status');
+  const btn = document.getElementById('btn-publish');
+  btn.disabled = true;
+  btn.textContent = 'Publishing…';
+  statusEl.className = 'publish-status';
+  statusEl.textContent = '';
+
+  try {
+    const sha = editingFile?.sha || null;
+    const action = sha ? 'Update' : 'Add';
+    await ghPutFile(filePath, content, sha, `${action} ${slug}.md via Content Studio`);
+
+    statusEl.className = 'publish-status success';
+    statusEl.textContent = '✓ Published';
+    showToast('Published to GitHub!', 'gold');
+    editingFile = { path: filePath, sha: 'reload' };
+
+    // Refresh sha
+    setTimeout(async () => {
+      try {
+        const f = await ghGetFile(filePath);
+        if (editingFile) editingFile.sha = f.sha;
+      } catch(e) {}
+    }, 1200);
+
+  } catch(e) {
+    statusEl.className = 'publish-status error';
+    statusEl.textContent = '✗ Failed';
+    showToast('Publish failed: ' + e.message, 'danger');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Publish to GitHub →';
+  }
+});
+
+// ════════════════════════════════════════
+// BACK + NEW
+// ════════════════════════════════════════
+document.getElementById('btn-back').addEventListener('click', () => {
+  setPanel('list');
+  loadSection(currentSection);
+});
+
+document.getElementById('btn-new').addEventListener('click', () => {
+  openNewEditor();
+});
+</script>
+</body>
+</html>

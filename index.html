@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chief Eben Adjetey — Be Formidable.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink: #0A0A0A;
+  --ink-mid: #222;
+  --ink-soft: #444;
+  --ink-muted: #666;
+  --ink-faint: #999;
+  --ink-ghost: #bbb;
+  --rule: #E5E5E5;
+  --rule-soft: #EFEFEF;
+  --bg: #FFFFFF;
+  --bg-off: #FAFAFA;
+  --gold: #C9A84C;
+  --gold-dim: #8B6F2E;
+  --gold-bg: rgba(201,168,76,0.06);
+  --px: clamp(3rem, 9vw, 10rem);
+}
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── VIEW SWITCHING ── */
+.view { display: none; }
+.view.active { display: block; animation: pageFadeIn 0.3s ease both; }
+@keyframes pageFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem var(--px);
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid var(--rule);
+  backdrop-filter: blur(12px);
+}
+.nav-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 700; letter-spacing: 0.01em;
+  cursor: pointer; text-decoration: none; color: var(--ink);
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-ghost); text-decoration: none; transition: color 0.15s;
+  cursor: pointer; padding-bottom: 3px;
+  border-bottom: 1.5px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav-links a:hover { color: var(--ink-mid); }
+.nav-links a.active { color: var(--ink); border-bottom-color: var(--ink); }
+.nav-btn {
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  background: var(--ink); color: #fff;
+  padding: 0.65rem 1.6rem; border: none; cursor: pointer;
+  transition: background 0.15s; text-decoration: none; display: inline-block;
+}
+.nav-btn:hover { background: var(--ink-mid); }
+
+/* ════════════════════════════════
+   HERO — MEDIA SLIDESHOW
+   ════════════════════════════════ */
+.hero {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 92vh; border-bottom: 1px solid var(--rule);
+}
+.hero-left {
+  padding: clamp(4rem, 7vw, 7rem) var(--px);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  border-right: 1px solid var(--rule);
+}
+.hero-roles {
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 2rem;
+}
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.8rem, 7vw, 7rem);
+  font-weight: 700; line-height: 0.92;
+  letter-spacing: -0.025em; margin-bottom: 2.5rem;
+}
+.hero-name .italic { font-style: italic; font-weight: 400; }
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.3rem, 2vw, 1.9rem);
+  font-weight: 400; font-style: italic;
+  color: var(--ink-mid); line-height: 1.35;
+  max-width: 480px; margin-bottom: 2rem;
+  padding-left: 1.25rem; border-left: 3px solid var(--ink);
+}
+.hero-sub {
+  font-size: 0.93rem; line-height: 1.85;
+  color: var(--ink-soft); max-width: 460px; margin-bottom: 2.5rem;
+}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* Slideshow panel */
+.hero-right {
+  position: relative; overflow: hidden;
+  background: var(--bg-off); min-height: 500px;
+}
+.slide {
+  position: absolute; inset: 0;
+  opacity: 0; transition: opacity 1.2s ease;
+  z-index: 0;
+}
+.slide.active { opacity: 1; z-index: 1; }
+.slide img, .slide video {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block;
+}
+.slide img { filter: grayscale(15%); }
+.slide video { filter: grayscale(10%); }
+/* placeholder slide */
+.slide-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.75rem;
+  background: linear-gradient(160deg, #f5f5f5, #e8e8e8);
+}
+.slide-placeholder span {
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-ghost);
+}
+.hero-photo-caption {
+  position: absolute; bottom: 1.5rem; left: 1.5rem;
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(10,10,10,0.4); z-index: 10;
+}
+
+/* ── BUTTONS ── */
+.btn-dark {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  background: var(--ink); color: #fff; padding: 0.9rem 2.2rem;
+  border: 1.5px solid var(--ink); cursor: pointer; transition: all 0.15s;
+}
+.btn-dark:hover { background: #fff; color: var(--ink); }
+.btn-outline {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  background: transparent; color: var(--ink); padding: 0.9rem 2.2rem;
+  border: 1.5px solid var(--ink); cursor: pointer; transition: all 0.15s;
+}
+.btn-outline:hover { background: var(--ink); color: #fff; }
+
+/* ── CLIENTS TICKER ── */
+.clients-bar { padding: 1.75rem var(--px); border-bottom: 1px solid var(--rule); overflow: hidden; }
+.clients-label {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--ink-ghost); margin-bottom: 1.25rem;
+}
+.clients-track {
+  display: flex; gap: 3rem; align-items: center;
+  animation: ticker 22s linear infinite; width: max-content;
+}
+.clients-track:hover { animation-play-state: paused; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.client-name {
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-ghost); white-space: nowrap;
+}
+
+/* ── ABOUT ── */
+.about { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); }
+.about-left { padding: clamp(3rem, 6vw, 6rem) var(--px); border-right: 1px solid var(--rule); }
+.about-right { padding: clamp(3rem, 6vw, 6rem) var(--px); }
+.eyebrow {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 1.5rem;
+}
+.about-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.08; margin-bottom: 2rem;
+}
+.about-headline em { font-style: italic; font-weight: 400; }
+.about-body p { font-size: 0.93rem; line-height: 1.9; color: var(--ink-soft); margin-bottom: 1.2rem; }
+.about-body strong { color: var(--ink); font-weight: 600; }
+
+/* ── STATS ── */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--rule); }
+.stat { padding: clamp(2rem, 4vw, 3.5rem) var(--px); border-right: 1px solid var(--rule); }
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; line-height: 1; margin-bottom: 0.6rem;
+}
+.stat-desc { font-size: 0.82rem; line-height: 1.55; color: var(--ink-muted); }
+.stat-desc em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; }
+
+/* ── DOSSIER ── */
+.dossier {
+  display: grid; grid-template-columns: 1fr 1.7fr; gap: clamp(3rem, 6vw, 6rem);
+  padding: clamp(3rem, 6vw, 6rem) var(--px); border-bottom: 1px solid var(--rule); align-items: start;
+}
+.dossier-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.12; position: sticky; top: 5rem;
+}
+.dossier-title em { font-style: italic; font-weight: 400; }
+.dossier-list { list-style: none; }
+.dossier-item {
+  display: flex; align-items: flex-start; gap: 1.25rem;
+  padding: 1rem 0; border-bottom: 1px solid var(--rule-soft);
+  font-size: 0.9rem; line-height: 1.65; color: var(--ink-soft);
+}
+.dossier-item:last-child { border-bottom: none; }
+.dossier-item::before { content: '—'; color: var(--ink-ghost); flex-shrink: 0; margin-top: 1px; }
+
+/* ── BIG QUESTION ── */
+.big-question {
+  background: var(--ink); padding: clamp(4rem, 8vw, 8rem) var(--px);
+  border-bottom: 1px solid var(--rule); text-align: center;
+}
+.big-question p {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 2rem;
+}
+.big-question h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 3.8rem); font-weight: 700; font-style: italic;
+  color: #fff; line-height: 1.12; max-width: 860px; margin: 0 auto;
+}
+.big-question h2 em { font-style: normal; color: var(--gold); }
+
+/* ── PHILOSOPHY ── */
+.philosophy { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); align-items: center; }
+.philosophy-left { padding: clamp(3rem, 6vw, 6rem) var(--px); border-right: 1px solid var(--rule); }
+.philosophy-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 6rem); font-weight: 700; line-height: 0.92; letter-spacing: -0.02em;
+}
+.philosophy-headline em { font-style: italic; font-weight: 400; display: block; }
+.philosophy-right { padding: clamp(3rem, 6vw, 6rem) var(--px); }
+.philosophy-right p { font-size: 0.95rem; line-height: 1.9; color: var(--ink-soft); margin-bottom: 1.1rem; }
+.philosophy-right strong { color: var(--ink); font-weight: 600; }
+
+/* ── SERVICES ── */
+.services { border-bottom: 1px solid var(--rule); }
+.services-header {
+  padding: 3rem var(--px); border-bottom: 1px solid var(--rule);
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.services-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; }
+.services-header span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); }
+.services-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.service-item {
+  padding: 2.5rem var(--px); border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); transition: background 0.2s;
+}
+.service-item:hover { background: var(--bg-off); }
+.service-item:nth-child(even) { border-right: none; }
+.service-item:nth-last-child(-n+2) { border-bottom: none; }
+.svc-num { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; font-weight: 600; color: var(--ink-ghost); margin-bottom: 1rem; }
+.svc-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; }
+.svc-desc { font-size: 0.875rem; line-height: 1.78; color: var(--ink-muted); }
+
+/* ── EXPLORE ── */
+.explore { border-bottom: 1px solid var(--rule); }
+.explore-header { padding: 3rem var(--px) 2.5rem; border-bottom: 1px solid var(--rule); }
+.explore-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 0.4rem; }
+.explore-header p { font-size: 0.88rem; color: var(--ink-muted); }
+.explore-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.explore-card {
+  padding: 2.5rem var(--px); border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); cursor: pointer; transition: background 0.2s;
+}
+.explore-card:hover { background: var(--bg-off); }
+.explore-card:nth-child(even) { border-right: none; }
+.explore-card:nth-last-child(-n+2) { border-bottom: none; }
+.explore-card.featured { background: var(--gold-bg); }
+.explore-card.featured:hover { background: rgba(201,168,76,0.1); }
+.card-tag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1rem; }
+.explore-card.featured .card-tag { color: var(--gold-dim); }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+.card-desc { font-size: 0.875rem; line-height: 1.75; color: var(--ink-muted); margin-bottom: 1.75rem; }
+.card-link { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); display: flex; align-items: center; gap: 0.5rem; transition: gap 0.2s; }
+.card-link:hover { gap: 0.85rem; }
+.explore-card.featured .card-link { color: var(--gold-dim); }
+
+/* ── TRUTH ── */
+.truth {
+  background: var(--ink); color: #fff;
+  padding: clamp(4rem, 8vw, 8rem) var(--px); border-bottom: 1px solid var(--rule);
+}
+.truth-eyebrow { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase; color: #444; margin-bottom: 2rem; }
+.truth-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4.5vw, 3.8rem); font-weight: 700; line-height: 1.08; max-width: 700px; margin-bottom: 2.5rem;
+}
+.truth-headline em { font-style: italic; font-weight: 400; color: var(--gold); }
+.truth-body p { font-size: 0.96rem; line-height: 1.9; color: #888; max-width: 580px; margin-bottom: 1rem; }
+.truth-body strong { color: #fff; }
+.truth-btns { margin-top: 3rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-gold {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  background: var(--gold); color: var(--ink); padding: 0.9rem 2.2rem; border: 1.5px solid var(--gold); cursor: pointer; transition: all 0.15s;
+}
+.btn-gold:hover { background: transparent; color: var(--gold); }
+.btn-ghost-w {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  background: transparent; color: #fff; padding: 0.9rem 2.2rem; border: 1.5px solid #333; cursor: pointer; transition: border-color 0.15s;
+}
+.btn-ghost-w:hover { border-color: #fff; }
+
+/* ════════════════════════════════
+   INNER PAGES
+   ════════════════════════════════ */
+.inner-hero {
+  padding: clamp(4rem, 7vw, 7rem) var(--px) clamp(3rem, 5vw, 5rem);
+  border-bottom: 1px solid var(--rule);
+}
+.inner-hero-eyebrow { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1.25rem; }
+.inner-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 7vw, 6rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 1.5rem;
+}
+.inner-hero-title em { font-style: italic; font-weight: 400; }
+.inner-hero-desc { font-size: 0.95rem; line-height: 1.8; color: var(--ink-soft); max-width: 560px; }
+
+/* filter bar */
+.filter-bar {
+  padding: 1.25rem var(--px); border-bottom: 1px solid var(--rule);
+  display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+}
+.filter-btn {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  background: transparent; color: var(--ink-faint);
+  padding: 0.45rem 1rem; border: 1px solid var(--rule); cursor: pointer; transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--ink-mid); color: var(--ink-mid); }
+.filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ── CARD GRID ── */
+.card-grid {
+  padding: 0 var(--px);
+}
+
+/* Featured card — full width */
+.content-card.featured {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  padding: 3rem 0; border-bottom: 1px solid var(--rule);
+}
+.content-card.featured .card-img { aspect-ratio: 4/3; margin-bottom: 0; }
+.content-card.featured .card-title-text { font-size: clamp(1.5rem, 2.5vw, 2.2rem); }
+
+/* Regular cards — 3 column */
+.cards-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--rule);
+}
+.content-card {
+  padding: 2.5rem 2rem 2.5rem 0; border-right: 1px solid var(--rule);
+  transition: background 0.15s; cursor: pointer;
+}
+.content-card:last-child { border-right: none; padding-right: 0; }
+.content-card:first-child { padding-left: 0; }
+.content-card:hover { background: var(--bg-off); }
+
+.card-meta { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
+.card-type {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.2rem 0.6rem;
+}
+.card-date { font-size: 0.62rem; color: var(--ink-ghost); letter-spacing: 0.05em; }
+.card-img {
+  width: 100%; aspect-ratio: 16/9; background: var(--bg-off); margin-bottom: 1.25rem;
+  overflow: hidden; position: relative;
+}
+.card-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); transition: transform 0.4s ease; }
+.content-card:hover .card-img img { transform: scale(1.03); }
+.card-img-placeholder {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #f0f0f0, #e5e5e5);
+}
+.card-title-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; color: var(--ink);
+}
+.card-excerpt { font-size: 0.82rem; line-height: 1.7; color: var(--ink-muted); margin-bottom: 1.25rem; }
+.card-read {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint);
+  display: flex; align-items: center; gap: 0.4rem; transition: gap 0.15s, color 0.15s;
+}
+.content-card:hover .card-read { gap: 0.7rem; color: var(--ink); }
+
+/* inner page bottom CTA */
+.inner-footer-cta {
+  padding: clamp(4rem, 7vw, 7rem) var(--px);
+  background: var(--ink); color: #fff;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem;
+}
+.inner-footer-cta h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 600; font-style: italic; max-width: 500px; line-height: 1.2;
+}
+.btn-gold-outline {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  background: transparent; color: var(--gold); padding: 0.9rem 2.2rem; border: 1.5px solid var(--gold);
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.btn-gold-outline:hover { background: var(--gold); color: var(--ink); }
+
+/* ── SHARED FOOTER ── */
+footer {
+  padding: 2.25rem var(--px);
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--rule); flex-wrap: wrap; gap: 1rem;
+}
+.footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 700; cursor: pointer; }
+.footer-links { display: flex; gap: 2rem; list-style: none; }
+.footer-links a { font-size: 0.7rem; color: var(--ink-faint); text-decoration: none; cursor: pointer; transition: color 0.15s; }
+.footer-links a:hover { color: var(--ink); }
+.footer-copy { font-size: 0.7rem; color: var(--ink-ghost); }
+.built { font-size: 0.65rem; color: var(--ink-ghost); letter-spacing: 0.1em; font-style: italic; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { border-right: none; border-bottom: 1px solid var(--rule); justify-content: flex-start; padding-top: 6rem; }
+  .hero-right { min-height: 55vw; }
+  .content-card.featured { grid-template-columns: 1fr; }
+  .content-card.featured .card-img { aspect-ratio: 16/9; }
+  .cards-row { grid-template-columns: 1fr 1fr; }
+  .cards-row .content-card:last-child { border-right: none; }
+  .cards-row .content-card:nth-child(odd):not(:last-child) { border-right: 1px solid var(--rule); }
+}
+@media (max-width: 900px) {
+  :root { --px: clamp(2rem, 6vw, 4rem); }
+  .about, .philosophy, .dossier { grid-template-columns: 1fr; }
+  .about-left, .philosophy-left { border-right: none; border-bottom: 1px solid var(--rule); }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stat:nth-child(2) { border-right: none; }
+  .stat:nth-child(3) { border-top: 1px solid var(--rule); border-right: none; }
+  nav .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  :root { --px: 1.5rem; }
+  .stats, .services-grid, .explore-grid { grid-template-columns: 1fr; }
+  .stat, .service-item, .explore-card { border-right: none; }
+  .hero-right { min-height: 80vw; }
+  .cards-row { grid-template-columns: 1fr; }
+  .cards-row .content-card { border-right: none; border-bottom: 1px solid var(--rule); padding: 2rem 0; }
+  .inner-footer-cta { flex-direction: column; }
+}
+
+/* ── DYNAMIC CONTENT STATES ── */
+.cards-loading {
+  padding: 4rem var(--px);
+  font-size: 0.8rem;
+  color: var(--ink-ghost);
+  letter-spacing: 0.1em;
+}
+.cards-empty {
+  padding: 4rem var(--px);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+</style>
+</head>
+<body>
+
+<!-- ════════ PERSISTENT NAV ════════ -->
+<nav>
+  <a class="nav-name" data-route="home">Chief Eben Adjetey.</a>
+  <ul class="nav-links">
+    <li><a data-route="projects">Projects</a></li>
+    <li><a data-route="keynotes">Keynotes</a></li>
+    <li><a data-route="perspective">Perspective</a></li>
+  </ul>
+  <a class="nav-btn" data-route="home" data-anchor="explore">Book a 1:1</a>
+</nav>
+
+<!-- ════════ HOME ════════ -->
+<div class="view" id="view-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-roles">Business Consultant · Brand Strategist · Creative Thinker</p>
+      <h1 class="hero-name">Chief Eben<br><span class="italic">Adjetey.</span></h1>
+      <div class="hero-tagline">"Be Formidable."</div>
+      <p class="hero-sub">Most businesses are one sharp strategy away from becoming completely impossible to ignore. Chief Eben Adjetey is the person who finds it — and builds everything around it.</p>
+      <div class="hero-btns">
+        <button class="btn-dark">Work With Chief Eben</button>
+        <button class="btn-outline" data-route="perspective">See How I Think</button>
+      </div>
+    </div>
+
+    <!-- SLIDESHOW PANEL -->
+    <div class="hero-right" id="hero-slideshow">
+      <!--
+        HOW TO ADD YOUR OWN IMAGES / VIDEOS:
+        Each slide is a <div class="slide"> inside #hero-slideshow.
+        For images: <div class="slide"><img src="your-photo.jpg" alt="..."></div>
+        For video:  <div class="slide"><video src="your-video.mp4" autoplay muted loop playsinline></video></div>
+        The JS below will automatically cycle through all slides.
+      -->
+      <div class="slide active">
+        <div class="slide-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="18" r="9" stroke="#ccc" stroke-width="1.5" fill="none"/>
+            <path d="M6 42c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="#ccc" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span>Slide 1 — add your image</span>
+        </div>
+      </div>
+      <div class="slide">
+        <div class="slide-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="12" width="32" height="24" rx="2" stroke="#ccc" stroke-width="1.5" fill="none"/>
+            <path d="M20 20l8 4-8 4V20z" stroke="#ccc" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span>Slide 2 — add a video or image</span>
+        </div>
+      </div>
+      <div class="slide">
+        <div class="slide-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="18" r="9" stroke="#ccc" stroke-width="1.5" fill="none"/>
+            <path d="M6 42c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="#ccc" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span>Slide 3 — add your image</span>
+        </div>
+      </div>
+      <div class="hero-photo-caption">Chief Eben Adjetey.</div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <div class="clients-bar">
+    <div class="clients-label">Trusted by founders, executives &amp; growing organisations</div>
+    <div class="clients-track">
+      <span class="client-name">SMEs</span><span class="client-name">·</span>
+      <span class="client-name">Enterprises</span><span class="client-name">·</span>
+      <span class="client-name">Serious Founders</span><span class="client-name">·</span>
+      <span class="client-name">Brand Leaders</span><span class="client-name">·</span>
+      <span class="client-name">Chief &amp; Company</span><span class="client-name">·</span>
+      <span class="client-name">Growth Consultancy</span><span class="client-name">·</span>
+      <span class="client-name">SMEs</span><span class="client-name">·</span>
+      <span class="client-name">Enterprises</span><span class="client-name">·</span>
+      <span class="client-name">Serious Founders</span><span class="client-name">·</span>
+      <span class="client-name">Brand Leaders</span><span class="client-name">·</span>
+      <span class="client-name">Chief &amp; Company</span><span class="client-name">·</span>
+      <span class="client-name">Growth Consultancy</span><span class="client-name">·</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="about" id="about">
+    <div class="about-left">
+      <p class="eyebrow">The Man Behind the Work</p>
+      <h2 class="about-headline">He doesn't<br>just consult.<br><em>He transforms.</em></h2>
+    </div>
+    <div class="about-right">
+      <div class="about-body">
+        <p>He noticed the pattern early. Every room he walked into, he moved forward. Every table he sat at, he led. Not because anyone asked. Because <strong>that's what Chief people do.</strong></p>
+        <p>So he owned the name. Built a company around it. And turned that same instinct into a discipline he now gives to serious businesses — <strong>the clarity to know exactly who you are, and the architecture to make the market feel it.</strong></p>
+        <p>Chief Eben operates at the intersection of strategy, brand, creative, and commercial growth. He doesn't believe in cosmetic fixes. He believes in <strong>structural change</strong> — the kind that makes a business permanently different, not just temporarily refreshed.</p>
+        <p>When you leave an engagement with Chief Eben, <strong>your market knows you differently.</strong> That's not a pitch. That's a pattern.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">6+</div>
+      <div class="stat-desc">Disciplines mastered — strategy, brand, marketing,<br>design, digital &amp; revenue growth</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">SME → Scale</div>
+      <div class="stat-desc">The shift clients come for —<br>from reactive &amp; invisible to structured &amp; inevitable</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1</div>
+      <div class="stat-desc">Guiding mandate — <em>Be Formidable.</em></div>
+    </div>
+  </div>
+
+  <!-- DOSSIER -->
+  <div class="dossier">
+    <div>
+      <p class="eyebrow">What Sets Him Apart</p>
+      <h2 class="dossier-title">Not a<br>consultant.<br><em>A different<br>breed.</em></h2>
+    </div>
+    <div>
+      <p class="eyebrow" style="margin-bottom:2rem">Credential Dossier</p>
+      <ul class="dossier-list">
+        <li class="dossier-item">Business Consultant &amp; Strategist with rare multi-disciplinary command across the full commercial growth stack</li>
+        <li class="dossier-item">Expert in brand positioning, narrative design &amp; personal brand architecture</li>
+        <li class="dossier-item">Revenue systems builder — demand generation, sales architecture, growth loops</li>
+        <li class="dossier-item">Digital transformation advisor for scaling organisations</li>
+        <li class="dossier-item">Founder, Chief &amp; Company — a strategic consultancy for serious businesses</li>
+        <li class="dossier-item">Creative thinker who fuses design intuition with hard commercial logic</li>
+        <li class="dossier-item">Specialises in SMEs, intentional founders, and mid-to-large enterprises</li>
+        <li class="dossier-item">Track record: from survival mode to structured, premium, and impossible to ignore</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BIG QUESTION -->
+  <div class="big-question">
+    <p>The question Chief Eben has built his entire practice around</p>
+    <h2>"Why does your competitor — who is <em>objectively worse</em> than you — keep winning the room?"</h2>
+  </div>
+
+  <!-- PHILOSOPHY -->
+  <div class="philosophy" id="philosophy">
+    <div class="philosophy-left">
+      <p class="eyebrow">The Philosophy</p>
+      <h2 class="philosophy-headline">Be<br><em>Formidable.</em></h2>
+    </div>
+    <div class="philosophy-right">
+      <p>Most businesses plateau not because they lack ambition. They plateau because they lack <strong>clarity, structure, and a signal strong enough to cut through the noise.</strong></p>
+      <p>Formidable is not about volume. It's not about being everywhere. It's about being so precisely positioned, so clearly articulated, so consistently present — that <strong>ignoring you becomes the harder option.</strong></p>
+      <p>Every framework Chief Eben uses. Every strategy he installs. Every brand he builds. All of it flows from this one mandate: <strong>make the business impossible to overlook and impossible to replace.</strong></p>
+      <p>That is what formidable looks like when it's working.</p>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="services" id="services">
+    <div class="services-header">
+      <h2>Six Disciplines.<br>One Direction.</h2>
+      <span>Growth.</span>
+    </div>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="svc-num">01</div>
+        <div class="svc-name">Business Strategy</div>
+        <p class="svc-desc">Clarity on where you are, where you need to go, and the precise moves that close the gap. No noise. No guessing. Just direction.</p>
+      </div>
+      <div class="service-item">
+        <div class="svc-num">02</div>
+        <div class="svc-name">Brand Positioning</div>
+        <p class="svc-desc">Claim a specific, ownable position in your market that makes you the obvious choice — before the conversation even starts.</p>
+      </div>
+      <div class="service-item">
+        <div class="svc-num">03</div>
+        <div class="svc-name">Revenue Systems</div>
+        <p class="svc-desc">Predictable revenue is an architecture problem, not a hustle problem. I build the demand systems that make it structural.</p>
+      </div>
+      <div class="service-item">
+        <div class="svc-num">04</div>
+        <div class="svc-name">Marketing &amp; Storytelling</div>
+        <p class="svc-desc">Your story is your most underused asset. Narratives that earn trust before the meeting, and close the room before you leave it.</p>
+      </div>
+      <div class="service-item">
+        <div class="svc-num">05</div>
+        <div class="svc-name">Personal Brand</div>
+        <p class="svc-desc">The founder is the brand. I help you build the kind of personal authority that opens doors before you knock on them.</p>
+      </div>
+      <div class="service-item">
+        <div class="svc-num">06</div>
+        <div class="svc-name">Digital Transformation</div>
+        <p class="svc-desc">Modernising how your business operates and scales — so systems run it, not the other way around.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPLORE -->
+  <div class="explore" id="explore">
+    <div class="explore-header">
+      <h2>Work With Chief Eben.</h2>
+      <p>Choose your entry point.</p>
+    </div>
+    <div class="explore-grid">
+      <div class="explore-card">
+        <div class="card-tag">For Organisations</div>
+        <div class="card-title">Strategy &amp; Consulting</div>
+        <p class="card-desc">Embedded strategic consulting for SMEs and enterprises that need direction, brand clarity, and growth systems that work — without the founder as the bottleneck.</p>
+        <div class="card-link">Enquire Now →</div>
+      </div>
+      <div class="explore-card featured">
+        <div class="card-tag">Most Sought After</div>
+        <div class="card-title">1:1 Private Advisory</div>
+        <p class="card-desc">For founders and leaders who want a thinking partner with real commercial edge. Direct access. Radical clarity. Results that show up in the numbers.</p>
+        <div class="card-link">Apply Now →</div>
+      </div>
+      <div class="explore-card">
+        <div class="card-tag">Events &amp; Stages</div>
+        <div class="card-title">Keynotes &amp; Speaking</div>
+        <p class="card-desc">Chief Eben doesn't give presentations. He shifts how a room thinks. Ideas that land — and stay with people long after they leave.</p>
+        <div class="card-link">Book Chief Eben →</div>
+      </div>
+      <div class="explore-card">
+        <div class="card-tag">Coming Soon</div>
+        <div class="card-title">Chief's Inner Circle</div>
+        <p class="card-desc">A curated cohort for founders and leaders building with intention — structured, mentored, and accountable to outcomes that matter.</p>
+        <div class="card-link">Join the Waitlist →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUTH -->
+  <div class="truth">
+    <p class="truth-eyebrow">Let's be honest</p>
+    <h2 class="truth-headline">You already know<br>what's holding you<br><em>back.</em></h2>
+    <div class="truth-body">
+      <p>It's not effort. You've been working. It's not ambition — you have plenty of that. <strong>What's missing is the architecture.</strong> The right positioning. The right systems. The right story that makes people choose you before they've even met you.</p>
+      <p>Every week without that, you're leaving money, momentum, and market share on the table — and handing it to someone who may not deserve it half as much as you do.</p>
+      <p><strong>The gap between where you are and where you should be is a strategy problem. Strategy is exactly what Chief Eben solves.</strong></p>
+    </div>
+    <div class="truth-btns">
+      <button class="btn-gold">Start the Conversation</button>
+      <button class="btn-ghost-w" data-route="perspective">Read the Philosophy</button>
+    </div>
+  </div>
+
+</div><!-- /view-home -->
+
+
+<!-- ════════ PROJECTS ════════ -->
+<div class="view" id="view-projects">
+
+  <div class="inner-hero">
+    <p class="inner-hero-eyebrow">Projects</p>
+    <h1 class="inner-hero-title">Work that<br><em>moved things.</em></h1>
+    <p class="inner-hero-desc">Case studies, research projects, and strategic engagements — a record of what happens when clarity meets execution.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="case-study">Case Studies</button>
+    <button class="filter-btn" data-filter="research">Research</button>
+    <button class="filter-btn" data-filter="strategy">Strategy</button>
+    <button class="filter-btn" data-filter="brand">Brand</button>
+  </div>
+
+  <div class="card-grid" id="projects-grid">
+    <div class="cards-loading">Loading projects…</div>
+  </div>
+
+  <div class="inner-footer-cta">
+    <h3>"Every project starts with one honest conversation."</h3>
+    <button class="btn-gold-outline" data-route="home" data-anchor="explore">Work With Chief Eben →</button>
+  </div>
+
+</div><!-- /view-projects -->
+
+
+<!-- ════════ KEYNOTES ════════ -->
+<div class="view" id="view-keynotes">
+
+  <div class="inner-hero">
+    <p class="inner-hero-eyebrow">Keynotes</p>
+    <h1 class="inner-hero-title">Words that<br><em>move rooms.</em></h1>
+    <p class="inner-hero-desc">Letters, reports, research, stories, and long-form essays — writing that earns its place because it says something worth saying.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="letter">Letters</button>
+    <button class="filter-btn" data-filter="report">Reports</button>
+    <button class="filter-btn" data-filter="essay">Essays</button>
+    <button class="filter-btn" data-filter="story">Stories</button>
+  </div>
+
+  <div class="card-grid" id="keynotes-grid">
+    <div class="cards-loading">Loading keynotes…</div>
+  </div>
+
+  <div class="inner-footer-cta">
+    <h3>"Ideas only matter if they reach the people who need them."</h3>
+    <button class="btn-gold-outline">Subscribe to the Newsletter →</button>
+  </div>
+
+</div><!-- /view-keynotes -->
+
+
+<!-- ════════ PERSPECTIVE ════════ -->
+<div class="view" id="view-perspective">
+
+  <div class="inner-hero">
+    <p class="inner-hero-eyebrow">Perspective</p>
+    <h1 class="inner-hero-title">How Chief<br><em>Eben thinks.</em></h1>
+    <p class="inner-hero-desc">Unfiltered thinking, random observations, and the kind of ideas that don't fit neatly into a framework — but need to be said anyway.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="business">Business</button>
+    <button class="filter-btn" data-filter="brand">Brand</button>
+    <button class="filter-btn" data-filter="leadership">Leadership</button>
+    <button class="filter-btn" data-filter="life">Life</button>
+  </div>
+
+  <div class="card-grid" id="perspective-grid">
+    <div class="cards-loading">Loading perspectives…</div>
+  </div>
+
+  <div class="inner-footer-cta">
+    <h3>"Thinking out loud is how better ideas get made."</h3>
+    <button class="btn-gold-outline">Follow on Instagram →</button>
+  </div>
+
+</div><!-- /view-perspective -->
+
+
+<!-- ════════ SHARED FOOTER ════════ -->
+<footer id="main-footer">
+  <div class="footer-brand" data-route="home">Chief Eben Adjetey.</div>
+  <ul class="footer-links">
+    <li><a data-route="projects">Projects</a></li>
+    <li><a data-route="keynotes">Keynotes</a></li>
+    <li><a data-route="perspective">Perspective</a></li>
+  </ul>
+  <div>
+    <div class="footer-copy">© 2026 Chief &amp; Company. All rights reserved.</div>
+    <div class="built">Built with formidability.</div>
+  </div>
+</footer>
+
+
+<script>
+// ════════════════════════════════════════
+// ROUTER — hash-based, no pushState errors
+// ════════════════════════════════════════
+const ROUTES = ['home','projects','keynotes','perspective'];
+
+function navigate(route, anchor) {
+  if (!ROUTES.includes(route)) route = 'home';
+
+  // swap views
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + route).classList.add('active');
+
+  // update hash (safe in any environment)
+  const hash = route === 'home' ? '' : '#/' + route;
+  if (window.location.hash !== hash) {
+    window.history.replaceState({ route }, '', window.location.pathname + (hash || ' ').trimEnd());
+    // use replaceState to avoid pushState cross-origin errors in file:// / sandboxed iframes
+  }
+
+  // page title
+  const titles = { home: 'Chief Eben Adjetey — Be Formidable.', projects: 'Projects — Chief Eben Adjetey', keynotes: 'Keynotes — Chief Eben Adjetey', perspective: 'Perspective — Chief Eben Adjetey' };
+  document.title = titles[route];
+
+  // active nav link
+  document.querySelectorAll('.nav-links a[data-route]').forEach(a => {
+    a.classList.toggle('active', a.dataset.route === route && route !== 'home');
+  });
+
+  // scroll
+  if (anchor) {
+    setTimeout(() => {
+      const el = document.getElementById(anchor);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 80);
+  } else {
+    window.scrollTo(0, 0);
+  }
+}
+
+function routeFromHash() {
+  const h = window.location.hash;
+  const m = h.match(/^#\/(\w+)/);
+  return (m && ROUTES.includes(m[1])) ? m[1] : 'home';
+}
+
+// intercept all data-route clicks
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-route]');
+  if (!el) return;
+  e.preventDefault();
+  navigate(el.dataset.route || 'home', el.dataset.anchor || null);
+});
+
+// browser back/forward
+window.addEventListener('hashchange', () => navigate(routeFromHash()));
+
+// ════════════════════════════════════════
+// FILTER — for inner page cards
+// ════════════════════════════════════════
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  const bar = btn.closest('.filter-bar');
+  const grid = btn.closest('.view').querySelector('.card-grid');
+  const filter = btn.dataset.filter;
+
+  bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // featured card
+  const featured = grid.querySelector('.content-card.featured');
+  if (featured) {
+    if (filter === 'all') { featured.style.display = ''; }
+    else {
+      const cats = (featured.dataset.category || '').split(' ');
+      featured.style.display = cats.includes(filter) ? '' : 'none';
+    }
+  }
+
+  // rows
+  grid.querySelectorAll('.cards-row').forEach(row => {
+    let anyVisible = false;
+    row.querySelectorAll('.content-card').forEach(card => {
+      if (filter === 'all') { card.style.display = ''; anyVisible = true; }
+      else {
+        const cats = (card.dataset.category || '').split(' ');
+        const show = cats.includes(filter);
+        card.style.display = show ? '' : 'none';
+        if (show) anyVisible = true;
+      }
+    });
+    row.style.display = anyVisible ? '' : 'none';
+  });
+});
+
+// ════════════════════════════════════════
+// HERO SLIDESHOW — no dots, no controls
+// ════════════════════════════════════════
+(function initSlideshow() {
+  const slides = document.querySelectorAll('#hero-slideshow .slide');
+  if (slides.length < 2) return;
+  let cur = 0;
+  setInterval(() => {
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add('active');
+  }, 4500);
+})();
+
+// ════════════════════════════════════════
+// CONTENT ENGINE — GitHub fetch + render
+// ════════════════════════════════════════
+
+// ── CONFIG: set your GitHub username and repo here ──
+const CONTENT_CONFIG = {
+  username: 'YOUR_GITHUB_USERNAME',   // e.g. 'chiefeben'
+  repo:     'YOUR_REPO_NAME',         // e.g. 'chief-eben-site'
+  branch:   'main',
+};
+
+const SECTION_MAP = {
+  projects:    { grid: 'projects-grid',    path: 'content/projects',    readLabel: 'Read the project' },
+  keynotes:    { grid: 'keynotes-grid',    path: 'content/keynotes',    readLabel: 'Read more'         },
+  perspective: { grid: 'perspective-grid', path: 'content/perspective', readLabel: 'Read the perspective' },
+};
+
+// Cache so we don't re-fetch on every visit within a session
+const _cache = {};
+
+// Parse frontmatter from a raw markdown string
+function parseFrontmatter(raw) {
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!m) return { meta: {}, body: raw };
+  const meta = {};
+  m[1].split('\n').forEach(line => {
+    const kv = line.match(/^(\w+):\s*"?([^"]*)"?\s*$/);
+    if (kv) meta[kv[1]] = kv[2].trim();
+  });
+  return { meta, body: raw.slice(m[0].length).trim() };
+}
+
+// Format a date string into "Month YYYY"
+function fmtDate(d) {
+  if (!d) return '';
+  try {
+    return new Date(d).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  } catch { return d; }
+}
+
+// Capitalise first letter of a string
+function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+
+// The SVG placeholder icon used in every card
+const CARD_SVG = `<svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+  <rect x="4" y="4" width="24" height="24" rx="3" stroke="#ccc" stroke-width="1.5" fill="none"/>
+  <path d="M10 16h12M10 21h7" stroke="#ccc" stroke-width="1.5" stroke-linecap="round"/>
+</svg>`;
+
+// Build one card's HTML
+function buildCard(meta, slug, readLabel, isFeatured) {
+  const cat = (meta.category || '').trim();
+  const label = cap(cat.split(' ')[0]);
+  const dateStr = fmtDate(meta.date);
+
+  if (isFeatured) {
+    return `
+    <div class="content-card featured" data-category="${cat}" data-slug="${slug}">
+      <div class="card-img"><div class="card-img-placeholder">${CARD_SVG}</div></div>
+      <div>
+        <div class="card-meta"><span class="card-type">${label}</span><span class="card-date">${dateStr}</span></div>
+        <div class="card-title-text">${meta.title || slug}</div>
+        <p class="card-excerpt">${meta.excerpt || ''}</p>
+        <div class="card-read">${readLabel} →</div>
+      </div>
+    </div>`;
+  }
+
+  return `
+  <div class="content-card" data-category="${cat}" data-slug="${slug}">
+    <div class="card-meta"><span class="card-type">${label}</span><span class="card-date">${dateStr}</span></div>
+    <div class="card-img"><div class="card-img-placeholder">${CARD_SVG}</div></div>
+    <div class="card-title-text">${meta.title || slug}</div>
+    <p class="card-excerpt">${meta.excerpt || ''}</p>
+    <div class="card-read">${readLabel} →</div>
+  </div>`;
+}
+
+// Fetch all .md files for a section and render into the grid
+async function loadSection(section) {
+  const cfg = SECTION_MAP[section];
+  if (!cfg) return;
+  const grid = document.getElementById(cfg.grid);
+  if (!grid) return;
+
+  // Already cached?
+  if (_cache[section]) { renderGrid(grid, _cache[section], cfg.readLabel); return; }
+
+  grid.innerHTML = `<div class="cards-loading">Loading…</div>`;
+
+  const { username, repo, branch } = CONTENT_CONFIG;
+  const apiBase = `https://api.github.com/repos/${username}/${repo}/contents/${cfg.path}?ref=${branch}`;
+
+  try {
+    const listRes = await fetch(apiBase);
+    if (!listRes.ok) throw new Error(`GitHub ${listRes.status}`);
+    const files = await listRes.json();
+    const mdFiles = files.filter(f => f.name.endsWith('.md'));
+
+    if (!mdFiles.length) {
+      grid.innerHTML = `<div class="cards-empty">Nothing published yet.</div>`;
+      return;
+    }
+
+    // Fetch all files in parallel
+    const entries = await Promise.all(mdFiles.map(async f => {
+      const r = await fetch(f.download_url);
+      const raw = await r.text();
+      const { meta } = parseFrontmatter(raw);
+      return { meta, slug: f.name.replace('.md', '') };
+    }));
+
+    // Sort by date descending
+    entries.sort((a, b) => new Date(b.meta.date || 0) - new Date(a.meta.date || 0));
+
+    _cache[section] = entries;
+    renderGrid(grid, entries, cfg.readLabel);
+
+  } catch(e) {
+    grid.innerHTML = `<div class="cards-empty">Content unavailable — check back soon.</div>`;
+    console.warn('Content load error:', e);
+  }
+}
+
+// Render entries into the grid
+function renderGrid(grid, entries, readLabel) {
+  if (!entries.length) {
+    grid.innerHTML = `<div class="cards-empty">Nothing published yet.</div>`;
+    return;
+  }
+
+  let html = '';
+
+  // Featured = first entry with featured:true, or just first entry
+  const featuredIdx = entries.findIndex(e => e.meta.featured === 'true') ?? 0;
+  const featured = entries[featuredIdx] || entries[0];
+  html += buildCard(featured.meta, featured.slug, readLabel, true);
+
+  // Remaining entries in rows of 3
+  const rest = entries.filter((_, i) => i !== featuredIdx);
+  for (let i = 0; i < rest.length; i += 3) {
+    const chunk = rest.slice(i, i + 3);
+    html += `<div class="cards-row">`;
+    chunk.forEach(e => { html += buildCard(e.meta, e.slug, readLabel, false); });
+    html += `</div>`;
+  }
+
+  grid.innerHTML = html;
+}
+
+// Hook into the router: load content when a section view becomes active
+const _origNavigate = navigate;
+window._sectionLoaded = {};
+function navigate(route, anchor) {
+  _origNavigate(route, anchor);
+  if (SECTION_MAP[route] && !window._sectionLoaded[route]) {
+    window._sectionLoaded[route] = true;
+    loadSection(route);
+  }
+}
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+navigate(routeFromHash());
+</script>
+</body>
+</html>
