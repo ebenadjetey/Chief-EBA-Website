@@ -3,7 +3,7 @@ title: "The Becoming"
 date: "2026-03-31"
 category: "life"
 excerpt: "This is real life story"
-featured: "false"
+featured: "true"
 ---
 
 ---
