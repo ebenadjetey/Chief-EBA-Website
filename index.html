@@ -56,7 +56,7 @@ nav {
 .nav-links a {
   font-size: 0.7rem; font-weight: 600;
   letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--ink-ghost); text-decoration: none; transition: color 0.15s;
+  color: var(--ink-ghost); text-decoration: none;
   cursor: pointer; padding-bottom: 3px;
   border-bottom: 1.5px solid transparent;
   transition: color 0.15s, border-color 0.15s;
@@ -71,6 +71,33 @@ nav {
   transition: background 0.15s; text-decoration: none; display: inline-block;
 }
 .nav-btn:hover { background: var(--ink-mid); }
+.nav-hamburger {
+  display: none; flex-direction: column; justify-content: center;
+  gap: 5px; background: none; border: none; cursor: pointer;
+  padding: 4px; width: 32px; height: 32px;
+}
+.nav-hamburger span { display: block; height: 1.5px; background: var(--ink); transition: all 0.25s; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 199;
+  background: var(--bg); flex-direction: column;
+  align-items: center; justify-content: center; gap: 2.5rem;
+}
+.mobile-menu.open { display: flex; animation: menuFade 0.2s ease; }
+@keyframes menuFade { from { opacity: 0; } to { opacity: 1; } }
+.mobile-menu-links { display: flex; flex-direction: column; align-items: center; gap: 2rem; list-style: none; }
+.mobile-menu-links a {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--ink-faint); text-decoration: none; cursor: pointer; transition: color 0.15s;
+}
+.mobile-menu-links a:hover, .mobile-menu-links a.active { color: var(--ink); }
+.mobile-menu .nav-btn { font-size: 0.75rem; padding: 0.9rem 2.5rem; }
+.mobile-social { display: flex; gap: 1.75rem; margin-top: 0.5rem; }
+.mobile-social a { color: var(--ink-ghost); text-decoration: none; transition: color 0.15s; display: flex; }
+.mobile-social a:hover { color: var(--ink); }
+.mobile-social svg { width: 18px; height: 18px; fill: currentColor; }
 
 /* ════════════════════════════════
    HERO — MEDIA SLIDESHOW
@@ -346,30 +373,44 @@ nav {
 .filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
 /* ── CARD GRID ── */
-.card-grid {
-  padding: 0 var(--px);
-}
+.card-grid { padding: 0 var(--px); }
 
-/* Featured card — full width */
+/* Featured card — horizontal, compact */
 .content-card.featured {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
-  padding: 3rem 0; border-bottom: 1px solid var(--rule);
+  display: grid; grid-template-columns: 340px 1fr; gap: 3rem; align-items: start;
+  padding: 3rem 0; border-bottom: 1px solid var(--rule); cursor: pointer;
 }
-.content-card.featured .card-img { aspect-ratio: 4/3; margin-bottom: 0; }
-.content-card.featured .card-title-text { font-size: clamp(1.5rem, 2.5vw, 2.2rem); }
+.content-card.featured:hover { background: none; }
+.content-card.featured:hover .card-title-text { color: var(--ink-mid); }
+.content-card.featured .card-img { aspect-ratio: 16/9; margin-bottom: 0; flex-shrink: 0; }
+.content-card.featured .card-title-text { font-size: clamp(1.4rem, 2vw, 1.9rem); }
 
-/* Regular cards — 3 column */
+/* Regular cards — 3 col grid, separated from border */
 .cards-row {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  border-bottom: 1px solid var(--rule);
+  margin-top: 0;
 }
+.cards-row + .cards-row { border-top: 1px solid var(--rule); }
+
 .content-card {
-  padding: 2.5rem 2rem 2.5rem 0; border-right: 1px solid var(--rule);
+  padding: 2.5rem 2rem 2.5rem 0;
+  border-right: 1px solid var(--rule);
   transition: background 0.15s; cursor: pointer;
 }
 .content-card:last-child { border-right: none; padding-right: 0; }
 .content-card:first-child { padding-left: 0; }
 .content-card:hover { background: var(--bg-off); }
+
+/* Card without media — big title treatment */
+.content-card.no-media .card-title-text {
+  font-size: 1.35rem;
+  line-height: 1.18;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+.content-card.no-media.featured .card-title-text {
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+}
 
 .card-meta { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
 .card-type {
@@ -381,22 +422,84 @@ nav {
   width: 100%; aspect-ratio: 16/9; background: var(--bg-off); margin-bottom: 1.25rem;
   overflow: hidden; position: relative;
 }
-.card-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); transition: transform 0.4s ease; }
-.content-card:hover .card-img img { transform: scale(1.03); }
-.card-img-placeholder {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #f0f0f0, #e5e5e5);
+.card-img img, .card-img video {
+  width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%);
+  transition: transform 0.4s ease; display: block;
 }
+.content-card:hover .card-img img,
+.content-card:hover .card-img video { transform: scale(1.03); }
+.card-img iframe { width: 100%; height: 100%; border: none; }
 .card-title-text {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.25rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; color: var(--ink);
+  font-size: 1.2rem; font-weight: 700; line-height: 1.22; margin-bottom: 0.75rem; color: var(--ink);
+  transition: color 0.15s;
 }
+.content-card:hover .card-title-text { color: var(--ink-mid); }
 .card-excerpt { font-size: 0.82rem; line-height: 1.7; color: var(--ink-muted); margin-bottom: 1.25rem; }
 .card-read {
   font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint);
   display: flex; align-items: center; gap: 0.4rem; transition: gap 0.15s, color 0.15s;
 }
 .content-card:hover .card-read { gap: 0.7rem; color: var(--ink); }
+
+/* ── ARTICLE READER VIEW ── */
+#view-article { background: var(--bg); }
+.article-nav {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.25rem var(--px); border-bottom: 1px solid var(--rule);
+}
+.article-back {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-faint); background: none; border: 1px solid var(--rule);
+  padding: 0.5rem 0.9rem; cursor: pointer; font-family: 'Instrument Sans', sans-serif;
+  transition: all 0.12s;
+}
+.article-back:hover { border-color: var(--ink); color: var(--ink); }
+.article-section-label {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-ghost);
+}
+.article-hero { padding: clamp(3rem, 6vw, 6rem) var(--px) 2rem; border-bottom: 1px solid var(--rule); }
+.article-hero-meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+.article-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; line-height: 1.05;
+  letter-spacing: -0.02em; margin-bottom: 1.5rem;
+}
+.article-hero-excerpt {
+  font-size: 1.05rem; line-height: 1.75; color: var(--ink-soft); max-width: 640px;
+}
+.article-media {
+  width: 100%; aspect-ratio: 16/9; overflow: hidden; background: var(--bg-off);
+  margin: 0 0 0 0;
+}
+.article-media img, .article-media video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%); display: block; }
+.article-media iframe { width: 100%; height: 100%; border: none; }
+.article-body {
+  max-width: 720px; margin: 0 auto;
+  padding: clamp(3rem, 5vw, 5rem) var(--px);
+  font-size: 1rem; line-height: 1.9; color: var(--ink-soft);
+}
+.article-body h1, .article-body h2, .article-body h3 {
+  font-family: 'Cormorant Garamond', serif; color: var(--ink); margin: 2rem 0 0.75rem; line-height: 1.15;
+}
+.article-body h1 { font-size: 2rem; }
+.article-body h2 { font-size: 1.5rem; }
+.article-body h3 { font-size: 1.2rem; }
+.article-body p { margin-bottom: 1.4rem; }
+.article-body strong { color: var(--ink); font-weight: 600; }
+.article-body em { font-style: italic; }
+.article-body a { color: var(--gold-dim); text-decoration: underline; }
+.article-body blockquote {
+  border-left: 3px solid var(--ink); padding-left: 1.5rem;
+  font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+  font-style: italic; color: var(--ink-mid); margin: 2rem 0;
+}
+.article-body ul, .article-body ol { padding-left: 1.5rem; margin-bottom: 1.4rem; }
+.article-body li { margin-bottom: 0.4rem; }
+.article-body img { width: 100%; margin: 1.5rem 0; }
+.article-body hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+.article-loading { text-align: center; padding: 6rem var(--px); color: var(--ink-ghost); font-size: 0.82rem; letter-spacing: 0.1em; }
 
 /* inner page bottom CTA */
 .inner-footer-cta {
@@ -425,7 +528,12 @@ footer {
 .footer-links { display: flex; gap: 2rem; list-style: none; }
 .footer-links a { font-size: 0.7rem; color: var(--ink-faint); text-decoration: none; cursor: pointer; transition: color 0.15s; }
 .footer-links a:hover { color: var(--ink); }
+.footer-social { display: flex; gap: 1.25rem; align-items: center; }
+.footer-social a { color: var(--ink-ghost); text-decoration: none; transition: color 0.15s; display: flex; }
+.footer-social a:hover { color: var(--ink); }
+.footer-social svg { width: 16px; height: 16px; fill: currentColor; }
 .footer-copy { font-size: 0.7rem; color: var(--ink-ghost); }
+.footer-bottom { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
 .built { font-size: 0.65rem; color: var(--ink-ghost); letter-spacing: 0.1em; font-style: italic; }
 
 /* ── RESPONSIVE ── */
@@ -436,8 +544,8 @@ footer {
   .content-card.featured { grid-template-columns: 1fr; }
   .content-card.featured .card-img { aspect-ratio: 16/9; }
   .cards-row { grid-template-columns: 1fr 1fr; }
-  .cards-row .content-card:last-child { border-right: none; }
-  .cards-row .content-card:nth-child(odd):not(:last-child) { border-right: 1px solid var(--rule); }
+  .cards-row .content-card:nth-child(2) { border-right: none; }
+  .cards-row .content-card:nth-child(3) { border-top: 1px solid var(--rule); padding-top: 2rem; border-right: none; grid-column: 1 / -1; }
 }
 @media (max-width: 900px) {
   :root { --px: clamp(2rem, 6vw, 4rem); }
@@ -447,6 +555,8 @@ footer {
   .stat:nth-child(2) { border-right: none; }
   .stat:nth-child(3) { border-top: 1px solid var(--rule); border-right: none; }
   nav .nav-links { display: none; }
+  nav .nav-btn { display: none; }
+  .nav-hamburger { display: flex; }
 }
 @media (max-width: 600px) {
   :root { --px: 1.5rem; }
@@ -454,8 +564,13 @@ footer {
   .stat, .service-item, .explore-card { border-right: none; }
   .hero-right { min-height: 80vw; }
   .cards-row { grid-template-columns: 1fr; }
-  .cards-row .content-card { border-right: none; border-bottom: 1px solid var(--rule); padding: 2rem 0; }
+  .cards-row .content-card { border-right: none; border-top: 1px solid var(--rule); padding: 2rem 0; }
+  .cards-row .content-card:nth-child(3) { grid-column: auto; }
   .inner-footer-cta { flex-direction: column; }
+  .content-card.featured { grid-template-columns: 1fr; }
+  .footer-social { display: none; }
+  footer { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+  .footer-bottom { align-items: flex-start; }
 }
 
 /* ── DYNAMIC CONTENT STATES ── */
@@ -484,8 +599,38 @@ footer {
     <li><a data-route="keynotes">Keynotes</a></li>
     <li><a data-route="perspective">Perspective</a></li>
   </ul>
-  <a class="nav-btn" data-route="home" data-anchor="explore">Book a 1:1</a>
+  <a class="nav-btn" href="YOUR_BOOKING_LINK_HERE" target="_blank" rel="noopener">Book a 1:1</a>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile fullscreen menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <ul class="mobile-menu-links">
+    <li><a data-route="projects" data-mobile-nav>Projects</a></li>
+    <li><a data-route="keynotes" data-mobile-nav>Keynotes</a></li>
+    <li><a data-route="perspective" data-mobile-nav>Perspective</a></li>
+  </ul>
+  <a class="nav-btn" href="YOUR_BOOKING_LINK_HERE" target="_blank" rel="noopener">Book a 1:1</a>
+  <div class="mobile-social">
+    <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://twitter.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Twitter / X">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.732-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener" aria-label="YouTube">
+      <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </a>
+    <a href="https://facebook.com/YOUR_PAGE" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+  </div>
+</div>
 
 <!-- ════════ HOME ════════ -->
 <div class="view" id="view-home">
@@ -814,6 +959,37 @@ footer {
 </div><!-- /view-perspective -->
 
 
+<!-- ════════ ARTICLE READER VIEW ════════ -->
+<div class="view" id="view-article">
+  <div class="article-nav">
+    <button class="article-back" id="article-back-btn">← Back</button>
+    <span class="article-section-label" id="article-section-label"></span>
+  </div>
+  <div id="article-content">
+    <div class="article-loading">Loading…</div>
+  </div>
+  <footer>
+    <div class="footer-brand" data-route="home">Chief Eben Adjetey.</div>
+    <ul class="footer-links">
+      <li><a data-route="projects">Projects</a></li>
+      <li><a data-route="keynotes">Keynotes</a></li>
+      <li><a data-route="perspective">Perspective</a></li>
+    </ul>
+    <div class="footer-social">
+      <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://twitter.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.732-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      <a href="https://facebook.com/YOUR_PAGE" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Chief &amp; Company. All rights reserved.</div>
+      <div class="built">Built with formidability.</div>
+    </div>
+  </footer>
+</div>
+
+
 <!-- ════════ SHARED FOOTER ════════ -->
 <footer id="main-footer">
   <div class="footer-brand" data-route="home">Chief Eben Adjetey.</div>
@@ -822,7 +998,14 @@ footer {
     <li><a data-route="keynotes">Keynotes</a></li>
     <li><a data-route="perspective">Perspective</a></li>
   </ul>
-  <div>
+  <div class="footer-social">
+    <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 .774v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <a href="https://twitter.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.732-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+    <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    <a href="https://facebook.com/YOUR_PAGE" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+  </div>
+  <div class="footer-bottom">
     <div class="footer-copy">© 2026 Chief &amp; Company. All rights reserved.</div>
     <div class="built">Built with formidability.</div>
   </div>
@@ -831,34 +1014,40 @@ footer {
 
 <script>
 // ════════════════════════════════════════
-// ROUTER — hash-based, no pushState errors
+// ROUTER
 // ════════════════════════════════════════
-const ROUTES = ['home','projects','keynotes','perspective'];
+const ROUTES = ['home','projects','keynotes','perspective','article'];
+let _previousSection = 'perspective';
 
 function navigate(route, anchor) {
   if (!ROUTES.includes(route)) route = 'home';
 
-  // swap views
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.getElementById('view-' + route).classList.add('active');
+  const viewEl = document.getElementById('view-' + route);
+  if (viewEl) viewEl.classList.add('active');
 
-  // update hash (safe in any environment)
-  const hash = route === 'home' ? '' : '#/' + route;
+  // show/hide main footer (article view has its own footer)
+  const mainFooter = document.getElementById('main-footer');
+  if (mainFooter) mainFooter.style.display = route === 'article' ? 'none' : '';
+
+  const hash = (route === 'home') ? '' : '#/' + route;
   if (window.location.hash !== hash) {
     window.history.replaceState({ route }, '', window.location.pathname + (hash || ' ').trimEnd());
-    // use replaceState to avoid pushState cross-origin errors in file:// / sandboxed iframes
   }
 
-  // page title
-  const titles = { home: 'Chief Eben Adjetey — Be Formidable.', projects: 'Projects — Chief Eben Adjetey', keynotes: 'Keynotes — Chief Eben Adjetey', perspective: 'Perspective — Chief Eben Adjetey' };
-  document.title = titles[route];
+  const titles = {
+    home: 'Chief Eben Adjetey — Be Formidable.',
+    projects: 'Projects — Chief Eben Adjetey',
+    keynotes: 'Keynotes — Chief Eben Adjetey',
+    perspective: 'Perspective — Chief Eben Adjetey',
+    article: document.title,
+  };
+  if (route !== 'article') document.title = titles[route];
 
-  // active nav link
-  document.querySelectorAll('.nav-links a[data-route]').forEach(a => {
+  document.querySelectorAll('.nav-links a[data-route], .mobile-menu-links a[data-route]').forEach(a => {
     a.classList.toggle('active', a.dataset.route === route && route !== 'home');
   });
 
-  // scroll
   if (anchor) {
     setTimeout(() => {
       const el = document.getElementById(anchor);
@@ -868,7 +1057,6 @@ function navigate(route, anchor) {
     window.scrollTo(0, 0);
   }
 
-  // load dynamic content for content sections
   if (typeof SECTION_MAP !== 'undefined' && SECTION_MAP[route]) {
     loadSection(route);
   }
@@ -880,19 +1068,42 @@ function routeFromHash() {
   return (m && ROUTES.includes(m[1])) ? m[1] : 'home';
 }
 
-// intercept all data-route clicks
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-route]');
   if (!el) return;
+  // Don't intercept external links
+  if (el.tagName === 'A' && el.href && !el.dataset.route) return;
   e.preventDefault();
+  closeMobileMenu();
   navigate(el.dataset.route || 'home', el.dataset.anchor || null);
 });
 
-// browser back/forward
 window.addEventListener('hashchange', () => navigate(routeFromHash()));
 
 // ════════════════════════════════════════
-// FILTER — for inner page cards
+// MOBILE MENU
+// ════════════════════════════════════════
+const hamburger = document.getElementById('nav-hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+function closeMobileMenu() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+
+document.querySelectorAll('[data-mobile-nav]').forEach(el => {
+  el.addEventListener('click', closeMobileMenu);
+});
+
+// ════════════════════════════════════════
+// FILTER — inner page cards
 // ════════════════════════════════════════
 document.addEventListener('click', e => {
   const btn = e.target.closest('.filter-btn');
@@ -904,7 +1115,6 @@ document.addEventListener('click', e => {
   bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  // featured card
   const featured = grid.querySelector('.content-card.featured');
   if (featured) {
     if (filter === 'all') { featured.style.display = ''; }
@@ -914,7 +1124,6 @@ document.addEventListener('click', e => {
     }
   }
 
-  // rows
   grid.querySelectorAll('.cards-row').forEach(row => {
     let anyVisible = false;
     row.querySelectorAll('.content-card').forEach(card => {
@@ -931,7 +1140,7 @@ document.addEventListener('click', e => {
 });
 
 // ════════════════════════════════════════
-// HERO SLIDESHOW — no dots, no controls
+// HERO SLIDESHOW
 // ════════════════════════════════════════
 (function initSlideshow() {
   const slides = document.querySelectorAll('#hero-slideshow .slide');
@@ -947,8 +1156,6 @@ document.addEventListener('click', e => {
 // ════════════════════════════════════════
 // CONTENT ENGINE — GitHub fetch + render
 // ════════════════════════════════════════
-
-// ── CONFIG: set your GitHub username and repo here ──
 const CONTENT_CONFIG = {
   username: 'ebenadjetey',
   repo:     'Chief-EBA-Website',
@@ -956,15 +1163,13 @@ const CONTENT_CONFIG = {
 };
 
 const SECTION_MAP = {
-  projects:    { grid: 'projects-grid',    path: 'content/projects',    readLabel: 'Read the project' },
-  keynotes:    { grid: 'keynotes-grid',    path: 'content/keynotes',    readLabel: 'Read more'         },
-  perspective: { grid: 'perspective-grid', path: 'content/perspective', readLabel: 'Read the perspective' },
+  projects:    { grid: 'projects-grid',    path: 'content/projects',    label: 'Projects',    readLabel: 'Read the project' },
+  keynotes:    { grid: 'keynotes-grid',    path: 'content/keynotes',    label: 'Keynotes',    readLabel: 'Read more' },
+  perspective: { grid: 'perspective-grid', path: 'content/perspective', label: 'Perspective', readLabel: 'Read the perspective' },
 };
 
-// Cache so we don't re-fetch on every visit within a session
 const _cache = {};
 
-// Parse frontmatter from a raw markdown string
 function parseFrontmatter(raw) {
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!m) return { meta: {}, body: raw };
@@ -976,123 +1181,224 @@ function parseFrontmatter(raw) {
   return { meta, body: raw.slice(m[0].length).trim() };
 }
 
-// Format a date string into "Month YYYY"
 function fmtDate(d) {
   if (!d) return '';
-  try {
-    return new Date(d).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
-  } catch { return d; }
+  try { return new Date(d).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }); }
+  catch { return d; }
 }
 
-// Capitalise first letter of a string
 function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
 
-// The SVG placeholder icon used in every card
-const CARD_SVG = `<svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-  <rect x="4" y="4" width="24" height="24" rx="3" stroke="#ccc" stroke-width="1.5" fill="none"/>
-  <path d="M10 16h12M10 21h7" stroke="#ccc" stroke-width="1.5" stroke-linecap="round"/>
-</svg>`;
+// Render media block — supports image URL, video URL, or YouTube embed
+function renderMedia(meta) {
+  const url = (meta.image || meta.video || meta.youtube || '').trim();
+  if (!url) return '';
+  if (meta.youtube || url.includes('youtube.com') || url.includes('youtu.be')) {
+    let videoId = '';
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
+    if (m) videoId = m[1];
+    const src = videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+    return `<div class="card-img"><iframe src="${src}" allowfullscreen loading="lazy"></iframe></div>`;
+  }
+  if (meta.video || /\.(mp4|webm|ogg)(\?|$)/i.test(url)) {
+    return `<div class="card-img"><video src="${url}" muted loop playsinline preload="metadata"></video></div>`;
+  }
+  return `<div class="card-img"><img src="${url}" alt="${meta.title || ''}" loading="lazy"></div>`;
+}
 
-// Build one card's HTML
-function buildCard(meta, slug, readLabel, isFeatured) {
+// Build card HTML
+function buildCard(meta, slug, section, isFeatured) {
+  const cfg = SECTION_MAP[section];
   const cat = (meta.category || '').trim();
   const label = cap(cat.split(' ')[0]);
   const dateStr = fmtDate(meta.date);
+  const hasMedia = !!(meta.image || meta.video || meta.youtube);
+  const mediaHtml = renderMedia(meta);
+  const noMediaClass = hasMedia ? '' : ' no-media';
 
   if (isFeatured) {
     return `
-    <div class="content-card featured" data-category="${cat}" data-slug="${slug}">
-      <div class="card-img"><div class="card-img-placeholder">${CARD_SVG}</div></div>
+    <div class="content-card featured${noMediaClass}" data-category="${cat}" data-slug="${slug}" data-section="${section}">
+      ${mediaHtml}
       <div>
         <div class="card-meta"><span class="card-type">${label}</span><span class="card-date">${dateStr}</span></div>
         <div class="card-title-text">${meta.title || slug}</div>
         <p class="card-excerpt">${meta.excerpt || ''}</p>
-        <div class="card-read">${readLabel} →</div>
+        <div class="card-read">${cfg.readLabel} →</div>
       </div>
     </div>`;
   }
 
   return `
-  <div class="content-card" data-category="${cat}" data-slug="${slug}">
+  <div class="content-card${noMediaClass}" data-category="${cat}" data-slug="${slug}" data-section="${section}">
     <div class="card-meta"><span class="card-type">${label}</span><span class="card-date">${dateStr}</span></div>
-    <div class="card-img"><div class="card-img-placeholder">${CARD_SVG}</div></div>
+    ${mediaHtml}
     <div class="card-title-text">${meta.title || slug}</div>
     <p class="card-excerpt">${meta.excerpt || ''}</p>
-    <div class="card-read">${readLabel} →</div>
+    <div class="card-read">${cfg.readLabel} →</div>
   </div>`;
 }
 
-// Fetch all .md files for a section and render into the grid
 async function loadSection(section) {
   const cfg = SECTION_MAP[section];
   if (!cfg) return;
   const grid = document.getElementById(cfg.grid);
   if (!grid) return;
 
-  // Already cached?
-  if (_cache[section]) { renderGrid(grid, _cache[section], cfg.readLabel); return; }
+  if (_cache[section]) { renderGrid(grid, _cache[section], section); return; }
 
   grid.innerHTML = `<div class="cards-loading">Loading…</div>`;
 
   const { username, repo, branch } = CONTENT_CONFIG;
-  const apiBase = `https://api.github.com/repos/${username}/${repo}/contents/${cfg.path}?ref=${branch}`;
+  const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${cfg.path}?ref=${branch}`;
 
   try {
-    const listRes = await fetch(apiBase);
+    const listRes = await fetch(apiUrl);
     if (!listRes.ok) throw new Error(`GitHub ${listRes.status}`);
     const files = await listRes.json();
-    const mdFiles = files.filter(f => f.name.endsWith('.md'));
+    const mdFiles = Array.isArray(files) ? files.filter(f => f.name.endsWith('.md')) : [];
 
     if (!mdFiles.length) {
       grid.innerHTML = `<div class="cards-empty">Nothing published yet.</div>`;
       return;
     }
 
-    // Fetch all files in parallel
     const entries = await Promise.all(mdFiles.map(async f => {
       const r = await fetch(f.download_url);
       const raw = await r.text();
-      const { meta } = parseFrontmatter(raw);
-      return { meta, slug: f.name.replace('.md', '') };
+      const { meta, body } = parseFrontmatter(raw);
+      return { meta, body, slug: f.name.replace('.md', ''), downloadUrl: f.download_url };
     }));
 
-    // Sort by date descending
     entries.sort((a, b) => new Date(b.meta.date || 0) - new Date(a.meta.date || 0));
-
     _cache[section] = entries;
-    renderGrid(grid, entries, cfg.readLabel);
-
+    renderGrid(grid, entries, section);
   } catch(e) {
     grid.innerHTML = `<div class="cards-empty">Content unavailable — check back soon.</div>`;
-    console.warn('Content load error:', e);
+    console.warn('Content load error:', e.message);
   }
 }
 
-// Render entries into the grid
-function renderGrid(grid, entries, readLabel) {
+function renderGrid(grid, entries, section) {
   if (!entries.length) {
     grid.innerHTML = `<div class="cards-empty">Nothing published yet.</div>`;
     return;
   }
 
   let html = '';
+  const featuredIdx = entries.findIndex(e => e.meta.featured === 'true');
+  const fi = featuredIdx >= 0 ? featuredIdx : 0;
+  const featured = entries[fi];
+  html += buildCard(featured.meta, featured.slug, section, true);
 
-  // Featured = first entry with featured:true, or just first entry
-  const featuredIdx = entries.findIndex(e => e.meta.featured === 'true') ?? 0;
-  const featured = entries[featuredIdx] || entries[0];
-  html += buildCard(featured.meta, featured.slug, readLabel, true);
-
-  // Remaining entries in rows of 3
-  const rest = entries.filter((_, i) => i !== featuredIdx);
+  const rest = entries.filter((_, i) => i !== fi);
   for (let i = 0; i < rest.length; i += 3) {
-    const chunk = rest.slice(i, i + 3);
     html += `<div class="cards-row">`;
-    chunk.forEach(e => { html += buildCard(e.meta, e.slug, readLabel, false); });
+    rest.slice(i, i + 3).forEach(e => { html += buildCard(e.meta, e.slug, section, false); });
     html += `</div>`;
   }
 
   grid.innerHTML = html;
 }
+
+// ════════════════════════════════════════
+// ARTICLE READER
+// ════════════════════════════════════════
+function markdownToHtml(md) {
+  return md
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/^\> (.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/^---$/gm, '<hr>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>(\n|$))+/g, m => `<ul>${m}</ul>`)
+    .split(/\n\n+/)
+    .map(block => {
+      block = block.trim();
+      if (!block) return '';
+      if (/^<(h[1-6]|blockquote|ul|ol|hr|img)/.test(block)) return block;
+      return `<p>${block.replace(/\n/g, ' ')}</p>`;
+    })
+    .join('\n');
+}
+
+async function openArticle(slug, section) {
+  _previousSection = section;
+  const cfg = SECTION_MAP[section];
+  document.getElementById('article-section-label').textContent = cfg.label;
+  document.getElementById('article-back-btn').textContent = `← Back to ${cfg.label}`;
+  document.getElementById('article-content').innerHTML = `<div class="article-loading">Loading…</div>`;
+
+  navigate('article');
+
+  // Try cache first
+  const cached = (_cache[section] || []).find(e => e.slug === slug);
+  if (cached) { renderArticle(cached.meta, cached.body); return; }
+
+  // Otherwise fetch directly
+  const { username, repo, branch } = CONTENT_CONFIG;
+  const url = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/${cfg.path}/${slug}.md`;
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('Not found');
+    const raw = await r.text();
+    const { meta, body } = parseFrontmatter(raw);
+    renderArticle(meta, body);
+  } catch(e) {
+    document.getElementById('article-content').innerHTML = `<div class="article-loading">Could not load article.</div>`;
+  }
+}
+
+function renderArticle(meta, body) {
+  const dateStr = fmtDate(meta.date);
+  const cat = cap((meta.category || '').split(' ')[0]);
+  const mediaHtml = (() => {
+    const url = (meta.image || meta.video || meta.youtube || '').trim();
+    if (!url) return '';
+    if (meta.youtube || url.includes('youtube.com') || url.includes('youtu.be')) {
+      const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
+      const src = m ? `https://www.youtube.com/embed/${m[1]}` : url;
+      return `<div class="article-media"><iframe src="${src}" allowfullscreen loading="lazy"></iframe></div>`;
+    }
+    if (meta.video || /\.(mp4|webm|ogg)(\?|$)/i.test(url)) {
+      return `<div class="article-media"><video src="${url}" controls playsinline></video></div>`;
+    }
+    return `<div class="article-media"><img src="${url}" alt="${meta.title || ''}"></div>`;
+  })();
+
+  document.title = `${meta.title || 'Article'} — Chief Eben Adjetey`;
+  document.getElementById('article-content').innerHTML = `
+    <div class="article-hero">
+      <div class="article-hero-meta">
+        <span class="card-type">${cat}</span>
+        <span class="card-date">${dateStr}</span>
+      </div>
+      <h1 class="article-hero-title">${meta.title || ''}</h1>
+      ${meta.excerpt ? `<p class="article-hero-excerpt">${meta.excerpt}</p>` : ''}
+    </div>
+    ${mediaHtml}
+    <div class="article-body">${markdownToHtml(body)}</div>
+  `;
+}
+
+// Card click → open article
+document.addEventListener('click', e => {
+  const card = e.target.closest('.content-card[data-slug]');
+  if (!card) return;
+  const slug = card.dataset.slug;
+  const section = card.dataset.section;
+  if (slug && section) openArticle(slug, section);
+});
+
+// Back button
+document.getElementById('article-back-btn').addEventListener('click', () => {
+  navigate(_previousSection);
+});
 
 // ════════════════════════════════════════
 // INIT

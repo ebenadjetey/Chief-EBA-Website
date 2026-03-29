@@ -600,6 +600,18 @@ select.meta-input { cursor: pointer; }
             <textarea class="meta-input" id="meta-excerpt" placeholder="A short summary shown in the card…"></textarea>
           </div>
           <div class="meta-group">
+            <div class="meta-label">Media (optional)</div>
+            <input type="text" class="meta-input" id="meta-media" placeholder="Image URL, video URL, or YouTube link" />
+            <small style="font-size:0.7rem;color:var(--ink-faint);margin-top:3px;">Paste a direct image/video URL or a YouTube link.</small>
+          </div>
+          <div class="meta-group" style="flex-direction:row;align-items:center;gap:10px;padding:0.75rem 0;border-top:1px solid var(--rule-soft);">
+            <input type="checkbox" id="meta-featured" style="width:16px;height:16px;cursor:pointer;accent-color:var(--gold);" />
+            <div>
+              <div class="meta-label" style="margin-bottom:2px;">Feature this entry</div>
+              <small style="font-size:0.7rem;color:var(--ink-faint);">Pinned as the top card in this section.</small>
+            </div>
+          </div>
+          <div class="meta-group">
             <div class="meta-label">File name (slug)</div>
             <input type="text" class="meta-input" id="meta-slug" placeholder="my-article-slug" />
             <small style="font-size:0.7rem;color:var(--ink-faint);margin-top:3px;">Auto-generated from title. No spaces.</small>
@@ -703,8 +715,17 @@ async function ghDeleteFile(filePath, sha, message) {
 // ════════════════════════════════════════
 // MARKDOWN FRONTMATTER
 // ════════════════════════════════════════
-function buildMarkdown({ title, date, category, excerpt }, body) {
-  return `---\ntitle: "${title}"\ndate: "${date}"\ncategory: "${category}"\nexcerpt: "${excerpt}"\n---\n\n${body}`;
+function buildMarkdown({ title, date, category, excerpt, featured, media }, body) {
+  let fm = `---\ntitle: "${title}"\ndate: "${date}"\ncategory: "${category}"\nexcerpt: "${excerpt}"\nfeatured: "${featured ? 'true' : 'false'}"`;
+  if (media) {
+    const isYT = media.includes('youtube.com') || media.includes('youtu.be');
+    const isVideo = /\.(mp4|webm|ogg)/i.test(media);
+    if (isYT) fm += `\nyoutube: "${media}"`;
+    else if (isVideo) fm += `\nvideo: "${media}"`;
+    else fm += `\nimage: "${media}"`;
+  }
+  fm += `\n---\n\n${body}`;
+  return fm;
 }
 
 function parseFrontmatter(raw) {
@@ -869,10 +890,8 @@ function renderList(section) {
     div.className = 'entry-item';
     div.innerHTML = `
       <div class="entry-info">
-        <div class="entry-title">${slug.replace(/-/g, ' ')}</div>
-        <div class="entry-meta">
-          <span>${file.name}</span>
-        </div>
+        <div class="entry-title" id="title-${slug}">${slug.replace(/-/g, ' ')}</div>
+        <div class="entry-meta"><span>${file.name}</span></div>
       </div>
       <div class="entry-actions">
         <button class="btn-sm" data-action="edit" data-path="${file.path}" data-sha="${file.sha}">Edit</button>
@@ -880,6 +899,12 @@ function renderList(section) {
       </div>
     `;
     area.appendChild(div);
+    // Fetch real title async
+    fetch(file.download_url).then(r => r.text()).then(raw => {
+      const { meta } = parseFrontmatter(raw);
+      const el = document.getElementById(`title-${slug}`);
+      if (el && meta.title) el.textContent = meta.title + (meta.featured === 'true' ? ' ★' : '');
+    }).catch(() => {});
   });
 }
 
@@ -926,6 +951,8 @@ async function openEditor(filePath, sha) {
     document.getElementById('meta-title').value = meta.title || '';
     document.getElementById('meta-date').value = meta.date || '';
     document.getElementById('meta-excerpt').value = meta.excerpt || '';
+    document.getElementById('meta-featured').checked = meta.featured === 'true';
+    document.getElementById('meta-media').value = meta.youtube || meta.video || meta.image || '';
     document.getElementById('meta-slug').value = filePath.split('/').pop().replace('.md', '');
     document.getElementById('md-editor').value = body;
     populateCategories(meta.category);
@@ -942,6 +969,8 @@ function openNewEditor() {
   document.getElementById('meta-title').value = '';
   document.getElementById('meta-date').value = today;
   document.getElementById('meta-excerpt').value = '';
+  document.getElementById('meta-featured').checked = false;
+  document.getElementById('meta-media').value = '';
   document.getElementById('meta-slug').value = '';
   document.getElementById('md-editor').value = '';
   document.getElementById('publish-status').textContent = '';
@@ -972,13 +1001,15 @@ document.getElementById('btn-publish').addEventListener('click', async () => {
   const date = document.getElementById('meta-date').value.trim();
   const category = document.getElementById('meta-category').value.trim();
   const excerpt = document.getElementById('meta-excerpt').value.trim();
+  const featured = document.getElementById('meta-featured').checked;
+  const media = document.getElementById('meta-media').value.trim();
   const slug = document.getElementById('meta-slug').value.trim() || slugify(title);
   const body = document.getElementById('md-editor').value.trim();
 
   if (!title) { showToast('Please enter a title', 'danger'); return; }
   if (!slug) { showToast('Please enter a slug', 'danger'); return; }
 
-  const content = buildMarkdown({ title, date, category, excerpt }, body);
+  const content = buildMarkdown({ title, date, category, excerpt, featured, media }, body);
   const folderPath = SECTIONS[currentSection].path;
   const filePath = `${folderPath}/${slug}.md`;
 
