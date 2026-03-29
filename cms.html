@@ -601,8 +601,17 @@ select.meta-input { cursor: pointer; }
           </div>
           <div class="meta-group">
             <div class="meta-label">Media (optional)</div>
-            <input type="text" class="meta-input" id="meta-media" placeholder="Image URL, video URL, or YouTube link" />
-            <small style="font-size:0.7rem;color:var(--ink-faint);margin-top:3px;">Paste a direct image/video URL or a YouTube link.</small>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <label style="font-size:0.7rem;color:var(--ink-faint);">Upload from your PC</label>
+              <input type="file" id="meta-media-file" accept="image/*,video/mp4,video/webm"
+                style="font-size:0.75rem;color:var(--ink-soft);cursor:pointer;" />
+              <div style="font-size:0.7rem;color:var(--ink-ghost);text-align:center;padding:2px 0;">— or —</div>
+              <label style="font-size:0.7rem;color:var(--ink-faint);">Paste a URL or YouTube link</label>
+              <input type="text" class="meta-input" id="meta-media" placeholder="https://… or YouTube link" />
+            </div>
+            <small style="font-size:0.68rem;color:var(--ink-ghost);margin-top:4px;line-height:1.4;">
+              Uploaded images are stored in <code>content/media/</code> in your GitHub repo.
+            </small>
           </div>
           <div class="meta-group" style="flex-direction:row;align-items:center;gap:10px;padding:0.75rem 0;border-top:1px solid var(--rule-soft);">
             <input type="checkbox" id="meta-featured" style="width:16px;height:16px;cursor:pointer;accent-color:var(--gold);" />
@@ -712,9 +721,33 @@ async function ghDeleteFile(filePath, sha, message) {
   if (!r.ok) throw new Error(`GitHub error ${r.status}`);
 }
 
-// ════════════════════════════════════════
-// MARKDOWN FRONTMATTER
-// ════════════════════════════════════════
+// Upload a file to GitHub and return its raw URL
+async function ghUploadMedia(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const base64 = reader.result.split(',')[1];
+        const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '-')}`;
+        const filePath = `content/media/${filename}`;
+        const r = await fetch(`${ghBase()}/contents/${filePath}`, {
+          method: 'PUT',
+          headers: ghHeaders(),
+          body: JSON.stringify({
+            message: `Upload media: ${filename}`,
+            content: base64,
+          }),
+        });
+        if (!r.ok) { const e = await r.json(); throw new Error(e.message); }
+        const data = await r.json();
+        // Return the raw GitHub URL
+        resolve(`https://raw.githubusercontent.com/${GH.username}/${GH.repo}/main/${filePath}`);
+      } catch(e) { reject(e); }
+    };
+    reader.onerror = () => reject(new Error('File read failed'));
+    reader.readAsDataURL(file);
+  });
+}
 function buildMarkdown({ title, date, category, excerpt, featured, media }, body) {
   let fm = `---\ntitle: "${title}"\ndate: "${date}"\ncategory: "${category}"\nexcerpt: "${excerpt}"\nfeatured: "${featured ? 'true' : 'false'}"`;
   if (media) {
@@ -971,6 +1004,7 @@ function openNewEditor() {
   document.getElementById('meta-excerpt').value = '';
   document.getElementById('meta-featured').checked = false;
   document.getElementById('meta-media').value = '';
+  document.getElementById('meta-media-file').value = '';
   document.getElementById('meta-slug').value = '';
   document.getElementById('md-editor').value = '';
   document.getElementById('publish-status').textContent = '';
@@ -1002,16 +1036,13 @@ document.getElementById('btn-publish').addEventListener('click', async () => {
   const category = document.getElementById('meta-category').value.trim();
   const excerpt = document.getElementById('meta-excerpt').value.trim();
   const featured = document.getElementById('meta-featured').checked;
-  const media = document.getElementById('meta-media').value.trim();
+  let media = document.getElementById('meta-media').value.trim();
+  const mediaFile = document.getElementById('meta-media-file').files[0];
   const slug = document.getElementById('meta-slug').value.trim() || slugify(title);
   const body = document.getElementById('md-editor').value.trim();
 
   if (!title) { showToast('Please enter a title', 'danger'); return; }
   if (!slug) { showToast('Please enter a slug', 'danger'); return; }
-
-  const content = buildMarkdown({ title, date, category, excerpt, featured, media }, body);
-  const folderPath = SECTIONS[currentSection].path;
-  const filePath = `${folderPath}/${slug}.md`;
 
   const statusEl = document.getElementById('publish-status');
   const btn = document.getElementById('btn-publish');
@@ -1021,6 +1052,15 @@ document.getElementById('btn-publish').addEventListener('click', async () => {
   statusEl.textContent = '';
 
   try {
+    // Upload local file first if selected
+    if (mediaFile) {
+      btn.textContent = 'Uploading media…';
+      media = await ghUploadMedia(mediaFile);
+    }
+
+    const content = buildMarkdown({ title, date, category, excerpt, featured, media }, body);
+    const folderPath = SECTIONS[currentSection].path;
+    const filePath = `${folderPath}/${slug}.md`;
     const sha = editingFile?.sha || null;
     const action = sha ? 'Update' : 'Add';
     await ghPutFile(filePath, content, sha, `${action} ${slug}.md via Content Studio`);
@@ -1029,8 +1069,8 @@ document.getElementById('btn-publish').addEventListener('click', async () => {
     statusEl.textContent = '✓ Published';
     showToast('Published to GitHub!', 'gold');
     editingFile = { path: filePath, sha: 'reload' };
+    document.getElementById('meta-media-file').value = '';
 
-    // Refresh sha
     setTimeout(async () => {
       try {
         const f = await ghGetFile(filePath);

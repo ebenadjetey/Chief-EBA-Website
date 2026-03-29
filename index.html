@@ -375,74 +375,117 @@ nav {
 /* ── CARD GRID ── */
 .card-grid { padding: 0 var(--px); }
 
-/* Featured card — horizontal, compact */
+/* ── FEATURED CARD — horizontal strip, constrained width ── */
 .content-card.featured {
-  display: grid; grid-template-columns: 340px 1fr; gap: 3rem; align-items: start;
-  padding: 3rem 0; border-bottom: 1px solid var(--rule); cursor: pointer;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  max-width: 860px;
+  margin: 0;
+  padding: 3rem 0;
+  transition: opacity 0.15s;
 }
-.content-card.featured:hover { background: none; }
-.content-card.featured:hover .card-title-text { color: var(--ink-mid); }
-.content-card.featured .card-img { aspect-ratio: 16/9; margin-bottom: 0; flex-shrink: 0; }
-.content-card.featured .card-title-text { font-size: clamp(1.4rem, 2vw, 1.9rem); }
+.content-card.featured:hover { opacity: 0.85; }
+.content-card.featured .card-img {
+  aspect-ratio: 4/3;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+.content-card.featured .card-text {
+  padding: 0 0 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.content-card.featured .card-title-text {
+  font-size: clamp(1.3rem, 1.8vw, 1.75rem);
+  margin-bottom: 0.75rem;
+}
+.content-card.featured .card-meta { margin-bottom: 0.75rem; }
 
-/* Regular cards — 3 col grid, separated from border */
+/* ── REGULAR CARDS — image top, text below ── */
 .cards-row {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--rule);
 }
-.cards-row + .cards-row { border-top: 1px solid var(--rule); }
-
 .content-card {
-  padding: 2.5rem 2rem 2.5rem 0;
   border-right: 1px solid var(--rule);
-  transition: background 0.15s; cursor: pointer;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
-.content-card:last-child { border-right: none; padding-right: 0; }
-.content-card:first-child { padding-left: 0; }
+.content-card:last-child { border-right: none; }
 .content-card:hover { background: var(--bg-off); }
 
-/* Card without media — big title treatment */
-.content-card.no-media .card-title-text {
-  font-size: 1.35rem;
-  line-height: 1.18;
-  margin-bottom: 1rem;
-  margin-top: 0.5rem;
+/* image fills top of card */
+.content-card:not(.featured) .card-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  flex-shrink: 0;
+  margin-bottom: 0;
 }
-.content-card.no-media.featured .card-title-text {
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+/* text area below image */
+.content-card:not(.featured) .card-text {
+  padding: 1.5rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.card-meta { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
-.card-type {
-  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--ink-faint); border: 1px solid var(--rule); padding: 0.2rem 0.6rem;
+/* no-media: image area hidden, more padding */
+.content-card.no-media:not(.featured) .card-img { display: none; }
+.content-card.no-media:not(.featured) .card-text { padding-top: 2rem; }
+.content-card.no-media:not(.featured) .card-title-text {
+  font-size: 1.35rem;
+  line-height: 1.18;
 }
-.card-date { font-size: 0.62rem; color: var(--ink-ghost); letter-spacing: 0.05em; }
+
+/* shared card elements */
+.card-meta {
+  display: flex; gap: 0.6rem; align-items: center; margin-bottom: 0.9rem;
+  flex-wrap: wrap;
+}
+.card-type {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  background: var(--gold-bg); color: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.3); padding: 0.25rem 0.65rem;
+}
+.card-date {
+  font-size: 0.62rem; color: var(--ink-ghost); letter-spacing: 0.08em; text-transform: uppercase;
+}
 .card-img {
-  width: 100%; aspect-ratio: 16/9; background: var(--bg-off); margin-bottom: 1.25rem;
-  overflow: hidden; position: relative;
+  overflow: hidden; background: var(--bg-off); position: relative;
 }
 .card-img img, .card-img video {
-  width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%);
-  transition: transform 0.4s ease; display: block;
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(10%); transition: transform 0.5s ease; display: block;
 }
 .content-card:hover .card-img img,
-.content-card:hover .card-img video { transform: scale(1.03); }
+.content-card:hover .card-img video { transform: scale(1.04); }
 .card-img iframe { width: 100%; height: 100%; border: none; }
 .card-title-text {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem; font-weight: 700; line-height: 1.22; margin-bottom: 0.75rem; color: var(--ink);
-  transition: color 0.15s;
+  font-size: 1.2rem; font-weight: 700; line-height: 1.22;
+  margin-bottom: 0.65rem; color: var(--ink); transition: color 0.15s;
 }
 .content-card:hover .card-title-text { color: var(--ink-mid); }
-.card-excerpt { font-size: 0.82rem; line-height: 1.7; color: var(--ink-muted); margin-bottom: 1.25rem; }
-.card-read {
-  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint);
-  display: flex; align-items: center; gap: 0.4rem; transition: gap 0.15s, color 0.15s;
+.card-excerpt {
+  font-size: 0.8rem; line-height: 1.7; color: var(--ink-muted);
+  margin-bottom: 1.25rem; flex: 1;
 }
-.content-card:hover .card-read { gap: 0.7rem; color: var(--ink); }
+.card-read {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-dim); display: flex; align-items: center; gap: 0.4rem;
+  transition: gap 0.15s, color 0.15s; margin-top: auto;
+}
+.content-card:hover .card-read { gap: 0.7rem; color: var(--gold); }
 
-/* ── ARTICLE READER VIEW ── */
+/* ── ARTICLE READER ── */
 #view-article { background: var(--bg); }
 .article-nav {
   display: flex; align-items: center; gap: 1rem;
@@ -459,47 +502,74 @@ nav {
   font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--ink-ghost);
 }
-.article-hero { padding: clamp(3rem, 6vw, 6rem) var(--px) 2rem; border-bottom: 1px solid var(--rule); }
-.article-hero-meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+
+/* Two-column article header */
+.article-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 420px;
+  border-bottom: 1px solid var(--rule);
+}
+.article-header-media {
+  overflow: hidden; background: var(--bg-off);
+  border-right: 1px solid var(--rule);
+}
+.article-header-media img,
+.article-header-media video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%); display: block; }
+.article-header-media iframe { width: 100%; height: 100%; border: none; }
+.article-header-text {
+  padding: clamp(2.5rem, 5vw, 4rem) var(--px);
+  display: flex; flex-direction: column; justify-content: center;
+}
+/* No-media article: header is single column */
+.article-header.no-media {
+  grid-template-columns: 1fr;
+  min-height: auto;
+}
+.article-header.no-media .article-header-media { display: none; }
+.article-header.no-media .article-header-text {
+  border-right: none;
+  max-width: 760px;
+  padding: clamp(3rem, 6vw, 6rem) var(--px);
+}
+.article-hero-meta { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; }
 .article-hero-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; line-height: 1.05;
-  letter-spacing: -0.02em; margin-bottom: 1.5rem;
+  font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; line-height: 1.08;
+  letter-spacing: -0.02em; margin-bottom: 1.25rem;
 }
 .article-hero-excerpt {
-  font-size: 1.05rem; line-height: 1.75; color: var(--ink-soft); max-width: 640px;
+  font-size: 0.95rem; line-height: 1.78; color: var(--ink-soft);
 }
-.article-media {
-  width: 100%; aspect-ratio: 16/9; overflow: hidden; background: var(--bg-off);
-  margin: 0 0 0 0;
-}
-.article-media img, .article-media video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%); display: block; }
-.article-media iframe { width: 100%; height: 100%; border: none; }
 .article-body {
   max-width: 720px; margin: 0 auto;
   padding: clamp(3rem, 5vw, 5rem) var(--px);
   font-size: 1rem; line-height: 1.9; color: var(--ink-soft);
 }
 .article-body h1, .article-body h2, .article-body h3 {
-  font-family: 'Cormorant Garamond', serif; color: var(--ink); margin: 2rem 0 0.75rem; line-height: 1.15;
+  font-family: 'Cormorant Garamond', serif; color: var(--ink);
+  margin: 2.5rem 0 0.75rem; line-height: 1.12;
 }
-.article-body h1 { font-size: 2rem; }
-.article-body h2 { font-size: 1.5rem; }
-.article-body h3 { font-size: 1.2rem; }
-.article-body p { margin-bottom: 1.4rem; }
+.article-body h1 { font-size: 2.2rem; }
+.article-body h2 { font-size: 1.65rem; }
+.article-body h3 { font-size: 1.25rem; }
+.article-body p { margin-bottom: 1.5rem; }
 .article-body strong { color: var(--ink); font-weight: 600; }
 .article-body em { font-style: italic; }
 .article-body a { color: var(--gold-dim); text-decoration: underline; }
 .article-body blockquote {
-  border-left: 3px solid var(--ink); padding-left: 1.5rem;
-  font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
-  font-style: italic; color: var(--ink-mid); margin: 2rem 0;
+  border-left: 3px solid var(--gold); padding-left: 1.5rem;
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+  font-style: italic; color: var(--ink-mid); margin: 2.5rem 0;
 }
-.article-body ul, .article-body ol { padding-left: 1.5rem; margin-bottom: 1.4rem; }
-.article-body li { margin-bottom: 0.4rem; }
-.article-body img { width: 100%; margin: 1.5rem 0; }
-.article-body hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
-.article-loading { text-align: center; padding: 6rem var(--px); color: var(--ink-ghost); font-size: 0.82rem; letter-spacing: 0.1em; }
+.article-body ul, .article-body ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+.article-body li { margin-bottom: 0.5rem; }
+.article-body img { width: 100%; margin: 2rem 0; }
+.article-body hr { border: none; border-top: 1px solid var(--rule); margin: 3rem 0; }
+.article-loading {
+  text-align: center; padding: 6rem var(--px);
+  color: var(--ink-ghost); font-size: 0.82rem; letter-spacing: 0.1em;
+}
 
 /* inner page bottom CTA */
 .inner-footer-cta {
@@ -541,11 +611,11 @@ footer {
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-left { border-right: none; border-bottom: 1px solid var(--rule); justify-content: flex-start; padding-top: 6rem; }
   .hero-right { min-height: 55vw; }
-  .content-card.featured { grid-template-columns: 1fr; }
-  .content-card.featured .card-img { aspect-ratio: 16/9; }
+  .content-card.featured { grid-template-columns: 260px 1fr; max-width: 100%; }
   .cards-row { grid-template-columns: 1fr 1fr; }
   .cards-row .content-card:nth-child(2) { border-right: none; }
-  .cards-row .content-card:nth-child(3) { border-top: 1px solid var(--rule); padding-top: 2rem; border-right: none; grid-column: 1 / -1; }
+  .cards-row .content-card:nth-child(3) { border-top: 1px solid var(--rule); border-right: none; grid-column: 1 / -1; }
+  .article-header { min-height: 340px; }
 }
 @media (max-width: 900px) {
   :root { --px: clamp(2rem, 6vw, 4rem); }
@@ -557,6 +627,11 @@ footer {
   nav .nav-links { display: none; }
   nav .nav-btn { display: none; }
   .nav-hamburger { display: flex; }
+  .content-card.featured { grid-template-columns: 1fr; max-width: 100%; }
+  .content-card.featured .card-img { aspect-ratio: 16/9; }
+  .content-card.featured .card-text { padding: 1.5rem 0 0; }
+  .article-header { grid-template-columns: 1fr; min-height: auto; }
+  .article-header-media { aspect-ratio: 16/9; border-right: none; border-bottom: 1px solid var(--rule); }
 }
 @media (max-width: 600px) {
   :root { --px: 1.5rem; }
@@ -564,10 +639,9 @@ footer {
   .stat, .service-item, .explore-card { border-right: none; }
   .hero-right { min-height: 80vw; }
   .cards-row { grid-template-columns: 1fr; }
-  .cards-row .content-card { border-right: none; border-top: 1px solid var(--rule); padding: 2rem 0; }
+  .cards-row .content-card { border-right: none; border-top: 1px solid var(--rule); }
   .cards-row .content-card:nth-child(3) { grid-column: auto; }
   .inner-footer-cta { flex-direction: column; }
-  .content-card.featured { grid-template-columns: 1fr; }
   .footer-social { display: none; }
   footer { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
   .footer-bottom { align-items: flex-start; }
@@ -1217,10 +1291,11 @@ function buildCard(meta, slug, section, isFeatured) {
   const noMediaClass = hasMedia ? '' : ' no-media';
 
   if (isFeatured) {
+    // Featured: horizontal — image left, text right
     return `
     <div class="content-card featured${noMediaClass}" data-category="${cat}" data-slug="${slug}" data-section="${section}">
       ${mediaHtml}
-      <div>
+      <div class="card-text">
         <div class="card-meta"><span class="card-type">${label}</span><span class="card-date">${dateStr}</span></div>
         <div class="card-title-text">${meta.title || slug}</div>
         <p class="card-excerpt">${meta.excerpt || ''}</p>
@@ -1229,13 +1304,16 @@ function buildCard(meta, slug, section, isFeatured) {
     </div>`;
   }
 
+  // Regular: image on top, text below — all inside one box
   return `
   <div class="content-card${noMediaClass}" data-category="${cat}" data-slug="${slug}" data-section="${section}">
-    <div class="card-meta"><span class="card-type">${label}</span><span class="card-date">${dateStr}</span></div>
     ${mediaHtml}
-    <div class="card-title-text">${meta.title || slug}</div>
-    <p class="card-excerpt">${meta.excerpt || ''}</p>
-    <div class="card-read">${cfg.readLabel} →</div>
+    <div class="card-text">
+      <div class="card-meta"><span class="card-type">${label}</span><span class="card-date">${dateStr}</span></div>
+      <div class="card-title-text">${meta.title || slug}</div>
+      <p class="card-excerpt">${meta.excerpt || ''}</p>
+      <div class="card-read">${cfg.readLabel} →</div>
+    </div>
   </div>`;
 }
 
@@ -1357,31 +1435,35 @@ async function openArticle(slug, section) {
 function renderArticle(meta, body) {
   const dateStr = fmtDate(meta.date);
   const cat = cap((meta.category || '').split(' ')[0]);
-  const mediaHtml = (() => {
-    const url = (meta.image || meta.video || meta.youtube || '').trim();
-    if (!url) return '';
+  const url = (meta.image || meta.video || meta.youtube || '').trim();
+  const hasMedia = !!url;
+
+  let mediaInner = '';
+  if (hasMedia) {
     if (meta.youtube || url.includes('youtube.com') || url.includes('youtu.be')) {
       const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
       const src = m ? `https://www.youtube.com/embed/${m[1]}` : url;
-      return `<div class="article-media"><iframe src="${src}" allowfullscreen loading="lazy"></iframe></div>`;
+      mediaInner = `<iframe src="${src}" allowfullscreen loading="lazy"></iframe>`;
+    } else if (meta.video || /\.(mp4|webm|ogg)(\?|$)/i.test(url)) {
+      mediaInner = `<video src="${url}" controls playsinline></video>`;
+    } else {
+      mediaInner = `<img src="${url}" alt="${meta.title || ''}">`;
     }
-    if (meta.video || /\.(mp4|webm|ogg)(\?|$)/i.test(url)) {
-      return `<div class="article-media"><video src="${url}" controls playsinline></video></div>`;
-    }
-    return `<div class="article-media"><img src="${url}" alt="${meta.title || ''}"></div>`;
-  })();
+  }
 
   document.title = `${meta.title || 'Article'} — Chief Eben Adjetey`;
   document.getElementById('article-content').innerHTML = `
-    <div class="article-hero">
-      <div class="article-hero-meta">
-        <span class="card-type">${cat}</span>
-        <span class="card-date">${dateStr}</span>
+    <div class="article-header${hasMedia ? '' : ' no-media'}">
+      ${hasMedia ? `<div class="article-header-media">${mediaInner}</div>` : ''}
+      <div class="article-header-text">
+        <div class="article-hero-meta">
+          <span class="card-type">${cat}</span>
+          <span class="card-date">${dateStr}</span>
+        </div>
+        <h1 class="article-hero-title">${meta.title || ''}</h1>
+        ${meta.excerpt ? `<p class="article-hero-excerpt">${meta.excerpt}</p>` : ''}
       </div>
-      <h1 class="article-hero-title">${meta.title || ''}</h1>
-      ${meta.excerpt ? `<p class="article-hero-excerpt">${meta.excerpt}</p>` : ''}
     </div>
-    ${mediaHtml}
     <div class="article-body">${markdownToHtml(body)}</div>
   `;
 }
