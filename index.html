@@ -867,6 +867,11 @@ function navigate(route, anchor) {
   } else {
     window.scrollTo(0, 0);
   }
+
+  // load dynamic content for content sections
+  if (typeof SECTION_MAP !== 'undefined' && SECTION_MAP[route]) {
+    loadSection(route);
+  }
 }
 
 function routeFromHash() {
@@ -945,8 +950,8 @@ document.addEventListener('click', e => {
 
 // ── CONFIG: set your GitHub username and repo here ──
 const CONTENT_CONFIG = {
-  username: 'ebenadjetey',   // e.g. 'chiefeben'
-  repo:     'chief-eba-website',         // e.g. 'chief-eben-site'
+  username: 'ebenadjetey',
+  repo:     'Chief-EBA-Website',
   branch:   'main',
 };
 
@@ -1089,21 +1094,12 @@ function renderGrid(grid, entries, readLabel) {
   grid.innerHTML = html;
 }
 
-// Hook into the router: load content when a section view becomes active
-const _origNavigate = navigate;
-window._sectionLoaded = {};
-function navigate(route, anchor) {
-  _origNavigate(route, anchor);
-  if (SECTION_MAP[route] && !window._sectionLoaded[route]) {
-    window._sectionLoaded[route] = true;
-    loadSection(route);
-  }
-}
-
 // ════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════
-navigate(routeFromHash());
+const _initRoute = routeFromHash();
+navigate(_initRoute);
+if (SECTION_MAP[_initRoute]) loadSection(_initRoute);
 </script>
 </body>
 </html>
