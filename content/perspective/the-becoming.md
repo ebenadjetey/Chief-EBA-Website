@@ -23,8 +23,6 @@ Your full article body goes here, written in Markdown.
 
 https://www.youtube.com/watch?v=eqrfrDuN3jo
 
-
-<iframe width="680" height="800" src="https://www.youtube.com/embed/eqrfrDuN3jo" title="Watching A Man Change ( A Real Time Movie )" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" muted allowfullscreen></iframe>
-
+<iframe width="1193" height="671" src="https://www.youtube.com/embed/eqrfrDuN3jo" title="Watching A Man Change ( A Real Time Movie )" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 More content...
