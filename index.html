@@ -1578,6 +1578,7 @@ function navigate(route, anchor) {
     projects: 'Projects — Chief Eben Adjetey',
     keynotes: 'Keynotes — Chief Eben Adjetey',
     perspective: 'Perspective — Chief Eben Adjetey',
+    contact: 'Contact — Chief Eben Adjetey',
     article: document.title,
   };
   if (route !== 'article') document.title = titles[route];
@@ -2078,59 +2079,26 @@ document.getElementById('article-back-btn').addEventListener('click', () => {
 });
 
 // ════════════════════════════════════════
-// GITHUB SUBSCRIBER STORAGE
+// SUBSCRIBER / CONTACT STORAGE
+// Posts to /.netlify/functions/subscribe which:
+//   1. Writes to content/subscribers.json in GitHub (server-side token)
+//   2. Sends branded acknowledgement email to the submitter
+//   3. Sends new enquiry notification to Chief Eben (contact only)
 // ════════════════════════════════════════
-// All newsletter signups and contact form submissions are stored in
-// content/subscribers.json in your GitHub repo.
-// View, search, and download them from the CMS → Subscribers tab.
-const SUB_CONFIG = {
-  username: 'ebenadjetey',      // ← same as CONTENT_CONFIG
-  repo:     'Chief-EBA-Website', // ← same as CONTENT_CONFIG
-  branch:   'main',
-};
-const SUB_PATH = 'content/subscribers.json';
-
 async function writeSubscriber(record) {
-  // record: { name, email, source, message?, organisation?, interest? }
   record.date = new Date().toISOString();
   try {
-    const { username, repo, branch } = SUB_CONFIG;
-    const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${SUB_PATH}`;
-
-    // Fetch current file
-    let existing = [];
-    let sha = null;
-    const r = await fetch(`${apiUrl}?ref=${branch}`);
-    if (r.ok) {
-      const f = await r.json();
-      sha = f.sha;
-      const raw = decodeURIComponent(escape(atob(f.content.replace(/\n/g,''))));
-      existing = JSON.parse(raw);
-    }
-
-    existing.push(record);
-    const json = JSON.stringify(existing, null, 2);
-    const body = {
-      message: `Add subscriber: ${record.email}`,
-      content: btoa(unescape(encodeURIComponent(json))),
-      branch,
-    };
-    if (sha) body.sha = sha;
-
-    await fetch(apiUrl, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        // Note: writing to GitHub from the browser requires a token.
-        // For a public-facing site, use a serverless function (Netlify Function)
-        // to proxy this write so the token stays server-side.
-        // See instructions in the README or ask in the CMS.
-      },
-      body: JSON.stringify(body),
+    const res = await fetch('/.netlify/functions/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(record),
     });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.warn('Subscriber write failed:', err.error || res.status);
+    }
   } catch(e) {
-    // Fail silently on the frontend — data integrity handled server-side
-    console.warn('Subscriber write failed:', e.message);
+    console.warn('Subscriber network error:', e.message);
   }
 }
 
@@ -2171,7 +2139,7 @@ document.addEventListener('click', async e => {
 
 // ════════════════════════════════════════
 // INIT
-// ═══════════════════════════════════�
+// ═══════════════════════════════════�
 const _initRoute = routeFromHash();
 navigate(_initRoute);
 if (typeof SECTION_MAP !== 'undefined' && SECTION_MAP[_initRoute]) loadSection(_initRoute);
