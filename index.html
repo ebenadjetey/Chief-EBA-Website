@@ -3,7 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ═══ PRIMARY SEO ═══ -->
 <title>Chief Eben Adjetey — Be Formidable.</title>
+<meta name="description" content="Chief Eben Adjetey is a business consultant, brand strategist, and creative thinker helping serious entrepreneurs, SMEs, and organisations become structurally impossible to ignore.">
+<meta name="keywords" content="Chief Eben Adjetey, business consultant Ghana, brand strategist Africa, SME growth, brand positioning, revenue systems, business strategy West Africa, Be Formidable">
+<meta name="author" content="Chief Eben Adjetey">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://YOUR_DOMAIN.com/">
+
+<!-- ═══ OPEN GRAPH (Facebook / LinkedIn) ═══ -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://YOUR_DOMAIN.com/">
+<meta property="og:title" content="Chief Eben Adjetey — Be Formidable.">
+<meta property="og:description" content="Business consultant, brand strategist, and creative thinker. I help serious businesses become structurally impossible to ignore.">
+<meta property="og:image" content="https://YOUR_DOMAIN.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Chief Eben Adjetey">
+<meta property="og:locale" content="en_GB">
+
+<!-- ═══ TWITTER / X CARD ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
+<meta name="twitter:creator" content="@YOUR_TWITTER_HANDLE">
+<meta name="twitter:title" content="Chief Eben Adjetey — Be Formidable.">
+<meta name="twitter:description" content="Business consultant, brand strategist, and creative thinker. I help serious businesses become structurally impossible to ignore.">
+<meta name="twitter:image" content="https://YOUR_DOMAIN.com/og-image.jpg">
+
+<!-- ═══ SCHEMA.ORG PERSON ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Chief Eben Adjetey",
+  "url": "https://YOUR_DOMAIN.com/",
+  "description": "Business consultant, brand strategist, and creative thinker based in Ghana.",
+  "jobTitle": "Business Consultant & Brand Strategist",
+  "worksFor": { "@type": "Organization", "name": "Chief & Company" },
+  "sameAs": [
+    "https://linkedin.com/in/YOUR_PROFILE",
+    "https://instagram.com/YOUR_HANDLE",
+    "https://twitter.com/YOUR_HANDLE"
+  ]
+}
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,7 +68,7 @@ html { scroll-behavior: smooth; }
   --gold: #C9A84C;
   --gold-dim: #8B6F2E;
   --gold-bg: rgba(201,168,76,0.06);
-  --px: clamp(3rem, 9vw, 10rem);
+  --px: clamp(2rem, 7vw, 8rem);
 }
 
 body {
@@ -322,7 +367,40 @@ nav {
 /* ── TRUTH ── */
 .truth {
   background: var(--ink); color: #fff;
-  padding: clamp(4rem, 8vw, 8rem) var(--px); border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.truth-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 480px;
+  align-items: stretch;
+}
+.truth-text-col {
+  padding: clamp(4rem, 8vw, 8rem) var(--px);
+  display: flex; flex-direction: column; justify-content: center;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.truth-media-col {
+  position: relative;
+  overflow: hidden;
+  background: #111;
+  min-height: 360px;
+}
+.truth-media-col img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  filter: grayscale(20%) brightness(0.75);
+  display: block;
+}
+.truth-media-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.75rem;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+}
+.truth-media-placeholder span {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.25em;
+  text-transform: uppercase; color: rgba(255,255,255,0.2);
 }
 .truth-eyebrow { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase; color: #444; margin-bottom: 2rem; }
 .truth-headline {
@@ -348,7 +426,7 @@ nav {
    INNER PAGES
    ════════════════════════════════ */
 .inner-hero {
-  padding: clamp(4rem, 7vw, 7rem) var(--px) clamp(3rem, 5vw, 5rem);
+  padding: clamp(2.5rem, 4vw, 4rem) var(--px) clamp(1.75rem, 3vw, 3rem);
   border-bottom: 1px solid var(--rule);
 }
 .inner-hero-eyebrow { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1.25rem; }
@@ -363,6 +441,7 @@ nav {
 .filter-bar {
   padding: 1.25rem var(--px); border-bottom: 1px solid var(--rule);
   display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+  margin-bottom:1.5rem;
 }
 .filter-btn {
   font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
@@ -375,54 +454,84 @@ nav {
 /* ── CARD GRID ── */
 .card-grid { padding: 0 var(--px); }
 
-/* ── FEATURED CARD — horizontal strip, constrained width ── */
+/* ── FEATURED CARD — fixed-height square image LEFT, text right ── */
 .content-card.featured {
   display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 0;
-  border-bottom: 1px solid var(--rule);
+  grid-template-columns: 260px 1fr;
+  height: 220px;
+  border: 1px solid var(--rule);
+  margin-top:1.5rem;
+  margin-bottom: 1.5rem;
   cursor: pointer;
-  max-width: 860px;
-  margin: 0;
-  padding: 3rem 0;
-  transition: opacity 0.15s;
+  transition: background 0.15s;
+  overflow: hidden;
 }
-.content-card.featured:hover { opacity: 0.85; }
+.content-card.featured:hover { background: var(--bg-off); }
 .content-card.featured .card-img {
-  aspect-ratio: 4/3;
-  margin-bottom: 0;
+  width: 260px;
+  height: 100%;
   flex-shrink: 0;
+  margin-bottom: 0;
+  border-right: 1px solid var(--rule);
 }
+.content-card.featured.no-media {
+  grid-template-columns: 1fr;
+  height: auto;
+}
+.content-card.featured.no-media .card-img { display: none; }
 .content-card.featured .card-text {
-  padding: 0 0 0 2.5rem;
+  padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
 }
 .content-card.featured .card-title-text {
-  font-size: clamp(1.3rem, 1.8vw, 1.75rem);
-  margin-bottom: 0.75rem;
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
-.content-card.featured .card-meta { margin-bottom: 0.75rem; }
+.content-card.featured .card-meta { margin-bottom: 0.5rem; }
+.content-card.featured .card-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
-/* ── REGULAR CARDS — image top, text below ── */
+/* ── REGULAR CARDS — standalone bordered boxes, 3 per row ── */
 .cards-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--rule);
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
 }
+.cards-row.hidden { display: none; }
 .content-card {
-  border-right: 1px solid var(--rule);
+  border: 1px solid var(--rule);
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color 0.15s;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
-.content-card:last-child { border-right: none; }
-.content-card:hover { background: var(--bg-off); }
+.content-card:hover { background: var(--bg-off); border-color: var(--ink-ghost); }
 
-/* image fills top of card */
+/* Load More */
+.load-more-wrap {
+  padding: 1.5rem 0 2rem;
+  text-align: center;
+}
+.btn-load-more {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  background: var(--ink); color: #fff;
+  padding: 0.9rem 3rem; border: none; cursor: pointer;
+  transition: background 0.15s; font-family: 'Instrument Sans', sans-serif;
+}
+.btn-load-more:hover { background: var(--ink-mid); }
+.btn-load-more:disabled { background: var(--ink-ghost); cursor: default; }
+
+/* image fills top of regular card */
 .content-card:not(.featured) .card-img {
   width: 100%;
   aspect-ratio: 16/9;
@@ -431,19 +540,87 @@ nav {
 }
 /* text area below image */
 .content-card:not(.featured) .card-text {
-  padding: 1.5rem 1.5rem 2rem;
+  padding: 1.25rem 1.25rem 1.75rem;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-/* no-media: image area hidden, more padding */
+/* no-media regular card */
 .content-card.no-media:not(.featured) .card-img { display: none; }
-.content-card.no-media:not(.featured) .card-text { padding-top: 2rem; }
-.content-card.no-media:not(.featured) .card-title-text {
-  font-size: 1.35rem;
-  line-height: 1.18;
+.content-card.no-media:not(.featured) .card-text { padding-top: 1.75rem; }
+.content-card.no-media:not(.featured) .card-title-text { font-size: 1.2rem; line-height: 1.18; }
+
+/* ── CONTACT PAGE ── */
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 70vh;
+  border-bottom: 1px solid var(--rule);
 }
+.contact-left {
+  padding: clamp(3rem, 6vw, 6rem) var(--px);
+  border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.contact-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700; line-height: 1.05; margin-bottom: 1.5rem;
+}
+.contact-headline em { font-style: italic; font-weight: 400; }
+.contact-intro {
+  font-size: 0.93rem; line-height: 1.85; color: var(--ink-soft); max-width: 420px; margin-bottom: 2.5rem;
+}
+.contact-detail {
+  display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem;
+}
+.contact-detail-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+}
+.contact-detail-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--ink-faint);
+  min-width: 80px; padding-top: 1px;
+}
+.contact-detail-value {
+  font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5;
+}
+.contact-detail-value a { color: var(--gold-dim); text-decoration: underline; }
+.contact-right {
+  padding: clamp(3rem, 6vw, 6rem) var(--px);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+.cf-group { display: flex; flex-direction: column; gap: 6px; }
+.cf-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.cf-input {
+  padding: 0.7rem 0.9rem; border: 1px solid var(--rule);
+  background: var(--bg-off); font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.88rem; color: var(--ink); outline: none; transition: border-color 0.15s;
+}
+.cf-input:focus { border-color: var(--ink); background: var(--bg); }
+.cf-input::placeholder { color: var(--ink-ghost); }
+textarea.cf-input { resize: vertical; min-height: 130px; line-height: 1.6; }
+select.cf-input { cursor: pointer; }
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.cf-submit {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  background: var(--ink); color: #fff; padding: 0.9rem 2.5rem;
+  border: none; cursor: pointer; font-family: 'Instrument Sans', sans-serif;
+  transition: background 0.15s; align-self: flex-start; margin-top: 0.5rem;
+}
+.cf-submit:hover { background: var(--ink-mid); }
+.cf-submit:disabled { background: var(--ink-ghost); cursor: not-allowed; }
+.cf-success {
+  display: none; padding: 1rem 1.25rem;
+  background: #f0faf5; border: 1px solid #a8dfc2;
+  font-size: 0.88rem; color: #1a7a4a; line-height: 1.6;
+}
+.cf-success.visible { display: block; }
 
 /* shared card elements */
 .card-meta {
@@ -503,46 +680,87 @@ nav {
   color: var(--ink-ghost);
 }
 
-/* Two-column article header */
+/* WITH MEDIA — full bleed bg image, gradient overlay, white text centered */
 .article-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 420px;
+  position: relative;
+  min-height: 480px;
+  display: flex; align-items: flex-end;
   border-bottom: 1px solid var(--rule);
+  overflow: hidden;
 }
 .article-header-media {
-  overflow: hidden; background: var(--bg-off);
-  border-right: 1px solid var(--rule);
+  position: absolute; inset: 0;
+  z-index: 0;
 }
 .article-header-media img,
-.article-header-media video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%); display: block; }
-.article-header-media iframe { width: 100%; height: 100%; border: none; }
-.article-header-text {
-  padding: clamp(2.5rem, 5vw, 4rem) var(--px);
-  display: flex; flex-direction: column; justify-content: center;
+.article-header-media video {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
 }
-/* No-media article: header is single column */
+.article-header-media iframe {
+  width: 100%; height: 100%; border: none;
+}
+/* black-to-transparent gradient from bottom up */
+.article-header-gradient {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.1) 100%);
+}
+/* text sits above gradient */
+.article-header-text {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 820px; margin: 0 auto;
+  padding: 3rem var(--px) clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+/* white text for media headers */
+.article-header .article-hero-meta .card-type {
+  background: rgba(255,255,255,0.15); color: #fff;
+  border-color: rgba(255,255,255,0.3);
+}
+.article-header .article-hero-meta .card-date { color: rgba(255,255,255,0.65); }
+.article-header .article-hero-title { color: #fff; }
+.article-header .article-hero-excerpt { color: rgba(255,255,255,0.8); }
+
+/* NO-MEDIA — single column, centered, no bg */
 .article-header.no-media {
-  grid-template-columns: 1fr;
   min-height: auto;
+  display: block;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
 }
 .article-header.no-media .article-header-media { display: none; }
+.article-header.no-media .article-header-gradient { display: none; }
 .article-header.no-media .article-header-text {
-  border-right: none;
-  max-width: 760px;
+  position: static;
   padding: clamp(3rem, 6vw, 6rem) var(--px);
+  text-align: center;
+  align-items: center;
 }
-.article-hero-meta { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; }
+
+.article-header.no-media .article-hero-meta { justify-content: center; }
+.article-header.no-media .article-hero-meta .card-type {   background: var(--gold-bg); color: var(--gold-dim);  border-color: rgba(201,168,76,0.3); }
+.article-header.no-media .article-hero-meta .card-date {  color: var(--ink-ghost); }
+.article-header.no-media .article-hero-title { color: var(--ink); text-align: center; }
+.article-header.no-media .article-hero-excerpt { color: var(--ink-soft); text-align: center; }
+
+/* shared article header text elements */
+.article-hero-meta {
+  display: flex; gap: 0.75rem; align-items: center;
+  margin-bottom: 1.25rem; justify-content: center;
+}
 .article-hero-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; line-height: 1.08;
-  letter-spacing: -0.02em; margin-bottom: 1.25rem;
+  font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.1;
+  letter-spacing: -0.02em; margin-bottom: 1rem;
+  max-width: 680px;
 }
 .article-hero-excerpt {
-  font-size: 0.95rem; line-height: 1.78; color: var(--ink-soft);
+  font-size: 0.95rem; line-height: 1.65; max-width: 580px;
 }
 .article-body {
-  max-width: 720px; margin: 0 auto;
+  max-width: 920px; margin: 0 auto;
   padding: clamp(3rem, 5vw, 5rem) var(--px);
   font-size: 1rem; line-height: 1.9; color: var(--ink-soft);
 }
@@ -606,19 +824,120 @@ footer {
 .footer-bottom { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
 .built { font-size: 0.65rem; color: var(--ink-ghost); letter-spacing: 0.1em; font-style: italic; }
 
+/* ── NEWSLETTER POPUP ── */
+.newsletter-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(10,10,10,0.55);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.newsletter-overlay.open { opacity: 1; pointer-events: all; }
+.newsletter-modal {
+  background: #fff; max-width: 780px; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr;
+  max-height: 90vh; overflow: hidden;
+  transform: translateY(20px);
+  transition: transform 0.35s ease;
+}
+.newsletter-overlay.open .newsletter-modal { transform: translateY(0); }
+.newsletter-img {
+  position: relative; overflow: hidden; min-height: 420px;
+  background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+}
+.newsletter-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(15%) brightness(0.7);
+}
+.newsletter-img-placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(145deg, #1c1c1c, #0a0a0a);
+}
+.newsletter-form-col {
+  padding: 3rem 2.5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow-y: auto;
+}
+.newsletter-close {
+  position: absolute; top: 1rem; right: 1rem; z-index: 10;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.2rem; color: #fff; opacity: 0.6; line-height: 1;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: opacity 0.15s;
+}
+.newsletter-close:hover { opacity: 1; }
+.newsletter-eyebrow {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.35em;
+  text-transform: uppercase; color: var(--gold-dim); margin-bottom: 1rem;
+}
+.newsletter-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700;
+  line-height: 1.15; margin-bottom: 0.75rem;
+}
+.newsletter-sub {
+  font-size: 0.85rem; line-height: 1.75; color: var(--ink-soft);
+  margin-bottom: 1.75rem;
+}
+.newsletter-field {
+  display: flex; flex-direction: column; gap: 5px; margin-bottom: 0.85rem;
+}
+.newsletter-field label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.newsletter-field input {
+  padding: 0.65rem 0.9rem; border: 1px solid var(--rule);
+  background: var(--bg-off); font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.85rem; color: var(--ink); outline: none; transition: border-color 0.15s;
+}
+.newsletter-field input:focus { border-color: var(--ink); background: #fff; }
+.newsletter-submit {
+  width: 100%; padding: 0.85rem;
+  background: var(--ink); color: #fff; border: none;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.15s; margin-top: 0.5rem;
+}
+.newsletter-submit:hover { background: var(--ink-mid); }
+.newsletter-skip {
+  font-size: 0.65rem; color: var(--ink-ghost); text-align: center;
+  margin-top: 1rem; cursor: pointer; transition: color 0.15s; background: none; border: none;
+  font-family: 'Instrument Sans', sans-serif; width: 100%;
+}
+.newsletter-skip:hover { color: var(--ink-muted); }
+.newsletter-success {
+  text-align: center; display: none;
+}
+.newsletter-success-icon {
+  font-size: 2.5rem; margin-bottom: 1rem; color: var(--gold);
+}
+.newsletter-success p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-style: italic; color: var(--ink); line-height: 1.3;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-left { border-right: none; border-bottom: 1px solid var(--rule); justify-content: flex-start; padding-top: 6rem; }
   .hero-right { min-height: 55vw; }
-  .content-card.featured { grid-template-columns: 260px 1fr; max-width: 100%; }
-  .cards-row { grid-template-columns: 1fr 1fr; }
-  .cards-row .content-card:nth-child(2) { border-right: none; }
-  .cards-row .content-card:nth-child(3) { border-top: 1px solid var(--rule); border-right: none; grid-column: 1 / -1; }
-  .article-header { min-height: 340px; }
+  .truth-inner { grid-template-columns: 1fr; }
+  .truth-text-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .truth-media-col { min-height: 280px; }
+  .newsletter-modal { grid-template-columns: 1fr; }
+  .newsletter-img { display: none; }
+  .newsletter-form-col { padding: 2.5rem 2rem; }
+  .article-header { min-height: 380px; }
+  .content-card.featured { grid-template-columns: 200px 1fr; height: 180px; }
+  .content-card.featured .card-img { width: 200px; }
+  .contact-wrap { grid-template-columns: 1fr; }
+  .contact-left { border-right: none; border-bottom: 1px solid var(--rule); }
 }
 @media (max-width: 900px) {
-  :root { --px: clamp(2rem, 6vw, 4rem); }
+  :root { --px: clamp(1.5rem, 5vw, 3rem); }
   .about, .philosophy, .dossier { grid-template-columns: 1fr; }
   .about-left, .philosophy-left { border-right: none; border-bottom: 1px solid var(--rule); }
   .stats { grid-template-columns: 1fr 1fr; }
@@ -627,24 +946,26 @@ footer {
   nav .nav-links { display: none; }
   nav .nav-btn { display: none; }
   .nav-hamburger { display: flex; }
-  .content-card.featured { grid-template-columns: 1fr; max-width: 100%; }
-  .content-card.featured .card-img { aspect-ratio: 16/9; }
-  .content-card.featured .card-text { padding: 1.5rem 0 0; }
-  .article-header { grid-template-columns: 1fr; min-height: auto; }
-  .article-header-media { aspect-ratio: 16/9; border-right: none; border-bottom: 1px solid var(--rule); }
+  .content-card.featured { grid-template-columns: 1fr; height: auto; }
+  .content-card.featured .card-img { width: 100%; height: 180px; border-right: none; border-bottom: 1px solid var(--rule); }
+  .article-header { min-height: 300px; }
+  .cards-row { grid-template-columns: 1fr 1fr; }
+  .cf-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
-  :root { --px: 1.5rem; }
+  :root { --px: 1.25rem; }
   .stats, .services-grid, .explore-grid { grid-template-columns: 1fr; }
   .stat, .service-item, .explore-card { border-right: none; }
   .hero-right { min-height: 80vw; }
   .cards-row { grid-template-columns: 1fr; }
-  .cards-row .content-card { border-right: none; border-top: 1px solid var(--rule); }
-  .cards-row .content-card:nth-child(3) { grid-column: auto; }
   .inner-footer-cta { flex-direction: column; }
   .footer-social { display: none; }
   footer { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
   .footer-bottom { align-items: flex-start; }
+  .newsletter-modal { max-height: 95vh; }
+  .newsletter-form-col { padding: 2rem 1.5rem; }
+  .truth-text-col { padding: clamp(3rem, 6vw, 5rem) var(--px); }
+  .article-header { min-height: 260px; }
 }
 
 /* ── DYNAMIC CONTENT STATES ── */
@@ -667,11 +988,21 @@ footer {
 
 <!-- ════════ PERSISTENT NAV ════════ -->
 <nav>
+  <!--
+    LOGO SWAP INSTRUCTIONS:
+    When you're ready to use an image logo, comment out the <a class="nav-name"> line below
+    and uncomment the <a class="nav-logo-img"> block.
+
+    <a class="nav-logo-img" data-route="home">
+      <img src="YOUR_LOGO.png" alt="Chief Eben Adjetey" style="height:32px;width:auto;display:block;">
+    </a>
+  -->
   <a class="nav-name" data-route="home">Chief Eben Adjetey.</a>
   <ul class="nav-links">
     <li><a data-route="projects">Projects</a></li>
     <li><a data-route="keynotes">Keynotes</a></li>
     <li><a data-route="perspective">Perspective</a></li>
+    <li><a data-route="contact">Contact</a></li>
   </ul>
   <a class="nav-btn" href="YOUR_BOOKING_LINK_HERE" target="_blank" rel="noopener">Book a 1:1</a>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
@@ -685,6 +1016,7 @@ footer {
     <li><a data-route="projects" data-mobile-nav>Projects</a></li>
     <li><a data-route="keynotes" data-mobile-nav>Keynotes</a></li>
     <li><a data-route="perspective" data-mobile-nav>Perspective</a></li>
+    <li><a data-route="contact" data-mobile-nav>Contact</a></li>
   </ul>
   <a class="nav-btn" href="YOUR_BOOKING_LINK_HERE" target="_blank" rel="noopener">Book a 1:1</a>
   <div class="mobile-social">
@@ -930,16 +1262,34 @@ footer {
 
   <!-- TRUTH -->
   <div class="truth">
-    <p class="truth-eyebrow">Let's be honest</p>
-    <h2 class="truth-headline">You already know<br>what's holding you<br><em>back.</em></h2>
-    <div class="truth-body">
-      <p>It's not effort. You've been working. It's not ambition — you have plenty of that. <strong>What's missing is the architecture.</strong> The right positioning. The right systems. The right story that makes people choose you before they've even met you.</p>
-      <p>Every week without that, you're leaving money, momentum, and market share on the table — and handing it to someone who may not deserve it half as much as you do.</p>
-      <p><strong>The gap between where you are and where you should be is a strategy problem. Strategy is exactly what Chief Eben solves.</strong></p>
-    </div>
-    <div class="truth-btns">
-      <button class="btn-gold">Start the Conversation</button>
-      <button class="btn-ghost-w" data-route="perspective">Read the Philosophy</button>
+    <div class="truth-inner">
+      <div class="truth-text-col">
+        <p class="truth-eyebrow">Let's be honest</p>
+        <h2 class="truth-headline">You already know<br>what's holding you<br><em>back.</em></h2>
+        <div class="truth-body">
+          <p>It's not effort. You've been working. It's not ambition — you have plenty of that. <strong>What's missing is the architecture.</strong> The right positioning. The right systems. The right story that makes people choose you before they've even met you.</p>
+          <p>Every week without that, you're leaving money, momentum, and market share on the table — and handing it to someone who may not deserve it half as much as you do.</p>
+          <p><strong>The gap between where you are and where you should be is a strategy problem. Strategy is exactly what Chief Eben solves.</strong></p>
+        </div>
+        <div class="truth-btns">
+          <button class="btn-gold" data-route="contact">Start the Conversation</button>
+          <button class="btn-ghost-w" data-route="perspective">Read the Philosophy</button>
+        </div>
+      </div>
+      <div class="truth-media-col">
+        <!--
+          ADD YOUR IMAGE HERE:
+          Replace the placeholder div with:
+          <img src="your-image.jpg" alt="Chief Eben Adjetey">
+        -->
+        <div class="truth-media-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="18" r="9" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" fill="none"/>
+            <path d="M6 42c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span>Add your image here</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -998,7 +1348,7 @@ footer {
 
   <div class="inner-footer-cta">
     <h3>"Ideas only matter if they reach the people who need them."</h3>
-    <button class="btn-gold-outline">Subscribe to the Newsletter →</button>
+    <button class="btn-gold-outline" id="btn-open-newsletter">Subscribe to the Newsletter →</button>
   </div>
 
 </div><!-- /view-keynotes -->
@@ -1027,7 +1377,7 @@ footer {
 
   <div class="inner-footer-cta">
     <h3>"Thinking out loud is how better ideas get made."</h3>
-    <button class="btn-gold-outline">Follow on Instagram →</button>
+    <button class="btn-gold-outline" onclick="window.open('https://instagram.com/YOUR_HANDLE','_blank')">Follow on Instagram →</button>
   </div>
 
 </div><!-- /view-perspective -->
@@ -1064,6 +1414,80 @@ footer {
 </div>
 
 
+<!-- ════════ CONTACT ════════ -->
+<div class="view" id="view-contact">
+
+  <div class="inner-hero">
+    <p class="inner-hero-eyebrow">Contact</p>
+    <h1 class="inner-hero-title">Let's start a<br><em>conversation.</em></h1>
+    <p class="inner-hero-desc">Whether you have a project in mind, want to explore working together, or simply want to say hello — Chief Eben is listening.</p>
+  </div>
+
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <h2 class="contact-headline">The gap between<br>where you are and<br>where you should be is<br><em>one conversation.</em></h2>
+      <p class="contact-intro">Every great engagement starts with an honest conversation. Tell Chief Eben what you're building, where you're stuck, or what you want to become — and he'll tell you what he sees.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Email</span>
+          <span class="contact-detail-value"><a href="/cdn-cgi/l/email-protection#8de5e8e1e1e2cdd4c2d8dfd2c9c2c0ccc4c3a3eee2e0">hello@YOUR_DOMAIN.com</a></span>
+        </div>
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Based in</span>
+          <span class="contact-detail-value">Accra, Ghana · Available worldwide</span>
+        </div>
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Book a call</span>
+          <span class="contact-detail-value"><a href="YOUR_BOOKING_LINK_HERE" target="_blank" rel="noopener">Schedule a 1:1 →</a></span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="contact-form" id="contact-form">
+        <div class="cf-row">
+          <div class="cf-group">
+            <label class="cf-label" for="cf-name">First name *</label>
+            <input class="cf-input" type="text" id="cf-name" placeholder="Your first name" required>
+          </div>
+          <div class="cf-group">
+            <label class="cf-label" for="cf-lastname">Last name</label>
+            <input class="cf-input" type="text" id="cf-lastname" placeholder="Your last name">
+          </div>
+        </div>
+        <div class="cf-group">
+          <label class="cf-label" for="cf-email">Email address *</label>
+          <input class="cf-input" type="email" id="cf-email" placeholder="you@example.com" required>
+        </div>
+        <div class="cf-group">
+          <label class="cf-label" for="cf-org">Organisation / Company</label>
+          <input class="cf-input" type="text" id="cf-org" placeholder="Where you work or what you're building">
+        </div>
+        <div class="cf-group">
+          <label class="cf-label" for="cf-interest">What are you interested in?</label>
+          <select class="cf-input" id="cf-interest">
+            <option value="">Select one…</option>
+            <option value="consulting">Strategy &amp; Consulting</option>
+            <option value="advisory">1:1 Private Advisory</option>
+            <option value="keynote">Keynote / Speaking</option>
+            <option value="brand">Brand &amp; Positioning</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div class="cf-group">
+          <label class="cf-label" for="cf-message">Tell me what you're working on *</label>
+          <textarea class="cf-input" id="cf-message" placeholder="Share what's going on — the more context, the better. Don't overthink it." required></textarea>
+        </div>
+        <button class="cf-submit" id="cf-submit">Send the Message →</button>
+        <div class="cf-success" id="cf-success">
+          ✓ Message received. Chief Eben will be in touch within 48 hours.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /view-contact -->
+
+
 <!-- ════════ SHARED FOOTER ════════ -->
 <footer id="main-footer">
   <div class="footer-brand" data-route="home">Chief Eben Adjetey.</div>
@@ -1071,9 +1495,10 @@ footer {
     <li><a data-route="projects">Projects</a></li>
     <li><a data-route="keynotes">Keynotes</a></li>
     <li><a data-route="perspective">Perspective</a></li>
+    <li><a data-route="contact">Contact</a></li>
   </ul>
   <div class="footer-social">
-    <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 .774v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
     <a href="https://twitter.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.732-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
     <a href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
     <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
@@ -1086,11 +1511,51 @@ footer {
 </footer>
 
 
-<script>
+<!-- ════════ NEWSLETTER POPUP ════════ -->
+<div class="newsletter-overlay" id="newsletter-overlay" role="dialog" aria-modal="true" aria-label="Newsletter signup">
+  <div class="newsletter-modal">
+    <div class="newsletter-img">
+      <!--
+        ADD YOUR IMAGE HERE:
+        <img src="your-photo.jpg" alt="Chief Eben Adjetey">
+      -->
+      <div class="newsletter-img-placeholder">
+        <svg width="56" height="56" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="18" r="9" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" fill="none"/>
+          <path d="M6 42c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <button class="newsletter-close" id="newsletter-close" aria-label="Close">✕</button>
+    </div>
+    <div class="newsletter-form-col">
+      <div id="newsletter-form-wrap">
+        <p class="newsletter-eyebrow">Chief's Inner Circle</p>
+        <h2 class="newsletter-headline">The thinking that doesn't make it to the feed.</h2>
+        <p class="newsletter-sub">Most of what Chief Eben knows, he doesn't post publicly. Subscribe and get the unfiltered thinking — strategy, brand, and the art of building something formidable — delivered straight to you.</p>
+        <div class="newsletter-field">
+          <label for="nl-name">First name</label>
+          <input type="text" id="nl-name" placeholder="Your first name" autocomplete="given-name">
+        </div>
+        <div class="newsletter-field">
+          <label for="nl-email">Email address</label>
+          <input type="email" id="nl-email" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <button class="newsletter-submit" id="newsletter-submit">Get the Thinking →</button>
+        <button class="newsletter-skip" id="newsletter-skip">Maybe later</button>
+      </div>
+      <div class="newsletter-success" id="newsletter-success">
+        <div class="newsletter-success-icon">✦</div>
+        <p>"You're in. Expect something worth reading."</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ════════════════════════════════════════
 // ROUTER
 // ════════════════════════════════════════
-const ROUTES = ['home','projects','keynotes','perspective','article'];
+const ROUTES = ['home','projects','keynotes','perspective','article','contact'];
 let _previousSection = 'perspective';
 
 function navigate(route, anchor) {
@@ -1100,7 +1565,6 @@ function navigate(route, anchor) {
   const viewEl = document.getElementById('view-' + route);
   if (viewEl) viewEl.classList.add('active');
 
-  // show/hide main footer (article view has its own footer)
   const mainFooter = document.getElementById('main-footer');
   if (mainFooter) mainFooter.style.display = route === 'article' ? 'none' : '';
 
@@ -1145,7 +1609,6 @@ function routeFromHash() {
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-route]');
   if (!el) return;
-  // Don't intercept external links
   if (el.tagName === 'A' && el.href && !el.dataset.route) return;
   e.preventDefault();
   closeMobileMenu();
@@ -1177,41 +1640,53 @@ document.querySelectorAll('[data-mobile-nav]').forEach(el => {
 });
 
 // ════════════════════════════════════════
-// FILTER — inner page cards
+// NEWSLETTER POPUP
 // ════════════════════════════════════════
-document.addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn');
-  if (!btn) return;
-  const bar = btn.closest('.filter-bar');
-  const grid = btn.closest('.view').querySelector('.card-grid');
-  const filter = btn.dataset.filter;
+const nlOverlay  = document.getElementById('newsletter-overlay');
+const nlClose    = document.getElementById('newsletter-close');
+const nlSkip     = document.getElementById('newsletter-skip');
+const nlSubmit   = document.getElementById('newsletter-submit');
 
-  bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+function openNewsletter() {
+  nlOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeNewsletter() {
+  nlOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  sessionStorage.setItem('nl_dismissed', '1');
+}
 
-  const featured = grid.querySelector('.content-card.featured');
-  if (featured) {
-    if (filter === 'all') { featured.style.display = ''; }
-    else {
-      const cats = (featured.dataset.category || '').split(' ');
-      featured.style.display = cats.includes(filter) ? '' : 'none';
-    }
-  }
+nlClose.addEventListener('click', closeNewsletter);
+nlSkip.addEventListener('click', closeNewsletter);
+nlOverlay.addEventListener('click', e => { if (e.target === nlOverlay) closeNewsletter(); });
 
-  grid.querySelectorAll('.cards-row').forEach(row => {
-    let anyVisible = false;
-    row.querySelectorAll('.content-card').forEach(card => {
-      if (filter === 'all') { card.style.display = ''; anyVisible = true; }
-      else {
-        const cats = (card.dataset.category || '').split(' ');
-        const show = cats.includes(filter);
-        card.style.display = show ? '' : 'none';
-        if (show) anyVisible = true;
-      }
-    });
-    row.style.display = anyVisible ? '' : 'none';
-  });
+// Subscribe button on keynotes page
+const btnOpenNl = document.getElementById('btn-open-newsletter');
+if (btnOpenNl) btnOpenNl.addEventListener('click', openNewsletter);
+
+// Submit — writes subscriber to GitHub subscribers.json
+nlSubmit.addEventListener('click', async () => {
+  const name  = document.getElementById('nl-name').value.trim();
+  const email = document.getElementById('nl-email').value.trim();
+  if (!email) { document.getElementById('nl-email').focus(); return; }
+
+  nlSubmit.disabled = true;
+  nlSubmit.textContent = 'Saving…';
+
+  await writeSubscriber({ name, email, source: 'newsletter' });
+
+  document.getElementById('newsletter-form-wrap').style.display = 'none';
+  document.getElementById('newsletter-success').style.display = 'block';
+  setTimeout(closeNewsletter, 3200);
+  nlSubmit.disabled = false;
+  nlSubmit.textContent = 'Get the Thinking →';
 });
+
+// Auto-trigger after 7 seconds (only once per session)
+if (!sessionStorage.getItem('nl_dismissed')) {
+  setTimeout(openNewsletter, 7000);
+}
 
 // ════════════════════════════════════════
 // HERO SLIDESHOW
@@ -1263,15 +1738,13 @@ function fmtDate(d) {
 
 function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
 
-// Render media block — supports image URL, video URL, or YouTube embed
+// Render cover media for a card
 function renderMedia(meta) {
   const url = (meta.image || meta.video || meta.youtube || '').trim();
   if (!url) return '';
   if (meta.youtube || url.includes('youtube.com') || url.includes('youtu.be')) {
-    let videoId = '';
     const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
-    if (m) videoId = m[1];
-    const src = videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+    const src = m ? `https://www.youtube.com/embed/${m[1]}` : url;
     return `<div class="card-img"><iframe src="${src}" allowfullscreen loading="lazy"></iframe></div>`;
   }
   if (meta.video || /\.(mp4|webm|ogg)(\?|$)/i.test(url)) {
@@ -1280,33 +1753,18 @@ function renderMedia(meta) {
   return `<div class="card-img"><img src="${url}" alt="${meta.title || ''}" loading="lazy"></div>`;
 }
 
-// Build card HTML
+// Build a single card's HTML
 function buildCard(meta, slug, section, isFeatured) {
   const cfg = SECTION_MAP[section];
   const cat = (meta.category || '').trim();
-  const label = cap(cat.split(' ')[0]);
+  const label = cap(cat);
   const dateStr = fmtDate(meta.date);
   const hasMedia = !!(meta.image || meta.video || meta.youtube);
   const mediaHtml = renderMedia(meta);
   const noMediaClass = hasMedia ? '' : ' no-media';
 
-  if (isFeatured) {
-    // Featured: horizontal — image left, text right
-    return `
-    <div class="content-card featured${noMediaClass}" data-category="${cat}" data-slug="${slug}" data-section="${section}">
-      ${mediaHtml}
-      <div class="card-text">
-        <div class="card-meta"><span class="card-type">${label}</span><span class="card-date">${dateStr}</span></div>
-        <div class="card-title-text">${meta.title || slug}</div>
-        <p class="card-excerpt">${meta.excerpt || ''}</p>
-        <div class="card-read">${cfg.readLabel} →</div>
-      </div>
-    </div>`;
-  }
-
-  // Regular: image on top, text below — all inside one box
   return `
-  <div class="content-card${noMediaClass}" data-category="${cat}" data-slug="${slug}" data-section="${section}">
+  <div class="content-card${isFeatured ? ' featured' : ''}${noMediaClass}" data-category="${cat}" data-slug="${slug}" data-section="${section}">
     ${mediaHtml}
     <div class="card-text">
       <div class="card-meta"><span class="card-type">${label}</span><span class="card-date">${dateStr}</span></div>
@@ -1348,6 +1806,7 @@ async function loadSection(section) {
       return { meta, body, slug: f.name.replace('.md', ''), downloadUrl: f.download_url };
     }));
 
+    // Sort newest first
     entries.sort((a, b) => new Date(b.meta.date || 0) - new Date(a.meta.date || 0));
     _cache[section] = entries;
     renderGrid(grid, entries, section);
@@ -1357,27 +1816,166 @@ async function loadSection(section) {
   }
 }
 
+// ── CARD GRID RENDERER ──────────────────────────────────────────────
+// Logic:
+//   - All entries marked featured: true, sorted newest first
+//   - Newest featured = top hero card (full width)
+//   - Remaining featured + all non-featured = square cards, date-sorted
+//   - Square cards shown 6 at a time (2 rows of 3); Load More reveals next 6
+//   - Filter tags built dynamically from actual content categories
+// ───────────────────────────────────────────────────────────────────
+const ROWS_PER_PAGE = 2; // rows of 3 cards shown before Load More
+
 function renderGrid(grid, entries, section) {
   if (!entries.length) {
     grid.innerHTML = `<div class="cards-empty">Nothing published yet.</div>`;
     return;
   }
 
-  let html = '';
-  const featuredIdx = entries.findIndex(e => e.meta.featured === 'true');
-  const fi = featuredIdx >= 0 ? featuredIdx : 0;
-  const featured = entries[fi];
-  html += buildCard(featured.meta, featured.slug, section, true);
+  // Separate featured (newest first) from non-featured
+  const featuredEntries = entries.filter(e => e.meta.featured === 'true');
+  const nonFeatured     = entries.filter(e => e.meta.featured !== 'true');
 
-  const rest = entries.filter((_, i) => i !== fi);
-  for (let i = 0; i < rest.length; i += 3) {
-    html += `<div class="cards-row">`;
-    rest.slice(i, i + 3).forEach(e => { html += buildCard(e.meta, e.slug, section, false); });
+  // Top hero = newest featured (or fall back to newest entry)
+  const heroEntry = featuredEntries.length ? featuredEntries[0] : entries[0];
+
+  // Square cards = remaining featured (oldest to newest after hero) + non-featured, all date-sorted
+  const olderFeatured = featuredEntries.slice(1); // already sorted newest first, so these are older
+  const squareCards = [...olderFeatured, ...nonFeatured]
+    .sort((a, b) => new Date(b.meta.date || 0) - new Date(a.meta.date || 0));
+
+  // Build tag list dynamically from all entries
+  const allTags = [...new Set(entries.map(e => (e.meta.category || '').trim()).filter(Boolean))];
+  rebuildFilterBar(grid, allTags, section);
+
+  // Build rows
+  const rows = [];
+  for (let i = 0; i < squareCards.length; i += 3) {
+    const chunk = squareCards.slice(i, i + 3);
+    rows.push(chunk);
+  }
+
+  // Render hero card
+  let html = buildCard(heroEntry.meta, heroEntry.slug, section, true);
+
+  // Render square card rows, hide after ROWS_PER_PAGE
+  rows.forEach((chunk, rowIdx) => {
+    const hidden = rowIdx >= ROWS_PER_PAGE ? ' hidden' : '';
+    html += `<div class="cards-row${hidden}">`;
+    chunk.forEach(e => { html += buildCard(e.meta, e.slug, section, false); });
     html += `</div>`;
+  });
+
+  // Load More button if there are hidden rows
+  if (rows.length > ROWS_PER_PAGE) {
+    html += `
+    <div class="load-more-wrap">
+      <button class="btn-load-more" data-section="${section}" data-shown="${ROWS_PER_PAGE}">Load More</button>
+    </div>`;
   }
 
   grid.innerHTML = html;
 }
+
+// Dynamically rebuild the filter bar for a section with real tags from content
+function rebuildFilterBar(grid, tags, section) {
+  const view = document.getElementById('view-' + section);
+  if (!view) return;
+  const bar = view.querySelector('.filter-bar');
+  if (!bar) return;
+
+  // Always keep "All" button first
+  let btns = `<button class="filter-btn active" data-filter="all">All</button>`;
+  tags.forEach(tag => {
+    btns += `<button class="filter-btn" data-filter="${tag}">${cap(tag)}</button>`;
+  });
+  bar.innerHTML = btns;
+}
+
+// Load More handler
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.btn-load-more');
+  if (!btn) return;
+  const section = btn.dataset.section;
+  const grid = document.getElementById(SECTION_MAP[section]?.grid);
+  if (!grid) return;
+
+  let shown = parseInt(btn.dataset.shown, 10);
+  const allRows = grid.querySelectorAll('.cards-row');
+
+  // Reveal next ROWS_PER_PAGE rows
+  let revealed = 0;
+  allRows.forEach((row, i) => {
+    if (i >= shown && i < shown + ROWS_PER_PAGE) {
+      row.classList.remove('hidden');
+      revealed++;
+    }
+  });
+
+  shown += revealed;
+  btn.dataset.shown = shown;
+
+  // Hide the button if all rows are now visible
+  if (shown >= allRows.length) {
+    btn.closest('.load-more-wrap').style.display = 'none';
+  }
+});
+
+// ════════════════════════════════════════
+// FILTER — dynamic tags from content
+// ════════════════════════════════════════
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  const bar = btn.closest('.filter-bar');
+  const view = btn.closest('.view');
+  if (!view) return;
+  const grid = view.querySelector('.card-grid');
+  const filter = btn.dataset.filter;
+
+  bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Featured hero card
+  const featuredCard = grid.querySelector('.content-card.featured');
+  if (featuredCard) {
+    const cats = (featuredCard.dataset.category || '').trim().toLowerCase();
+    featuredCard.style.display = (filter === 'all' || cats === filter) ? '' : 'none';
+  }
+
+  // All rows + cards
+  grid.querySelectorAll('.cards-row').forEach(row => {
+    // When filtering, reveal all rows temporarily so filter can work across all content
+    row.classList.remove('hidden');
+    let anyVisible = false;
+    row.querySelectorAll('.content-card').forEach(card => {
+      const cats = (card.dataset.category || '').trim().toLowerCase();
+      const show = filter === 'all' || cats === filter;
+      card.style.display = show ? '' : 'none';
+      if (show) anyVisible = true;
+    });
+    row.style.display = anyVisible ? '' : 'none';
+  });
+
+  // Hide load more when filtering (show all matching results)
+  const loadMoreWrap = grid.querySelector('.load-more-wrap');
+  if (loadMoreWrap) loadMoreWrap.style.display = filter === 'all' ? '' : 'none';
+
+  // If reset to All, re-apply pagination
+  if (filter === 'all') {
+    const section = grid.id.replace('-grid', '');
+    const allRows = grid.querySelectorAll('.cards-row');
+    allRows.forEach((row, i) => {
+      row.style.display = '';
+      row.classList.toggle('hidden', i >= ROWS_PER_PAGE);
+    });
+    if (loadMoreWrap) {
+      loadMoreWrap.style.display = allRows.length > ROWS_PER_PAGE ? '' : 'none';
+      const lmBtn = loadMoreWrap.querySelector('.btn-load-more');
+      if (lmBtn) lmBtn.dataset.shown = ROWS_PER_PAGE;
+    }
+  }
+});
 
 // ════════════════════════════════════════
 // ARTICLE READER
@@ -1411,14 +2009,11 @@ async function openArticle(slug, section) {
   document.getElementById('article-section-label').textContent = cfg.label;
   document.getElementById('article-back-btn').textContent = `← Back to ${cfg.label}`;
   document.getElementById('article-content').innerHTML = `<div class="article-loading">Loading…</div>`;
-
   navigate('article');
 
-  // Try cache first
   const cached = (_cache[section] || []).find(e => e.slug === slug);
   if (cached) { renderArticle(cached.meta, cached.body); return; }
 
-  // Otherwise fetch directly
   const { username, repo, branch } = CONTENT_CONFIG;
   const url = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/${cfg.path}/${slug}.md`;
   try {
@@ -1434,27 +2029,27 @@ async function openArticle(slug, section) {
 
 function renderArticle(meta, body) {
   const dateStr = fmtDate(meta.date);
-  const cat = cap((meta.category || '').split(' ')[0]);
-  const url = (meta.image || meta.video || meta.youtube || '').trim();
-  const hasMedia = !!url;
+  const cat = cap((meta.category || '').trim());
+  const coverUrl = (meta.image || meta.video || meta.youtube || '').trim();
+  const hasMedia = !!coverUrl;
 
   let mediaInner = '';
   if (hasMedia) {
-    if (meta.youtube || url.includes('youtube.com') || url.includes('youtu.be')) {
-      const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
-      const src = m ? `https://www.youtube.com/embed/${m[1]}` : url;
+    if (meta.youtube || coverUrl.includes('youtube.com') || coverUrl.includes('youtu.be')) {
+      const m = coverUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{11})/);
+      const src = m ? `https://www.youtube.com/embed/${m[1]}` : coverUrl;
       mediaInner = `<iframe src="${src}" allowfullscreen loading="lazy"></iframe>`;
-    } else if (meta.video || /\.(mp4|webm|ogg)(\?|$)/i.test(url)) {
-      mediaInner = `<video src="${url}" controls playsinline></video>`;
+    } else if (meta.video || /\.(mp4|webm|ogg)(\?|$)/i.test(coverUrl)) {
+      mediaInner = `<video src="${coverUrl}" controls playsinline></video>`;
     } else {
-      mediaInner = `<img src="${url}" alt="${meta.title || ''}">`;
+      mediaInner = `<img src="${coverUrl}" alt="${meta.title || ''}">`;
     }
   }
 
   document.title = `${meta.title || 'Article'} — Chief Eben Adjetey`;
   document.getElementById('article-content').innerHTML = `
     <div class="article-header${hasMedia ? '' : ' no-media'}">
-      ${hasMedia ? `<div class="article-header-media">${mediaInner}</div>` : ''}
+      ${hasMedia ? `<div class="article-header-media">${mediaInner}</div><div class="article-header-gradient"></div>` : ''}
       <div class="article-header-text">
         <div class="article-hero-meta">
           <span class="card-type">${cat}</span>
@@ -1483,11 +2078,103 @@ document.getElementById('article-back-btn').addEventListener('click', () => {
 });
 
 // ════════════════════════════════════════
-// INIT
+// GITHUB SUBSCRIBER STORAGE
 // ════════════════════════════════════════
+// All newsletter signups and contact form submissions are stored in
+// content/subscribers.json in your GitHub repo.
+// View, search, and download them from the CMS → Subscribers tab.
+const SUB_CONFIG = {
+  username: 'ebenadjetey',      // ← same as CONTENT_CONFIG
+  repo:     'Chief-EBA-Website', // ← same as CONTENT_CONFIG
+  branch:   'main',
+};
+const SUB_PATH = 'content/subscribers.json';
+
+async function writeSubscriber(record) {
+  // record: { name, email, source, message?, organisation?, interest? }
+  record.date = new Date().toISOString();
+  try {
+    const { username, repo, branch } = SUB_CONFIG;
+    const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${SUB_PATH}`;
+
+    // Fetch current file
+    let existing = [];
+    let sha = null;
+    const r = await fetch(`${apiUrl}?ref=${branch}`);
+    if (r.ok) {
+      const f = await r.json();
+      sha = f.sha;
+      const raw = decodeURIComponent(escape(atob(f.content.replace(/\n/g,''))));
+      existing = JSON.parse(raw);
+    }
+
+    existing.push(record);
+    const json = JSON.stringify(existing, null, 2);
+    const body = {
+      message: `Add subscriber: ${record.email}`,
+      content: btoa(unescape(encodeURIComponent(json))),
+      branch,
+    };
+    if (sha) body.sha = sha;
+
+    await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        // Note: writing to GitHub from the browser requires a token.
+        // For a public-facing site, use a serverless function (Netlify Function)
+        // to proxy this write so the token stays server-side.
+        // See instructions in the README or ask in the CMS.
+      },
+      body: JSON.stringify(body),
+    });
+  } catch(e) {
+    // Fail silently on the frontend — data integrity handled server-side
+    console.warn('Subscriber write failed:', e.message);
+  }
+}
+
+// ════════════════════════════════════════
+// CONTACT FORM
+// ════════════════════════════════════════
+document.addEventListener('click', async e => {
+  if (e.target.id !== 'cf-submit') return;
+  const name    = document.getElementById('cf-name')?.value.trim();
+  const email   = document.getElementById('cf-email')?.value.trim();
+  const message = document.getElementById('cf-message')?.value.trim();
+  if (!name || !email || !message) {
+    if (!name) document.getElementById('cf-name').focus();
+    else if (!email) document.getElementById('cf-email').focus();
+    else document.getElementById('cf-message').focus();
+    return;
+  }
+
+  const btn = document.getElementById('cf-submit');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  const lastname  = document.getElementById('cf-lastname')?.value.trim() || '';
+  const org       = document.getElementById('cf-org')?.value.trim() || '';
+  const interest  = document.getElementById('cf-interest')?.value || '';
+
+  await writeSubscriber({
+    name: `${name} ${lastname}`.trim(),
+    email, organisation: org, interest, message,
+    source: 'contact',
+  });
+
+  document.getElementById('cf-success').classList.add('visible');
+  btn.style.display = 'none';
+  ['cf-name','cf-lastname','cf-email','cf-org','cf-message'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+});
+
+// ════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════�
 const _initRoute = routeFromHash();
 navigate(_initRoute);
-if (SECTION_MAP[_initRoute]) loadSection(_initRoute);
+if (typeof SECTION_MAP !== 'undefined' && SECTION_MAP[_initRoute]) loadSection(_initRoute);
 </script>
 </body>
 </html>

@@ -477,7 +477,81 @@ select.meta-input { cursor: pointer; }
 }
 #md-editor::placeholder { color: var(--ink-ghost); }
 
-/* ── TOAST ── */
+/* ── SUBSCRIBERS PANEL ── */
+#panel-subscribers { display: none; flex-direction: column; flex: 1; }
+.sub-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 2rem; border-bottom: 1px solid var(--rule);
+}
+.sub-header-left h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; line-height: 1; }
+.sub-header-left p { font-size: 0.75rem; color: var(--ink-faint); margin-top: 4px; }
+.sub-actions { display: flex; gap: 0.75rem; align-items: center; }
+.btn-csv {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  background: transparent; color: var(--gold-dim); border: 1px solid rgba(201,168,76,0.4);
+  padding: 0.65rem 1.25rem; cursor: pointer; font-family: 'Instrument Sans', sans-serif;
+  transition: all 0.15s;
+}
+.btn-csv:hover { background: var(--gold-bg); border-color: var(--gold-dim); }
+.btn-csv:disabled { opacity: 0.4; cursor: not-allowed; }
+.sub-stats {
+  display: flex; gap: 0; border-bottom: 1px solid var(--rule);
+}
+.sub-stat {
+  padding: 1.25rem 2rem; border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 3px;
+}
+.sub-stat:last-child { border-right: none; }
+.sub-stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 700; line-height: 1; color: var(--ink);
+}
+.sub-stat-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-ghost); }
+.sub-search {
+  padding: 1rem 2rem; border-bottom: 1px solid var(--rule);
+}
+.sub-search input {
+  width: 100%; max-width: 360px; padding: 0.6rem 0.9rem;
+  border: 1px solid var(--rule); background: var(--bg-off);
+  font-family: 'Instrument Sans', sans-serif; font-size: 0.85rem;
+  color: var(--ink); outline: none; transition: border-color 0.15s;
+}
+.sub-search input:focus { border-color: var(--ink); background: var(--bg); }
+.sub-table-wrap { flex: 1; overflow-y: auto; padding: 0; }
+.sub-table {
+  width: 100%; border-collapse: collapse;
+}
+.sub-table th {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--ink-ghost); text-align: left; padding: 0.75rem 2rem;
+  border-bottom: 1px solid var(--rule); position: sticky; top: 0;
+  background: var(--bg); white-space: nowrap;
+}
+.sub-table td {
+  font-size: 0.85rem; padding: 0.85rem 2rem;
+  border-bottom: 1px solid var(--rule-soft); color: var(--ink-soft);
+  vertical-align: middle;
+}
+.sub-table tr:hover td { background: var(--bg-off); }
+.sub-table td:first-child { color: var(--ink); font-weight: 500; }
+.sub-badge {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 2px 8px; border: 1px solid;
+}
+.sub-badge.newsletter { color: var(--gold-dim); border-color: rgba(201,168,76,0.3); background: var(--gold-bg); }
+.sub-badge.contact { color: #1a7a4a; border-color: #a8dfc2; background: #f0faf5; }
+.sub-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 300px; gap: 0.5rem; color: var(--ink-ghost);
+}
+.sub-empty span { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--ink-faint); }
+.sub-empty p { font-size: 0.82rem; text-align: center; max-width: 300px; line-height: 1.5; }
+.sub-delete-btn {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--danger); background: none; border: 1px solid #f5c6c4;
+  padding: 0.3rem 0.6rem; cursor: pointer; font-family: 'Instrument Sans', sans-serif; transition: all 0.12s;
+}
+.sub-delete-btn:hover { background: var(--danger-bg); border-color: var(--danger); }
 .toast {
   position: fixed;
   bottom: 2rem;
@@ -547,6 +621,11 @@ select.meta-input { cursor: pointer; }
       <span class="nav-icon">◻</span> Projects
     </button>
 
+    <div class="aside-section-label">Audience</div>
+    <button class="nav-btn-side" id="btn-subscribers-nav">
+      <span class="nav-icon">◉</span> Subscribers
+    </button>
+
     <div class="aside-footer">
       <div class="aside-user">
         <strong id="aside-username">—</strong>
@@ -592,15 +671,16 @@ select.meta-input { cursor: pointer; }
             <input type="date" class="meta-input" id="meta-date" />
           </div>
           <div class="meta-group" id="meta-category-group">
-            <div class="meta-label">Category</div>
-            <select class="meta-input" id="meta-category"></select>
+            <div class="meta-label">Category / Tag</div>
+            <input type="text" class="meta-input" id="meta-category" placeholder="e.g. brand, strategy, life…" autocomplete="off" />
+            <small style="font-size:0.68rem;color:var(--ink-ghost);margin-top:3px;line-height:1.4;">Single tag. This becomes a filter on the site — use consistent naming.</small>
           </div>
           <div class="meta-group">
             <div class="meta-label">Excerpt / Summary</div>
             <textarea class="meta-input" id="meta-excerpt" placeholder="A short summary shown in the card…"></textarea>
           </div>
           <div class="meta-group">
-            <div class="meta-label">Media (optional)</div>
+            <div class="meta-label">Cover Media (optional)</div>
             <div style="display:flex;flex-direction:column;gap:8px;">
               <label style="font-size:0.7rem;color:var(--ink-faint);">Upload from your PC</label>
               <input type="file" id="meta-media-file" accept="image/*,video/mp4,video/webm"
@@ -610,14 +690,32 @@ select.meta-input { cursor: pointer; }
               <input type="text" class="meta-input" id="meta-media" placeholder="https://… or YouTube link" />
             </div>
             <small style="font-size:0.68rem;color:var(--ink-ghost);margin-top:4px;line-height:1.4;">
-              Uploaded images are stored in <code>content/media/</code> in your GitHub repo.
+              This is the main cover image/video shown at the top of the card and article.
             </small>
+          </div>
+          <div class="meta-group">
+            <div class="meta-label">Gallery / Body Images</div>
+            <small style="font-size:0.68rem;color:var(--ink-ghost);line-height:1.5;display:block;margin-bottom:8px;">
+              Upload extra images to embed anywhere in your content. Each upload gives you a markdown snippet — click to copy, then paste into the body.
+            </small>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <input type="file" id="gallery-files" accept="image/*" multiple
+                style="font-size:0.75rem;color:var(--ink-soft);cursor:pointer;" />
+              <button type="button" id="btn-upload-gallery" style="
+                font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+                background:transparent;color:var(--gold-dim);border:1px solid rgba(201,168,76,0.35);
+                padding:0.5rem 1rem;cursor:pointer;font-family:'Instrument Sans',sans-serif;
+                transition:all 0.12s;align-self:flex-start;
+              ">Upload &amp; Get Snippets →</button>
+              <div id="gallery-status" style="font-size:0.72rem;color:var(--ink-ghost);min-height:16px;"></div>
+              <div id="gallery-snippets" style="display:flex;flex-direction:column;gap:6px;"></div>
+            </div>
           </div>
           <div class="meta-group" style="flex-direction:row;align-items:center;gap:10px;padding:0.75rem 0;border-top:1px solid var(--rule-soft);">
             <input type="checkbox" id="meta-featured" style="width:16px;height:16px;cursor:pointer;accent-color:var(--gold);" />
             <div>
               <div class="meta-label" style="margin-bottom:2px;">Feature this entry</div>
-              <small style="font-size:0.7rem;color:var(--ink-faint);">Pinned as the top card in this section.</small>
+              <small style="font-size:0.7rem;color:var(--ink-faint);">Newest featured = top hero card. Others show as square cards above regular content.</small>
             </div>
           </div>
           <div class="meta-group">
@@ -630,6 +728,40 @@ select.meta-input { cursor: pointer; }
           <div class="editor-md-label">Body — Markdown</div>
           <textarea id="md-editor" placeholder="Write your content in Markdown…&#10;&#10;## Heading&#10;&#10;Your paragraph here.&#10;&#10;**Bold**, *italic*, [links](https://…)"></textarea>
         </div>
+      </div>
+    </div>
+
+    <!-- Subscribers Panel -->
+    <div id="panel-subscribers">
+      <div class="sub-header">
+        <div class="sub-header-left">
+          <h1>Subscribers</h1>
+          <p>Newsletter signups and contact form submissions — stored in your GitHub repo</p>
+        </div>
+        <div class="sub-actions">
+          <button class="btn-csv" id="btn-download-csv" disabled>↓ Download CSV</button>
+          <button class="btn-new-entry" id="btn-refresh-subs" style="background:transparent;color:var(--ink);border:1px solid var(--rule);">↺ Refresh</button>
+        </div>
+      </div>
+      <div class="sub-stats">
+        <div class="sub-stat">
+          <div class="sub-stat-val" id="stat-total">—</div>
+          <div class="sub-stat-label">Total</div>
+        </div>
+        <div class="sub-stat">
+          <div class="sub-stat-val" id="stat-newsletter">—</div>
+          <div class="sub-stat-label">Newsletter</div>
+        </div>
+        <div class="sub-stat">
+          <div class="sub-stat-val" id="stat-contact">—</div>
+          <div class="sub-stat-label">Contact</div>
+        </div>
+      </div>
+      <div class="sub-search">
+        <input type="text" id="sub-search-input" placeholder="Search by name or email…">
+      </div>
+      <div class="sub-table-wrap" id="sub-table-wrap">
+        <div class="sub-empty"><span>No subscribers yet.</span><p>When someone signs up via the newsletter popup or contact form on your site, they'll appear here.</p></div>
       </div>
     </div>
 
@@ -845,8 +977,153 @@ document.getElementById('btn-login').addEventListener('click', async () => {
   }
 });
 
-// Enter key on login
-['gh-username','gh-repo','gh-token'].forEach(id => {
+// ════════════════════════════════════════
+// SUBSCRIBERS
+// ════════════════════════════════════════
+const SUBS_PATH = 'content/subscribers.json';
+let subsData = []; // array of subscriber objects
+let subsSha = null; // current file sha for updates
+
+// Show subscribers panel
+document.getElementById('btn-subscribers-nav').addEventListener('click', () => {
+  document.querySelectorAll('.nav-btn-side').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-subscribers-nav').classList.add('active');
+  setPanel('subscribers');
+  loadSubscribers();
+});
+
+function setPanel(id) {
+  document.getElementById('panel-list').style.display = id === 'list' ? 'flex' : 'none';
+  document.getElementById('panel-editor').style.display = id === 'editor' ? 'flex' : 'none';
+  document.getElementById('panel-subscribers').style.display = id === 'subscribers' ? 'flex' : 'none';
+}
+
+async function loadSubscribers() {
+  const wrap = document.getElementById('sub-table-wrap');
+  wrap.innerHTML = '<div class="sub-empty"><span>Loading…</span></div>';
+  document.getElementById('btn-download-csv').disabled = true;
+
+  try {
+    const r = await fetch(`${ghBase()}/contents/${SUBS_PATH}`, { headers: ghHeaders() });
+    if (r.status === 404) {
+      subsData = [];
+      subsSha = null;
+      renderSubscribers(subsData);
+      return;
+    }
+    if (!r.ok) throw new Error(`GitHub ${r.status}`);
+    const file = await r.json();
+    subsSha = file.sha;
+    const raw = decodeURIComponent(escape(atob(file.content.replace(/\n/g,''))));
+    subsData = JSON.parse(raw);
+    renderSubscribers(subsData);
+  } catch(e) {
+    wrap.innerHTML = `<div class="sub-empty"><span>Could not load subscribers</span><p>${e.message}</p></div>`;
+  }
+}
+
+function renderSubscribers(data, filter = '') {
+  const wrap = document.getElementById('sub-table-wrap');
+  const filtered = filter
+    ? data.filter(s =>
+        (s.name || '').toLowerCase().includes(filter) ||
+        (s.email || '').toLowerCase().includes(filter))
+    : data;
+
+  // Stats (always from full data)
+  document.getElementById('stat-total').textContent = data.length;
+  document.getElementById('stat-newsletter').textContent = data.filter(s => s.source === 'newsletter').length;
+  document.getElementById('stat-contact').textContent = data.filter(s => s.source === 'contact').length;
+  document.getElementById('btn-download-csv').disabled = data.length === 0;
+
+  if (!filtered.length) {
+    wrap.innerHTML = data.length
+      ? `<div class="sub-empty"><span>No results for "${filter}"</span></div>`
+      : `<div class="sub-empty"><span>No subscribers yet.</span><p>When someone signs up via the newsletter popup or contact form, they'll appear here.</p></div>`;
+    return;
+  }
+
+  const rows = [...filtered].reverse().map((s, ri) => {
+    const badge = s.source === 'contact'
+      ? `<span class="sub-badge contact">Contact</span>`
+      : `<span class="sub-badge newsletter">Newsletter</span>`;
+    const date = s.date ? new Date(s.date).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '—';
+    const origIdx = data.length - 1 - ri; // index in full array (reversed)
+    return `
+    <tr>
+      <td>${escHtml(s.name || '—')}</td>
+      <td>${escHtml(s.email || '—')}</td>
+      <td>${badge}</td>
+      <td>${date}</td>
+      <td>${escHtml(s.message ? s.message.slice(0,60) + (s.message.length > 60 ? '…' : '') : '—')}</td>
+      <td><button class="sub-delete-btn" data-idx="${origIdx}">Delete</button></td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <table class="sub-table">
+      <thead><tr>
+        <th>Name</th><th>Email</th><th>Source</th><th>Date</th><th>Note</th><th></th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+
+  // Delete handler
+  wrap.querySelectorAll('.sub-delete-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const idx = parseInt(btn.dataset.idx, 10);
+      if (!confirm(`Remove ${subsData[idx]?.email}? This cannot be undone.`)) return;
+      subsData.splice(idx, 1);
+      await saveSubscribers();
+      renderSubscribers(subsData, document.getElementById('sub-search-input').value.trim().toLowerCase());
+      showToast('Subscriber removed', 'danger');
+    });
+  });
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function saveSubscribers() {
+  const json = JSON.stringify(subsData, null, 2);
+  const encoded = btoa(unescape(encodeURIComponent(json)));
+  const body = { message: 'Update subscribers.json', content: encoded };
+  if (subsSha) body.sha = subsSha;
+  const r = await fetch(`${ghBase()}/contents/${SUBS_PATH}`, {
+    method: 'PUT', headers: ghHeaders(), body: JSON.stringify(body),
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message); }
+  const data = await r.json();
+  subsSha = data.content.sha;
+}
+
+// Search
+document.getElementById('sub-search-input').addEventListener('input', e => {
+  renderSubscribers(subsData, e.target.value.trim().toLowerCase());
+});
+
+// Refresh
+document.getElementById('btn-refresh-subs').addEventListener('click', loadSubscribers);
+
+// CSV download
+document.getElementById('btn-download-csv').addEventListener('click', () => {
+  const headers = ['Name','Email','Source','Date','Organisation','Interest','Message'];
+  const rows = subsData.map(s => [
+    s.name || '', s.email || '', s.source || '', s.date || '',
+    s.organisation || '', s.interest || '', (s.message || '').replace(/\n/g,' '),
+  ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `chief-eba-subscribers-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+// Enter key on login fields
+['gh-username', 'gh-repo', 'gh-token'].forEach(id => {
   document.getElementById(id).addEventListener('keydown', e => {
     if (e.key === 'Enter') document.getElementById('btn-login').click();
   });
@@ -1005,6 +1282,9 @@ function openNewEditor() {
   document.getElementById('meta-featured').checked = false;
   document.getElementById('meta-media').value = '';
   document.getElementById('meta-media-file').value = '';
+  document.getElementById('gallery-files').value = '';
+  document.getElementById('gallery-snippets').innerHTML = '';
+  document.getElementById('gallery-status').textContent = '';
   document.getElementById('meta-slug').value = '';
   document.getElementById('md-editor').value = '';
   document.getElementById('publish-status').textContent = '';
@@ -1013,12 +1293,69 @@ function openNewEditor() {
 }
 
 function populateCategories(selected) {
-  const sel = document.getElementById('meta-category');
-  const cats = SECTIONS[currentSection].categories;
-  sel.innerHTML = cats.map(c =>
-    `<option value="${c}" ${c === selected ? 'selected' : ''}>${c.charAt(0).toUpperCase() + c.slice(1)}</option>`
-  ).join('');
+  // Now it's a free-text input — just set the value
+  const input = document.getElementById('meta-category');
+  if (input) input.value = selected || '';
 }
+
+// ════════════════════════════════════════
+// GALLERY / BODY IMAGE UPLOAD
+// ════════════════════════════════════════
+document.getElementById('btn-upload-gallery').addEventListener('click', async () => {
+  const files = document.getElementById('gallery-files').files;
+  if (!files || !files.length) {
+    document.getElementById('gallery-status').textContent = 'Select at least one image first.';
+    return;
+  }
+  if (!GH.token) { document.getElementById('gallery-status').textContent = 'Not connected to GitHub.'; return; }
+
+  const statusEl  = document.getElementById('gallery-status');
+  const snippetsEl = document.getElementById('gallery-snippets');
+  const btn = document.getElementById('btn-upload-gallery');
+  btn.disabled = true;
+  btn.textContent = 'Uploading…';
+  statusEl.textContent = `Uploading ${files.length} image${files.length > 1 ? 's' : ''}…`;
+
+  const uploaded = [];
+  for (const file of files) {
+    try {
+      const url = await ghUploadMedia(file);
+      uploaded.push({ name: file.name, url });
+    } catch(e) {
+      statusEl.textContent = `Failed on ${file.name}: ${e.message}`;
+    }
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Upload & Get Snippets →';
+  statusEl.textContent = uploaded.length ? `✓ ${uploaded.length} uploaded — click a snippet to copy it` : 'Upload failed.';
+
+  // Render clickable snippets
+  uploaded.forEach(({ name, url }) => {
+    const altText = name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+    const snippet = `![${altText}](${url})`;
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg-off);border:1px solid var(--rule);cursor:pointer;transition:border-color 0.12s;font-size:0.72rem;color:var(--ink-soft);';
+    div.innerHTML = `<code style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.68rem;">${snippet}</code><span style="font-size:0.6rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);flex-shrink:0;">Copy</span>`;
+    div.title = 'Click to copy this snippet';
+    div.addEventListener('click', () => {
+      navigator.clipboard.writeText(snippet).then(() => {
+        div.style.borderColor = 'var(--gold)';
+        setTimeout(() => div.style.borderColor = 'var(--rule)', 1200);
+        // Also insert at cursor in the markdown editor
+        const editor = document.getElementById('md-editor');
+        const pos = editor.selectionStart;
+        const before = editor.value.slice(0, pos);
+        const after = editor.value.slice(pos);
+        editor.value = before + '\n\n' + snippet + '\n\n' + after;
+        editor.selectionStart = editor.selectionEnd = pos + snippet.length + 4;
+        editor.focus();
+      });
+    });
+    snippetsEl.appendChild(div);
+  });
+  document.getElementById('gallery-files').value = '';
+});
 
 // Auto-slug from title
 document.getElementById('meta-title').addEventListener('input', e => {
