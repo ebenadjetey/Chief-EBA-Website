@@ -21,6 +21,6 @@ Your full article body goes here, written in Markdown.
 
 ## Subheading
 
-https://youtu.be/eqrfrDuN3jo
+https://www.youtube.com/watch?v=eqrfrDuN3jo
 
 More content...
