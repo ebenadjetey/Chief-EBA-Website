@@ -25,5 +25,4 @@ Your full article body goes here, written in Markdown.
 More content...
 
 
-
-![PFP 26 768x885](https://www.youtube.com/watch?v=eqrfrDuN3jo)
+https://www.youtube.com/watch?v=eqrfrDuN3jo
