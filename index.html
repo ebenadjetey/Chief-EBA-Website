@@ -2129,6 +2129,21 @@ function renderArticle(meta, body) {
     }
   }
 
+    // NEW: Build gallery carousel if gallery field present
+  let galleryHtml = '';
+  if (meta.gallery && Array.isArray(meta.gallery) && meta.gallery.length > 1) {
+    const slides = meta.gallery.map(u => `<img src="${u}" alt="">`).join('');
+    const dots = meta.gallery.map((_,i) => `<button class="carousel-dot${i===0?' active':''}" data-idx="${i}"></button>`).join('');
+    galleryHtml = `<div class="article-carousel" data-carousel>
+      <button class="carousel-btn prev" aria-label="Previous">&#8592;</button>
+      <div class="article-carousel-track">${slides}</div>
+      <button class="carousel-btn next" aria-label="Next">&#8594;</button>
+      <div class="carousel-dots">${dots}</div>
+    </div>`;
+  } else if (meta.gallery && Array.isArray(meta.gallery) && meta.gallery.length === 1) {
+    galleryHtml = `<img src="${meta.gallery[0]}" alt="" style="width:100%;margin:2rem 0;">`;
+  }
+
   document.title = `${meta.title || 'Article'} — Chief Eben Adjetey`;
   document.getElementById('article-content').innerHTML = `
     <div class="article-header${hasMedia ? '' : ' no-media'}">
