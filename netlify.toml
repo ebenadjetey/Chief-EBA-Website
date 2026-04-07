@@ -1,0 +1,12 @@
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+
+# Serve index.html for every path — required for client-side routing.
+# Without this, visiting /perspective/my-slug directly returns a 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
