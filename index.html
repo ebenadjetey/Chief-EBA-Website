@@ -2170,7 +2170,7 @@ function renderArticle(meta, body) {
   const content = document.getElementById('article-content');
   content.innerHTML = `
     <div class="article-header${hasMedia?'':' no-media'}">
-      ${hasMedia?`<div class="article-header-media">${mediaInner}</div>`:''}
+      ${hasMedia?`<div class="article-header-media">${mediaInner}</div><div class="article-header-gradient"></div>`:''}
       <div class="article-header-text">
         <div class="article-hero-meta"><span class="card-type">${cat}</span><span class="card-date">${dateStr}</span></div>
         <h1 class="article-hero-title">${meta.title||''}</h1>
