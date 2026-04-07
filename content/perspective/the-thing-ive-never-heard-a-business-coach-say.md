@@ -13,5 +13,6 @@ Markets have shifted. Attention has shifted. Trust has shifted. And yet the fram
 
 Here's what I actually think.
 
-
+<center>
 <iframe width="837" height="296" src="https://www.youtube.com/embed/OCbjQ6hxrx0" title="The Hard Truth I Learned After Everything Fell Apart" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" muted allowfullscreen></iframe>
+</center>
