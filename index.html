@@ -763,6 +763,43 @@ select.cf-input { cursor: pointer; }
 .article-hero-excerpt {
   font-size: 0.95rem; line-height: 1.65; max-width: 580px;
 }
+
+
+/* NEW; Carousel in article body */
+.article-carousel {
+  margin: 2rem 0; position: relative;
+  border: 1px solid var(--rule); overflow: hidden;
+}
+.article-carousel-track {
+  display: flex; transition: transform 0.4s ease;
+}
+.article-carousel-track img,
+.article-carousel-track video {
+  min-width: 100%; max-width: 100%; object-fit: cover;
+  filter: grayscale(8%); display: block;
+}
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(10,10,10,0.55); color: #fff; border: none;
+  width: 40px; height: 40px; cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2; transition: background 0.15s;
+}
+.carousel-btn:hover { background: rgba(10,10,10,0.85); }
+.carousel-btn.prev { left: 12px; }
+.carousel-btn.next { right: 12px; }
+.carousel-dots {
+  display: flex; justify-content: center; gap: 6px; padding: 10px 0 8px;
+  background: var(--bg);
+}
+.carousel-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ink-ghost); border: none; cursor: pointer; padding: 0;
+  transition: background 0.15s;
+}
+.carousel-dot.active { background: var(--ink); }
+
+  
 .article-body {
   max-width: 920px; margin: 0 auto;
   padding: clamp(3rem, 5vw, 5rem) var(--px);
@@ -1990,6 +2027,25 @@ document.addEventListener('click', e => {
 // ARTICLE READER
 // ════════════════════════════════════════
 function markdownToHtml(md) {
+  // Adding carousel handler
+  // Handle :::carousel ... ::: blocks first
+  md = md.replace(/:::carousel\n([\s\S]*?):::/g, (_, inner) => {
+    const urls = inner.trim().split('\n').map(l=>l.trim()).filter(Boolean);
+    if (!urls.length) return '';
+    const slides = urls.map(u => {
+      if (/\.(mp4|webm|ogg)/i.test(u)) return `<video src="${u}" muted loop playsinline></video>`;
+      return `<img src="${u}" alt="">`;
+    }).join('');
+    const dots = urls.map((_,i) => `<button class="carousel-dot${i===0?' active':''}" data-idx="${i}"></button>`).join('');
+    return `<div class="article-carousel" data-carousel>
+      <button class="carousel-btn prev" aria-label="Previous">&#8592;</button>
+      <div class="article-carousel-track">${slides}</div>
+      <button class="carousel-btn next" aria-label="Next">&#8594;</button>
+      <div class="carousel-dots">${dots}</div>
+    </div>`;
+  });
+
+  
   return md
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
@@ -2010,6 +2066,24 @@ function markdownToHtml(md) {
       return `<p>${block.replace(/\n/g, ' ')}</p>`;
     })
     .join('\n');
+}
+
+  // NEW: Init carousels in the article body
+function initCarousels(container) {
+  container.querySelectorAll('[data-carousel]').forEach(car => {
+    const track = car.querySelector('.article-carousel-track');
+    const dots = car.querySelectorAll('.carousel-dot');
+    let idx = 0;
+    function goTo(n) {
+      const total = track.children.length;
+      idx = (n + total) % total;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+    }
+    car.querySelector('.prev').addEventListener('click', () => goTo(idx-1));
+    car.querySelector('.next').addEventListener('click', () => goTo(idx+1));
+    dots.forEach((d,i) => d.addEventListener('click', () => goTo(i)));
+  });
 }
 
 async function openArticle(slug, section) {
@@ -2070,6 +2144,7 @@ function renderArticle(meta, body) {
     </div>
     <div class="article-body">${markdownToHtml(body)}</div>
   `;
+  initCarousels(content);
 }
 
 // Card click → open article
