@@ -4,7 +4,7 @@ date: "2026-04-07"
 category: "Cars"
 excerpt: "Bronco by Ford"
 featured: "false"
-image: "https://www.inquirer.com/resizer/v2/KRTZDSRL6ZENVK6KCXCNIWVFBE.jpg"
+image: "https://www.inquirer.com/resizer/v2/KRTZDSRL6ZENVK6KCXCNIWVFBE.jpg?auth=725f39aa7c53fc1fe51e6ce5ec0845bc644a3b8ed40c278c78e205330386d8e1&width=760&height=507&smart=true"
 ---
 
 ## BRONCO BY FORD
