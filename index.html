@@ -2144,19 +2144,40 @@ function renderArticle(meta, body) {
     galleryHtml = `<img src="${meta.gallery[0]}" alt="" style="width:100%;margin:2rem 0;">`;
   }
 
-  document.title = `${meta.title || 'Article'} — Chief Eben Adjetey`;
-  document.getElementById('article-content').innerHTML = `
-    <div class="article-header${hasMedia ? '' : ' no-media'}">
-      ${hasMedia ? `<div class="article-header-media">${mediaInner}</div><div class="article-header-gradient"></div>` : ''}
+
+// ORiginal  
+//  document.title = `${meta.title || 'Article'} — Chief Eben Adjetey`;
+//  document.getElementById('article-content').innerHTML = `
+//    <div class="article-header${hasMedia ? '' : ' no-media'}">
+//    ${hasMedia ? `<div class="article-header-media">${mediaInner}</div><div class="article-header-gradient"></div>` : ''}
+//   <div class="article-header-text">
+//        <div class="article-hero-meta">
+//          <span class="card-type">${cat}</span>
+//          <span class="card-date">${dateStr}</span>
+//        </div>
+//        <h1 class="article-hero-title">${meta.title || ''}</h1>
+//        ${meta.excerpt ? `<p class="article-hero-excerpt">${meta.excerpt}</p>` : ''}
+//     </div>
+//    </div>
+//    <div class="article-body">${markdownToHtml(body)}</div>
+//  `;
+//  initCarousels(content);
+//}
+
+
+  // NEW:
+    document.title = `${meta.title||'Article'} — Chief Eben Adjetey`;
+  const content = document.getElementById('article-content');
+  content.innerHTML = `
+    <div class="article-header${hasMedia?'':' no-media'}">
+      ${hasMedia?`<div class="article-header-media">${mediaInner}</div>`:''}
       <div class="article-header-text">
-        <div class="article-hero-meta">
-          <span class="card-type">${cat}</span>
-          <span class="card-date">${dateStr}</span>
-        </div>
-        <h1 class="article-hero-title">${meta.title || ''}</h1>
-        ${meta.excerpt ? `<p class="article-hero-excerpt">${meta.excerpt}</p>` : ''}
+        <div class="article-hero-meta"><span class="card-type">${cat}</span><span class="card-date">${dateStr}</span></div>
+        <h1 class="article-hero-title">${meta.title||''}</h1>
+        ${meta.excerpt?`<p class="article-hero-excerpt">${meta.excerpt}</p>`:''}
       </div>
     </div>
+    ${galleryHtml ? `<div style="padding:0 var(--px)">${galleryHtml}</div>` : ''}
     <div class="article-body">${markdownToHtml(body)}</div>
   `;
   initCarousels(content);
