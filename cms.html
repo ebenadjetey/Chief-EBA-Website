@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chief & Co. — Content Studio</title>
+<title>Chief EBA — Content Studio</title>
+
+<link rel="apple-touch-icon" sizes="180x180" href="src/img/favicons/fav2/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="src/img/favicons/fav2/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="src/img/favicons/fav2/favicon-16x16.png">
+<link rel="manifest" href="src/img/favicons/fav2/site.webmanifest">
+  
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -580,20 +586,20 @@ select.meta-input { cursor: pointer; }
   <div class="login-subtitle">Content Studio</div>
   <div class="login-card">
     <h2>Sign in</h2>
-    <p>Use your GitHub Personal Access Token to access and manage your site content.</p>
+    <p>Use your GH PAT to access and manage your site content.</p>
     <div class="field">
-      <label>GitHub Username</label>
+      <label>GH Username</label>
       <input type="text" id="gh-username" placeholder="your-github-username" autocomplete="username" />
     </div>
     <div class="field">
-      <label>Repository Name</label>
+      <label>Repo Name</label>
       <input type="text" id="gh-repo" placeholder="your-repo-name" />
-      <small>The repo where your site lives. e.g. <strong>chief-eben-site</strong></small>
+    <!--  <small>The repo where your site lives. e.g. <strong>chief-eben-site</strong></small>-->
     </div>
     <div class="field">
-      <label>Personal Access Token</label>
+      <label>GH PAT</label>
       <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="current-password" />
-      <small>Generate one at <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a> — needs <strong>repo</strong> scope.</small>
+     <!-- <small>Generate one at <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens</a> — needs <strong>repo</strong> scope.</small>-->
     </div>
     <button class="btn-primary" id="btn-login">Enter Content Studio →</button>
     <div class="error-banner" id="login-error"></div>
@@ -606,7 +612,7 @@ select.meta-input { cursor: pointer; }
   <!-- Sidebar -->
   <aside>
     <div class="aside-top">
-      <span class="aside-wordmark">Chief & Co.</span>
+      <span class="aside-wordmark">Chief EBA</span>
       <span class="aside-repo" id="aside-repo-name">—</span>
     </div>
 
