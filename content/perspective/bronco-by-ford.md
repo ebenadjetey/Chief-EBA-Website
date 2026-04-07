@@ -5,6 +5,7 @@ category: "Auto"
 excerpt: "Bronco by Ford"
 featured: "false"
 image: "https://www.fordofconshohocken.com/blogs/5369/wp-content/uploads/2025/01/pexels-garret-shields-1929773013-29088922-scaled.jpg"
+gallery: ["https://www.fordofconshohocken.com/blogs/5369/wp-content/uploads/2025/01/pexels-garret-shields-1929773013-29088922-scaled.jpg", "https://raw.githubusercontent.com/ebenadjetey/chief-eba-website/main/content/media/1775574130126-PFP-26-768x885.jpg"]
 ---
 
 ## Bronco is one of Ford's most loved automibiles.
