@@ -730,10 +730,22 @@ select.meta-input { cursor: pointer; }
             <small style="font-size:0.7rem;color:var(--ink-faint);margin-top:3px;">Auto-generated from title. No spaces.</small>
           </div>
         </div>
+        <!-- Originally Here 
         <div class="editor-md-panel">
           <div class="editor-md-label">Body — Markdown</div>
           <textarea id="md-editor" placeholder="Write your content in Markdown…&#10;&#10;## Heading&#10;&#10;Your paragraph here.&#10;&#10;**Bold**, *italic*, [links](https://…)"></textarea>
         </div>
+        -->
+        
+        <!--New version add, to add carousel insertor-->
+          <div class="editor-md-label" style="display:flex;align-items:center;justify-content:space-between;">
+            <span>Body — Markdown</span>
+            <button id="btn-insert-carousel" style="font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;background:none;border:1px solid var(--rule);padding:4px 10px;cursor:pointer;font-family:'Instrument Sans',sans-serif;color:var(--ink-faint);transition:all 0.12s;" title="Insert a carousel block at cursor position">+ Carousel</button>
+          </div>
+          <textarea id="md-editor" placeholder="Write your content in Markdown…&#10;&#10;## Heading&#10;&#10;Your paragraph here.&#10;&#10;**Bold**, *italic*, [links](https://…)&#10;&#10;Insert a carousel anywhere:&#10;:::carousel&#10;https://image1.jpg&#10;https://image2.jpg&#10;:::"></textarea>
+        </div>
+
+        
       </div>
     </div>
 
@@ -1434,6 +1446,18 @@ document.getElementById('btn-publish').addEventListener('click', async () => {
 // ════════════════════════════════════════
 // BACK + NEW
 // ════════════════════════════════════════
+
+//Adding Carousel Insert Function
+  document.getElementById('btn-insert-carousel').addEventListener('click', () => {
+  const ta = document.getElementById('md-editor');
+  const pos = ta.selectionStart;
+  const snippet = '\n:::carousel\nhttps://your-image-1.jpg\nhttps://your-image-2.jpg\n:::\n';
+  ta.value = ta.value.slice(0, pos) + snippet + ta.value.slice(pos);
+  ta.focus();
+  ta.selectionStart = ta.selectionEnd = pos + snippet.length;
+});
+
+  
 document.getElementById('btn-back').addEventListener('click', () => {
   setPanel('list');
   loadSection(currentSection);
