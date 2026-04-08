@@ -53,6 +53,18 @@
 }
 </script>
 
+
+<!-- ═══ GA4 — replace G-XXXXXXXXXX with your Measurement ID ═══ -->
+<!-- Get your ID: analytics.google.com → Admin → Data Streams → your stream → Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX', {
+    send_page_view: false   // we fire manually on each SPA navigation
+  });
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1692,6 +1704,15 @@ function navigate(route, anchor) {
   if (typeof SECTION_MAP !== 'undefined' && SECTION_MAP[route]) {
     loadSection(route);
   }
+
+  // ── GA4: fire page_view on each SPA navigation ──
+  if (typeof gtag === 'function') {
+    gtag('event', 'page_view', {
+      page_title: document.title,
+      page_location: window.location.href,
+      page_path: window.location.pathname + window.location.hash,
+    });
+  }
 }
 
 document.addEventListener('click', e => {
@@ -2154,6 +2175,16 @@ async function openArticle(slug, section) {
   const articlePath = '/' + section + '/' + slug;
   try { window.history.pushState({ section, slug }, '', articlePath); } catch(e) {}
 
+  // ── Track article read: GA4 event + custom counter ──
+  if (typeof gtag === 'function') {
+    gtag('event', 'article_read', {
+      article_slug: slug,
+      article_section: section,
+      event_category: 'content',
+    });
+  }
+  trackArticleRead(slug, section);
+
   const cached = (_cache[section] || []).find(e => e.slug === slug);
   if (cached) { renderArticle(cached.meta, cached.body); return; }
 
@@ -2257,6 +2288,20 @@ document.getElementById('article-back-btn').addEventListener('click', () => {
   navigate(_previousSection);
 });
 
+// ── GA4: track CTA and nav button clicks ──
+document.addEventListener('click', e => {
+  if (typeof gtag !== 'function') return;
+  const btn = e.target.closest('button, a, [data-route]');
+  if (!btn) return;
+  const label = btn.textContent?.trim().slice(0, 60) || btn.dataset.route || '';
+  const route = btn.dataset.route;
+  if (route) {
+    gtag('event', 'navigation_click', { nav_target: route, button_label: label });
+  } else if (btn.classList.contains('btn-dark') || btn.classList.contains('btn-gold') || btn.classList.contains('btn-outline') || btn.classList.contains('btn-gold-outline')) {
+    gtag('event', 'cta_click', { button_label: label });
+  }
+});
+
 // Share link button — copies current article URL to clipboard
 document.addEventListener('click', e => {
   const btn = e.target.closest('.article-share-btn');
@@ -2330,6 +2375,22 @@ document.addEventListener('click', async e => {
 });
 
 // ════════════════════════════════════════
+
+// ════════════════════════════════════════
+// CUSTOM ARTICLE READ COUNTER
+// Increments content/analytics.json in GitHub via Netlify function
+// ════════════════════════════════════════
+async function trackArticleRead(slug, section) {
+  try {
+    await fetch('/.netlify/functions/track-read', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug, section }),
+    });
+  } catch(e) {
+    // Fail silently — tracking should never break the page
+  }
+}
 
 // ════════════════════════════════════════
 // INIT — parse URL on load, handle direct article links

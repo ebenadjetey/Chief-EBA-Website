@@ -576,6 +576,202 @@ select.meta-input { cursor: pointer; }
 .toast.visible { opacity: 1; transform: translateY(0); }
 .toast.gold { background: var(--gold); color: #fff; }
 .toast.danger { background: var(--danger); }
+
+/* ══════════════════════════════════════
+   CONTACTS PANEL
+══════════════════════════════════════ */
+#panel-contacts { display: none; flex-direction: column; flex: 1; }
+
+/* ══════════════════════════════════════
+   CONTACT DETAIL MODAL
+══════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(10,10,10,0.5);
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-box {
+  background: var(--bg); border: 1px solid var(--rule);
+  max-width: 620px; width: 100%; max-height: 88vh; overflow-y: auto;
+  transform: translateY(16px); transition: transform 0.2s;
+}
+.modal-overlay.open .modal-box { transform: translateY(0); }
+.modal-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 1.75rem; border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0; background: var(--bg); z-index: 1;
+}
+.modal-top h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; }
+.modal-close {
+  background: none; border: 1px solid var(--rule); cursor: pointer;
+  font-size: 0.9rem; color: var(--ink-ghost); padding: 4px 10px;
+  line-height: 1; transition: all 0.12s; font-family: 'Instrument Sans', sans-serif;
+}
+.modal-close:hover { border-color: var(--ink); color: var(--ink); }
+.modal-body { padding: 1.5rem 1.75rem; }
+.modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+.modal-field { display: flex; flex-direction: column; gap: 4px; }
+.modal-field.full { grid-column: 1 / -1; }
+.modal-field-label {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.modal-field-val { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; }
+.modal-field-val a { color: var(--gold-dim); }
+.modal-message-box {
+  background: var(--bg-off); border-left: 3px solid var(--gold);
+  padding: 1rem 1.25rem; font-size: 0.88rem; line-height: 1.75;
+  color: var(--ink-soft); white-space: pre-wrap; word-break: break-word;
+  margin-top: 1.25rem;
+}
+.modal-footer {
+  padding: 1rem 1.75rem; border-top: 1px solid var(--rule);
+  display: flex; gap: 0.75rem; align-items: center;
+  position: sticky; bottom: 0; background: var(--bg);
+}
+.btn-reply {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  background: var(--ink); color: #fff; border: none;
+  padding: 0.7rem 1.5rem; cursor: pointer; font-family: 'Instrument Sans', sans-serif;
+  transition: background 0.12s; text-decoration: none; display: inline-block;
+}
+.btn-reply:hover { background: var(--ink-mid); }
+.badge-unread {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  background: var(--gold-bg); color: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+  padding: 2px 8px;
+}
+
+/* ══════════════════════════════════════
+   NEWSLETTER SEND PANEL
+══════════════════════════════════════ */
+#panel-newsletter { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+.nl-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 1.5rem 2rem; border-bottom: 1px solid var(--rule); flex-shrink: 0;
+}
+.nl-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; line-height: 1; }
+.nl-header p { font-size: 0.75rem; color: var(--ink-faint); margin-top: 4px; }
+.nl-body {
+  flex: 1; display: grid; grid-template-columns: 360px 1fr;
+  overflow: hidden; min-height: 0;
+}
+.nl-left {
+  border-right: 1px solid var(--rule); padding: 1.5rem;
+  overflow-y: auto; display: flex; flex-direction: column; gap: 1.25rem;
+}
+.nl-right {
+  padding: 1.5rem; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 1.25rem;
+}
+.nl-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.nl-group { display: flex; flex-direction: column; gap: 6px; }
+.nl-input {
+  padding: 0.6rem 0.75rem; border: 1px solid var(--rule);
+  background: var(--bg-off); font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.85rem; color: var(--ink); outline: none; transition: border-color 0.15s; width: 100%;
+}
+.nl-input:focus { border-color: var(--ink); background: var(--bg); }
+textarea.nl-input { resize: vertical; min-height: 120px; line-height: 1.6; }
+.nl-recip-option {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 0.75rem; border: 1px solid var(--rule);
+  cursor: pointer; transition: all 0.12s; background: var(--bg-off);
+}
+.nl-recip-option.selected { border-color: var(--ink); background: var(--bg); }
+.nl-recip-option input { accent-color: var(--ink); margin-top: 2px; flex-shrink: 0; }
+.nl-recip-label { font-size: 0.82rem; font-weight: 600; color: var(--ink); }
+.nl-recip-sub { font-size: 0.72rem; color: var(--ink-faint); margin-top: 1px; }
+.nl-article-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 0.65rem 0; border-bottom: 1px solid var(--rule-soft);
+}
+.nl-article-item:last-child { border-bottom: none; }
+.nl-article-item input { accent-color: var(--ink); margin-top: 3px; flex-shrink: 0; }
+.nl-article-title { font-size: 0.82rem; font-weight: 500; color: var(--ink); line-height: 1.3; }
+.nl-article-meta { font-size: 0.7rem; color: var(--ink-faint); margin-top: 2px; }
+.nl-preview-box {
+  border: 1px solid var(--rule); padding: 1.25rem 1.5rem;
+  background: var(--bg-off); font-size: 0.82rem; line-height: 1.75;
+  color: var(--ink-soft); flex: 1; white-space: pre-wrap; word-break: break-word;
+  min-height: 180px;
+}
+.nl-log {
+  display: none; font-size: 0.72rem; line-height: 1.75; color: var(--ink-faint);
+  max-height: 180px; overflow-y: auto; border: 1px solid var(--rule-soft); padding: 0.75rem;
+  background: var(--bg-off);
+}
+.nl-progress-wrap { display: none; }
+.nl-progress-wrap.visible { display: flex; flex-direction: column; gap: 4px; }
+.nl-progress-bar-bg { height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.nl-progress-bar { height: 100%; background: var(--gold); width: 0%; transition: width 0.3s; }
+.nl-send-bar {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.5rem; border-top: 1px solid var(--rule); background: var(--bg); flex-shrink: 0;
+}
+.btn-send-nl {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  background: var(--gold); color: var(--ink); border: none;
+  padding: 0.8rem 2rem; cursor: pointer; font-family: 'Instrument Sans', sans-serif; transition: background 0.15s;
+}
+.btn-send-nl:hover { background: var(--gold-dim); color: #fff; }
+.btn-send-nl:disabled { background: var(--ink-ghost); color: #fff; cursor: not-allowed; }
+.nl-send-status { font-size: 0.78rem; color: var(--ink-muted); }
+
+/* ══════════════════════════════════════
+   ANALYTICS PANEL
+══════════════════════════════════════ */
+#panel-analytics { display: none; flex-direction: column; flex: 1; overflow-y: auto; }
+.an-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 2rem; border-bottom: 1px solid var(--rule);
+}
+.an-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; line-height: 1; }
+.an-header p { font-size: 0.75rem; color: var(--ink-faint); margin-top: 4px; }
+.an-stats-row { display: flex; border-bottom: 1px solid var(--rule); }
+.an-stat {
+  padding: 1.25rem 2rem; border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 3px; flex: 1;
+}
+.an-stat:last-child { border-right: none; }
+.an-stat-val { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; line-height: 1; color: var(--ink); }
+.an-stat-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-ghost); }
+.an-section { padding: 0 2rem 2rem; }
+.an-section-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 700;
+  padding: 1.5rem 0 0.75rem; border-bottom: 1px solid var(--rule); margin-bottom: 0;
+}
+.an-table { width: 100%; border-collapse: collapse; }
+.an-table th {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-ghost); text-align: left; padding: 0.65rem 0; border-bottom: 1px solid var(--rule);
+}
+.an-table td { font-size: 0.85rem; padding: 0.7rem 0; border-bottom: 1px solid var(--rule-soft); color: var(--ink-soft); }
+.an-table tr:last-child td { border-bottom: none; }
+.an-table td:first-child { color: var(--ink); font-weight: 500; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.an-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.an-bar { height: 6px; background: var(--gold); border-radius: 3px; min-width: 4px; }
+.an-empty { padding: 2.5rem 0; text-align: center; font-size: 0.82rem; color: var(--ink-ghost); }
+
+/* shared util */
+.btn-pdf {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  background: transparent; color: var(--ink-soft); border: 1px solid var(--rule);
+  padding: 0.65rem 1.25rem; cursor: pointer; font-family: 'Instrument Sans', sans-serif; transition: all 0.15s;
+}
+.btn-pdf:hover { border-color: var(--ink); color: var(--ink); }
+.btn-send-entry {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  background: none; border: 1px solid rgba(201,168,76,0.35); color: var(--gold-dim);
+  padding: 0.35rem 0.7rem; cursor: pointer; font-family: 'Instrument Sans', sans-serif; transition: all 0.12s;
+}
+.btn-send-entry:hover { background: var(--gold-bg); border-color: var(--gold-dim); }
+
 </style>
 </head>
 <body>
@@ -630,6 +826,19 @@ select.meta-input { cursor: pointer; }
     <div class="aside-section-label">Audience</div>
     <button class="nav-btn-side" id="btn-subscribers-nav">
       <span class="nav-icon">◉</span> Subscribers
+    </button>
+    <button class="nav-btn-side" id="btn-contacts-nav">
+      <span class="nav-icon">✉</span> Contacts
+    </button>
+
+    <div class="aside-section-label">Outreach</div>
+    <button class="nav-btn-side" id="btn-newsletter-nav">
+      <span class="nav-icon">▷</span> Send Newsletter
+    </button>
+
+    <div class="aside-section-label">Insights</div>
+    <button class="nav-btn-side" id="btn-analytics-nav">
+      <span class="nav-icon">◈</span> Analytics
     </button>
 
     <div class="aside-footer">
@@ -755,7 +964,7 @@ select.meta-input { cursor: pointer; }
       <div class="sub-header">
         <div class="sub-header-left">
           <h1>Subscribers</h1>
-          <p>Newsletter signups and contact form submissions — stored in your GitHub repo</p>
+          <p>Newsletter signups stored in your GitHub repo</p>
         </div>
         <div class="sub-actions">
           <button class="btn-csv" id="btn-download-csv" disabled>↓ Download CSV</button>
@@ -765,26 +974,167 @@ select.meta-input { cursor: pointer; }
       <div class="sub-stats">
         <div class="sub-stat">
           <div class="sub-stat-val" id="stat-total">—</div>
-          <div class="sub-stat-label">Total</div>
+          <div class="sub-stat-label">Total Subscribers</div>
         </div>
         <div class="sub-stat">
-          <div class="sub-stat-val" id="stat-newsletter">—</div>
-          <div class="sub-stat-label">Newsletter</div>
+          <div class="sub-stat-val" id="stat-this-month">—</div>
+          <div class="sub-stat-label">This Month</div>
         </div>
         <div class="sub-stat">
-          <div class="sub-stat-val" id="stat-contact">—</div>
-          <div class="sub-stat-label">Contact</div>
+          <div class="sub-stat-val" id="stat-all-time">—</div>
+          <div class="sub-stat-label">All Time</div>
         </div>
       </div>
       <div class="sub-search">
         <input type="text" id="sub-search-input" placeholder="Search by name or email…">
       </div>
       <div class="sub-table-wrap" id="sub-table-wrap">
-        <div class="sub-empty"><span>No subscribers yet.</span><p>When someone signs up via the newsletter popup or contact form on your site, they'll appear here.</p></div>
+        <div class="sub-empty"><span>No subscribers yet.</span><p>When someone subscribes via the newsletter popup on your site, they'll appear here.</p></div>
+      </div>
+    </div>
+
+
+    <!-- ══ CONTACTS PANEL ══ -->
+    <div id="panel-contacts">
+      <div class="sub-header">
+        <div class="sub-header-left">
+          <h1>Contacts</h1>
+          <p>Messages submitted via the contact form — click any row to read in full</p>
+        </div>
+        <div class="sub-actions">
+          <button class="btn-csv" id="btn-dl-contacts" disabled>↓ CSV</button>
+          <button class="btn-new-entry" id="btn-refresh-contacts" style="background:transparent;color:var(--ink);border:1px solid var(--rule);">↺ Refresh</button>
+        </div>
+      </div>
+      <div class="sub-stats">
+        <div class="sub-stat"><div class="sub-stat-val" id="ct-stat-total">—</div><div class="sub-stat-label">Total Enquiries</div></div>
+        <div class="sub-stat"><div class="sub-stat-val" id="ct-stat-month">—</div><div class="sub-stat-label">This Month</div></div>
+        <div class="sub-stat"><div class="sub-stat-val" id="ct-stat-unread">—</div><div class="sub-stat-label">Unread</div></div>
+      </div>
+      <div class="sub-search">
+        <input type="text" id="ct-search" placeholder="Search by name, email or interest…">
+      </div>
+      <div class="sub-table-wrap" id="ct-table-wrap">
+        <div class="sub-empty"><span>No contacts yet.</span><p>Contact form submissions appear here.</p></div>
+      </div>
+    </div>
+
+    <!-- ══ NEWSLETTER SEND PANEL ══ -->
+    <div id="panel-newsletter">
+      <div class="nl-header">
+        <div>
+          <h1>Send Newsletter</h1>
+          <p>Compose and send directly to subscribers — no third-party platform needed</p>
+        </div>
+        <button class="btn-new-entry" id="btn-nl-reset" style="background:transparent;color:var(--ink);border:1px solid var(--rule);font-size:0.65rem;">✕ Reset</button>
+      </div>
+      <div class="nl-body">
+        <!-- Left: compose -->
+        <div class="nl-left">
+          <div class="nl-group">
+            <div class="nl-label">Subject Line *</div>
+            <input type="text" class="nl-input" id="nl-subject" placeholder="e.g. This week — Strategy, Brand & Thinking">
+          </div>
+          <div class="nl-group">
+            <div class="nl-label">Recipients</div>
+            <div class="nl-recip-option selected" data-val="all">
+              <input type="radio" name="nl-recip" value="all" checked>
+              <div>
+                <div class="nl-recip-label">All Subscribers</div>
+                <div class="nl-recip-sub" id="nl-all-count">—</div>
+              </div>
+            </div>
+            <div class="nl-recip-option" data-val="recent">
+              <input type="radio" name="nl-recip" value="recent">
+              <div>
+                <div class="nl-recip-label">Last 30 Days</div>
+                <div class="nl-recip-sub" id="nl-recent-count">—</div>
+              </div>
+            </div>
+          </div>
+          <div class="nl-group">
+            <div class="nl-label">Attach Content (generates digest links)</div>
+            <div id="nl-article-list" style="display:flex;flex-direction:column;max-height:240px;overflow-y:auto;border:1px solid var(--rule);padding:0.5rem 0.75rem;">
+              <div style="font-size:0.78rem;color:var(--ink-ghost);padding:0.5rem 0;">Loading articles…</div>
+            </div>
+          </div>
+          <div class="nl-group">
+            <div class="nl-label">Personal Note / Intro (optional)</div>
+            <textarea class="nl-input" id="nl-body" rows="5" placeholder="Write a short intro above the article links…"></textarea>
+          </div>
+          <div class="nl-group">
+            <div class="nl-label">Your Resend API Key *</div>
+            <input type="password" class="nl-input" id="nl-api-key" placeholder="re_xxxxxxxxxxxxxxxxxxxx">
+            <small style="font-size:0.68rem;color:var(--ink-ghost);line-height:1.4;margin-top:2px;">Used only for this send — never stored. Free at resend.com (3,000/month).</small>
+          </div>
+          <div class="nl-group">
+            <div class="nl-label">Send Report To (optional)</div>
+            <input type="email" class="nl-input" id="nl-report-to" placeholder="your@email.com">
+            <small style="font-size:0.68rem;color:var(--ink-ghost);line-height:1.4;margin-top:2px;">After sending, you'll receive a full delivery report at this address.</small>
+          </div>
+        </div>
+        <!-- Right: preview + log -->
+        <div class="nl-right">
+          <div class="nl-group" style="flex:0 0 auto;">
+            <div class="nl-label">Live Preview</div>
+            <div class="nl-preview-box" id="nl-preview">Fill in the subject to see a preview…</div>
+          </div>
+          <div class="nl-progress-wrap" id="nl-progress-wrap">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:0.75rem;color:var(--ink-muted);" id="nl-progress-text">Sending 0 / 0…</span>
+            </div>
+            <div class="nl-progress-bar-bg"><div class="nl-progress-bar" id="nl-progress-bar"></div></div>
+          </div>
+          <div class="nl-log" id="nl-log"></div>
+        </div>
+      </div>
+      <div class="nl-send-bar">
+        <button class="btn-send-nl" id="btn-send-nl" disabled>Send Newsletter →</button>
+        <span class="nl-send-status" id="nl-send-status"></span>
+      </div>
+    </div>
+
+    <!-- ══ ANALYTICS PANEL ══ -->
+    <div id="panel-analytics">
+      <div class="an-header">
+        <div>
+          <h1>Analytics</h1>
+          <p>Article read counts tracked on your site · Subscriber & contact totals · Newsletter history</p>
+        </div>
+        <div class="sub-actions">
+          <button class="btn-pdf" id="btn-analytics-pdf">↓ Export PDF</button>
+          <button class="btn-new-entry" id="btn-refresh-analytics" style="background:transparent;color:var(--ink);border:1px solid var(--rule);">↺ Refresh</button>
+        </div>
+      </div>
+      <div class="an-stats-row">
+        <div class="an-stat"><div class="an-stat-val" id="an-total-reads">—</div><div class="an-stat-label">Total Article Reads</div></div>
+        <div class="an-stat"><div class="an-stat-val" id="an-top-count">—</div><div class="an-stat-label">Most Read (count)</div></div>
+        <div class="an-stat"><div class="an-stat-val" id="an-total-subs">—</div><div class="an-stat-label">Subscribers</div></div>
+        <div class="an-stat"><div class="an-stat-val" id="an-total-contacts">—</div><div class="an-stat-label">Contacts</div></div>
+      </div>
+      <div class="an-section">
+        <div class="an-section-title">Article Read Counts</div>
+        <div id="an-reads-wrap"><div class="an-empty">Loading…</div></div>
+      </div>
+      <div class="an-section">
+        <div class="an-section-title">Newsletter Send History</div>
+        <div id="an-nl-wrap"><div class="an-empty">No newsletters sent yet.</div></div>
       </div>
     </div>
 
   </main>
+</div>
+
+<!-- ══ CONTACT DETAIL MODAL ══ -->
+<div class="modal-overlay" id="ct-modal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <h2 id="modal-name">Contact</h2>
+      <button class="modal-close" id="modal-close">✕ Close</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
 </div>
 
 <!-- Toast -->
@@ -946,10 +1296,7 @@ function setScreen(id) {
   document.getElementById(id).classList.add('active');
 }
 
-function setPanel(id) {
-  document.getElementById('panel-list').style.display = id === 'list' ? 'flex' : 'none';
-  document.getElementById('panel-editor').style.display = id === 'editor' ? 'flex' : 'none';
-}
+// setPanel defined below
 
 // ════════════════════════════════════════
 // LOGIN
@@ -1012,9 +1359,10 @@ document.getElementById('btn-subscribers-nav').addEventListener('click', () => {
 });
 
 function setPanel(id) {
-  document.getElementById('panel-list').style.display = id === 'list' ? 'flex' : 'none';
-  document.getElementById('panel-editor').style.display = id === 'editor' ? 'flex' : 'none';
-  document.getElementById('panel-subscribers').style.display = id === 'subscribers' ? 'flex' : 'none';
+  ['list','editor','subscribers','contacts','newsletter','analytics'].forEach(p => {
+    const el = document.getElementById('panel-' + p);
+    if (el) el.style.display = (p === id) ? 'flex' : 'none';
+  });
 }
 
 async function loadSubscribers() {
@@ -1043,51 +1391,52 @@ async function loadSubscribers() {
 
 function renderSubscribers(data, filter = '') {
   const wrap = document.getElementById('sub-table-wrap');
+  // Only newsletter source
+  const nlData = data.filter(s => s.source === 'newsletter');
+  const now = new Date();
+  const thisMonth = nlData.filter(s => {
+    if (!s.date) return false;
+    const d = new Date(s.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
+  document.getElementById('stat-total').textContent = nlData.length;
+  document.getElementById('stat-this-month').textContent = thisMonth.length;
+  document.getElementById('stat-all-time').textContent = nlData.length;
+  document.getElementById('btn-download-csv').disabled = nlData.length === 0;
+
   const filtered = filter
-    ? data.filter(s =>
+    ? nlData.filter(s =>
         (s.name || '').toLowerCase().includes(filter) ||
         (s.email || '').toLowerCase().includes(filter))
-    : data;
-
-  // Stats (always from full data)
-  document.getElementById('stat-total').textContent = data.length;
-  document.getElementById('stat-newsletter').textContent = data.filter(s => s.source === 'newsletter').length;
-  document.getElementById('stat-contact').textContent = data.filter(s => s.source === 'contact').length;
-  document.getElementById('btn-download-csv').disabled = data.length === 0;
+    : nlData;
 
   if (!filtered.length) {
-    wrap.innerHTML = data.length
-      ? `<div class="sub-empty"><span>No results for "${filter}"</span></div>`
-      : `<div class="sub-empty"><span>No subscribers yet.</span><p>When someone signs up via the newsletter popup or contact form, they'll appear here.</p></div>`;
+    wrap.innerHTML = nlData.length
+      ? `<div class="sub-empty"><span>No results for "${escHtml(filter)}"</span></div>`
+      : `<div class="sub-empty"><span>No subscribers yet.</span><p>When someone subscribes via the newsletter popup on your site, they'll appear here.</p></div>`;
     return;
   }
 
-  const rows = [...filtered].reverse().map((s, ri) => {
-    const badge = s.source === 'contact'
-      ? `<span class="sub-badge contact">Contact</span>`
-      : `<span class="sub-badge newsletter">Newsletter</span>`;
+  const rows = [...filtered].reverse().map((s) => {
     const date = s.date ? new Date(s.date).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '—';
-    const origIdx = data.length - 1 - ri; // index in full array (reversed)
+    const origIdx = data.indexOf(s);
     return `
     <tr>
       <td>${escHtml(s.name || '—')}</td>
       <td>${escHtml(s.email || '—')}</td>
-      <td>${badge}</td>
       <td>${date}</td>
-      <td>${escHtml(s.message ? s.message.slice(0,60) + (s.message.length > 60 ? '…' : '') : '—')}</td>
-      <td><button class="sub-delete-btn" data-idx="${origIdx}">Delete</button></td>
+      <td><button class="sub-delete-btn" data-idx="${origIdx}">Remove</button></td>
     </tr>`;
   }).join('');
 
   wrap.innerHTML = `
     <table class="sub-table">
       <thead><tr>
-        <th>Name</th><th>Email</th><th>Source</th><th>Date</th><th>Note</th><th></th>
+        <th>Name</th><th>Email</th><th>Subscribed</th><th></th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
 
-  // Delete handler
   wrap.querySelectorAll('.sub-delete-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
       const idx = parseInt(btn.dataset.idx, 10);
@@ -1127,10 +1476,10 @@ document.getElementById('btn-refresh-subs').addEventListener('click', loadSubscr
 
 // CSV download
 document.getElementById('btn-download-csv').addEventListener('click', () => {
-  const headers = ['Name','Email','Source','Date','Organisation','Interest','Message'];
-  const rows = subsData.map(s => [
-    s.name || '', s.email || '', s.source || '', s.date || '',
-    s.organisation || '', s.interest || '', (s.message || '').replace(/\n/g,' '),
+  const headers = ['Name','Email','Date'];
+  const nlOnly = subsData.filter(s => s.source === 'newsletter');
+  const rows = nlOnly.map(s => [
+    s.name || '', s.email || '', s.date || '',
   ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
   const csv = [headers.join(','), ...rows].join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
@@ -1223,6 +1572,7 @@ function renderList(section) {
         <div class="entry-meta"><span>${file.name}</span></div>
       </div>
       <div class="entry-actions">
+        <button class="btn-send-entry" data-action="send" data-path="${file.path}" data-slug="${slug}" title="Send as newsletter">▷ Send</button>
         <button class="btn-sm" data-action="edit" data-path="${file.path}" data-sha="${file.sha}">Edit</button>
         <button class="btn-sm danger" data-action="delete" data-path="${file.path}" data-sha="${file.sha}" data-name="${file.name}">Delete</button>
       </div>
@@ -1246,6 +1596,11 @@ document.getElementById('list-area').addEventListener('click', async e => {
 
   if (btn.dataset.action === 'edit') {
     await openEditor(btn.dataset.path, btn.dataset.sha);
+  }
+
+  if (btn.dataset.action === 'send') {
+    openSendPanel(btn.dataset.slug, currentSection);
+    return;
   }
 
   if (btn.dataset.action === 'delete') {
@@ -1467,6 +1822,588 @@ document.getElementById('btn-back').addEventListener('click', () => {
 document.getElementById('btn-new').addEventListener('click', () => {
   openNewEditor();
 });
+
+// ════════════════════════════════════════
+// CONTACTS
+// ════════════════════════════════════════
+let contactsData = [];
+let allSubsRaw = [];   // full raw data (newsletter + contact) for shared save
+
+document.getElementById('btn-contacts-nav').addEventListener('click', () => {
+  document.querySelectorAll('.nav-btn-side').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-contacts-nav').classList.add('active');
+  setPanel('contacts');
+  loadContacts();
+});
+document.getElementById('btn-refresh-contacts').addEventListener('click', loadContacts);
+
+async function loadContacts() {
+  const wrap = document.getElementById('ct-table-wrap');
+  wrap.innerHTML = '<div class="sub-empty"><span>Loading…</span></div>';
+  document.getElementById('btn-dl-contacts').disabled = true;
+  try {
+    const r = await fetch(`${ghBase()}/contents/${SUBS_PATH}`, { headers: ghHeaders() });
+    if (r.status === 404) { contactsData = []; renderContacts([]); return; }
+    if (!r.ok) throw new Error(`GitHub ${r.status}`);
+    const file = await r.json();
+    subsSha = file.sha;
+    const raw = decodeURIComponent(escape(atob(file.content.replace(/\n/g,''))));
+    allSubsRaw = JSON.parse(raw);
+    subsData = allSubsRaw;
+    contactsData = allSubsRaw.filter(s => s.source === 'contact');
+    renderContacts(contactsData);
+  } catch(e) {
+    wrap.innerHTML = `<div class="sub-empty"><span>Could not load</span><p>${escHtml(e.message)}</p></div>`;
+  }
+}
+
+function renderContacts(data, filter = '') {
+  const wrap = document.getElementById('ct-table-wrap');
+  const now = new Date();
+  const thisMonth = data.filter(s => {
+    if (!s.date) return false;
+    const d = new Date(s.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
+  const readSet = new Set(JSON.parse(localStorage.getItem('eba_ct_read') || '[]'));
+  const unread = data.filter(s => !readSet.has(s.email + '|' + s.date));
+
+  document.getElementById('ct-stat-total').textContent = data.length;
+  document.getElementById('ct-stat-month').textContent = thisMonth.length;
+  document.getElementById('ct-stat-unread').textContent = unread.length;
+  document.getElementById('btn-dl-contacts').disabled = data.length === 0;
+
+  const filtered = filter
+    ? data.filter(s =>
+        (s.name||'').toLowerCase().includes(filter) ||
+        (s.email||'').toLowerCase().includes(filter) ||
+        (s.interest||'').toLowerCase().includes(filter))
+    : data;
+
+  if (!filtered.length) {
+    wrap.innerHTML = data.length
+      ? `<div class="sub-empty"><span>No results for "${escHtml(filter)}"</span></div>`
+      : `<div class="sub-empty"><span>No contacts yet.</span><p>Contact form submissions will appear here.</p></div>`;
+    return;
+  }
+
+  const rows = [...filtered].reverse().map(s => {
+    const key = s.email + '|' + s.date;
+    const isUnread = !readSet.has(key);
+    const date = s.date ? new Date(s.date).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}) : '—';
+    return `<tr class="ct-row" data-key="${escHtml(key)}" style="cursor:pointer;${isUnread?'font-weight:600;':''}">
+      <td>${escHtml(s.name||'—')}</td>
+      <td>${escHtml(s.email||'—')}</td>
+      <td>${escHtml(s.interest||'—')}</td>
+      <td>${date}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-muted);">${escHtml((s.message||'').slice(0,55))}${(s.message||'').length>55?'…':''}</td>
+      <td>${isUnread?'<span class="badge-unread">New</span>':''}</td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML = `<table class="sub-table">
+    <thead><tr><th>Name</th><th>Email</th><th>Interest</th><th>Date</th><th>Message</th><th></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+
+  wrap.querySelectorAll('.ct-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const key = row.dataset.key;
+      const record = [...contactsData].reverse().find(s => (s.email+'|'+s.date) === key);
+      if (record) openContactModal(record, key);
+    });
+  });
+}
+
+function openContactModal(s, key) {
+  // mark read
+  const readSet = new Set(JSON.parse(localStorage.getItem('eba_ct_read') || '[]'));
+  readSet.add(key);
+  localStorage.setItem('eba_ct_read', JSON.stringify([...readSet]));
+
+  const date = s.date ? new Date(s.date).toLocaleString('en-GB', {dateStyle:'full', timeStyle:'short'}) : '—';
+  document.getElementById('modal-name').textContent = s.name || 'Contact';
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-grid">
+      <div class="modal-field">
+        <div class="modal-field-label">Email</div>
+        <div class="modal-field-val"><a href="mailto:${escHtml(s.email||'')}">${escHtml(s.email||'—')}</a></div>
+      </div>
+      <div class="modal-field">
+        <div class="modal-field-label">Date</div>
+        <div class="modal-field-val">${date}</div>
+      </div>
+      <div class="modal-field">
+        <div class="modal-field-label">Organisation</div>
+        <div class="modal-field-val">${escHtml(s.organisation||'—')}</div>
+      </div>
+      <div class="modal-field">
+        <div class="modal-field-label">Interest</div>
+        <div class="modal-field-val">${escHtml(s.interest||'—')}</div>
+      </div>
+      ${s.message ? `<div class="modal-field full">
+        <div class="modal-field-label">Message</div>
+        <div class="modal-message-box">${escHtml(s.message)}</div>
+      </div>` : ''}
+    </div>`;
+  document.getElementById('modal-footer').innerHTML = `
+    <a class="btn-reply" href="mailto:${escHtml(s.email||'')}?subject=Re: Your enquiry — Chief Eben Adjetey">
+      Reply to ${escHtml((s.name||'').split(' ')[0]||'them')} →
+    </a>`;
+
+  document.getElementById('ct-modal').classList.add('open');
+  // Refresh unread count
+  renderContacts(contactsData, document.getElementById('ct-search').value.trim().toLowerCase());
+}
+
+document.getElementById('modal-close').addEventListener('click', () => {
+  document.getElementById('ct-modal').classList.remove('open');
+});
+document.getElementById('ct-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('ct-modal'))
+    document.getElementById('ct-modal').classList.remove('open');
+});
+
+document.getElementById('ct-search').addEventListener('input', e => {
+  renderContacts(contactsData, e.target.value.trim().toLowerCase());
+});
+
+document.getElementById('btn-dl-contacts').addEventListener('click', () => {
+  const headers = ['Name','Email','Organisation','Interest','Date','Message'];
+  const rows = contactsData.map(s => [
+    s.name||'', s.email||'', s.organisation||'', s.interest||'', s.date||'',
+    (s.message||'').replace(/\n/g,' ')
+  ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `chief-eba-contacts-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click(); URL.revokeObjectURL(a.href);
+});
+
+// ════════════════════════════════════════
+// ANALYTICS
+// ════════════════════════════════════════
+const ANALYTICS_PATH = 'content/analytics.json';
+let analyticsData = { reads: {}, sends: [] };
+let analyticsSha = null;
+
+document.getElementById('btn-analytics-nav').addEventListener('click', () => {
+  document.querySelectorAll('.nav-btn-side').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-analytics-nav').classList.add('active');
+  setPanel('analytics');
+  loadAnalytics();
+});
+document.getElementById('btn-refresh-analytics').addEventListener('click', loadAnalytics);
+
+async function loadAnalytics() {
+  document.getElementById('an-reads-wrap').innerHTML = '<div class="an-empty">Loading…</div>';
+  try {
+    const r = await fetch(`${ghBase()}/contents/${ANALYTICS_PATH}`, { headers: ghHeaders() });
+    if (r.status === 404) { analyticsData = {reads:{}, sends:[]}; renderAnalytics(); return; }
+    if (!r.ok) throw new Error(`GitHub ${r.status}`);
+    const file = await r.json();
+    analyticsSha = file.sha;
+    const raw = decodeURIComponent(escape(atob(file.content.replace(/\n/g,''))));
+    analyticsData = JSON.parse(raw);
+  } catch(e) { console.warn('Analytics load error:', e.message); }
+
+  // Also ensure subs loaded for the stat totals
+  if (!subsData.length) await loadSubscribers();
+  renderAnalytics();
+}
+
+function renderAnalytics() {
+  const reads = analyticsData.reads || {};
+  const sends = analyticsData.sends || [];
+  const sorted = Object.entries(reads).sort((a,b) => b[1]-a[1]);
+  const totalReads = sorted.reduce((acc,[,v]) => acc+v, 0);
+  const nlSubs = subsData.filter(s => s.source === 'newsletter').length;
+  const ctCount = contactsData.length || subsData.filter(s=>s.source==='contact').length;
+
+  document.getElementById('an-total-reads').textContent = totalReads || '0';
+  document.getElementById('an-top-count').textContent = sorted.length ? sorted[0][1] : '0';
+  document.getElementById('an-total-subs').textContent = nlSubs;
+  document.getElementById('an-total-contacts').textContent = ctCount;
+
+  const maxR = sorted.length ? sorted[0][1] : 1;
+  const readRows = sorted.map(([slug, count]) => `<tr>
+    <td title="${escHtml(slug)}">${escHtml(slug.replace(/-/g,' '))}</td>
+    <td><div class="an-bar-wrap">
+      <div class="an-bar" style="width:${Math.max(6, Math.round((count/maxR)*160))}px;"></div>
+      <span>${count}</span>
+    </div></td>
+  </tr>`).join('');
+
+  document.getElementById('an-reads-wrap').innerHTML = readRows
+    ? `<table class="an-table"><thead><tr><th>Article</th><th>Reads</th></tr></thead><tbody>${readRows}</tbody></table>`
+    : '<div class="an-empty">No article reads recorded yet. Reads are tracked when visitors open articles on your live site.</div>';
+
+  const sendRows = [...sends].reverse().map(s => `<tr>
+    <td>${escHtml(s.subject||'—')}</td>
+    <td>${s.date ? new Date(s.date).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—'}</td>
+    <td>${s.sent||0}</td>
+    <td style="color:${(s.failed||0)>0?'var(--danger)':'var(--ink-ghost)'};">${s.failed||0}</td>
+  </tr>`).join('');
+
+  document.getElementById('an-nl-wrap').innerHTML = sendRows
+    ? `<table class="an-table"><thead><tr><th>Subject</th><th>Date</th><th>Sent</th><th>Failed</th></tr></thead><tbody>${sendRows}</tbody></table>`
+    : '<div class="an-empty">No newsletters sent yet.</div>';
+}
+
+document.getElementById('btn-analytics-pdf').addEventListener('click', () => {
+  const reads = analyticsData.reads || {};
+  const sends = analyticsData.sends || [];
+  const sorted = Object.entries(reads).sort((a,b) => b[1]-a[1]);
+  const totalReads = sorted.reduce((acc,[,v]) => acc+v, 0);
+  const nlSubs = subsData.filter(s=>s.source==='newsletter').length;
+  const ctCount = contactsData.length || subsData.filter(s=>s.source==='contact').length;
+  const dateStr = new Date().toLocaleDateString('en-GB', {dateStyle:'full'});
+
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Analytics Report</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#0A0A0A;padding:48px 56px;background:#fff}
+  .hdr{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:24px;border-bottom:2px solid #0A0A0A;margin-bottom:32px}
+  .hdr h1{font-size:28px;font-weight:700;letter-spacing:-0.02em}
+  .hdr .sub{font-size:11px;color:#bbb;margin-top:4px;text-transform:uppercase;letter-spacing:0.2em}
+  .hdr .date{font-size:12px;color:#999;text-align:right}
+  .stats{display:flex;gap:0;border:1px solid #e5e5e5;margin-bottom:32px}
+  .stat{flex:1;padding:20px 24px;border-right:1px solid #e5e5e5}
+  .stat:last-child{border-right:none}
+  .stat-val{font-size:32px;font-weight:700;line-height:1}
+  .stat-lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#bbb;margin-top:6px}
+  h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:#bbb;border-bottom:1px solid #e5e5e5;padding-bottom:8px;margin-bottom:0;margin-top:32px}
+  table{width:100%;border-collapse:collapse;margin-top:0}
+  th{font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:#bbb;text-align:left;padding:10px 0;border-bottom:1px solid #e5e5e5}
+  td{font-size:13px;padding:9px 0;border-bottom:1px solid #f5f5f5;color:#444}
+  td:first-child{color:#0A0A0A;font-weight:500}
+  .bar{height:5px;background:#C9A84C;border-radius:3px;display:inline-block}
+  .bar-wrap{display:flex;align-items:center;gap:8px}
+  .footer{margin-top:48px;padding-top:16px;border-top:1px solid #e5e5e5;font-size:11px;color:#bbb;display:flex;justify-content:space-between}
+  @media print{body{padding:32px}}
+</style></head><body>
+<div class="hdr">
+  <div>
+    <h1>Analytics Report</h1>
+    <div class="sub">Chief Eben Adjetey · Chief & Company</div>
+  </div>
+  <div class="date">Generated<br>${dateStr}</div>
+</div>
+<div class="stats">
+  <div class="stat"><div class="stat-val">${totalReads}</div><div class="stat-lbl">Article Reads</div></div>
+  <div class="stat"><div class="stat-val">${sorted.length}</div><div class="stat-lbl">Articles Tracked</div></div>
+  <div class="stat"><div class="stat-val">${nlSubs}</div><div class="stat-lbl">Subscribers</div></div>
+  <div class="stat"><div class="stat-val">${ctCount}</div><div class="stat-lbl">Contacts</div></div>
+</div>
+<h2>Article Read Counts</h2>
+<table><thead><tr><th>Article</th><th>Reads</th></tr></thead><tbody>
+${sorted.length ? sorted.map(([slug,count]) => `<tr><td>${escHtml(slug.replace(/-/g,' '))}</td><td>${count}</td></tr>`).join('') : '<tr><td colspan="2" style="color:#bbb;">No data recorded yet</td></tr>'}
+</tbody></table>
+<h2>Newsletter Send History</h2>
+<table><thead><tr><th>Subject</th><th>Date</th><th>Sent</th><th>Failed</th></tr></thead><tbody>
+${sends.length ? [...sends].reverse().map(s=>`<tr><td>${escHtml(s.subject||'—')}</td><td>${s.date?new Date(s.date).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'—'}</td><td>${s.sent||0}</td><td>${s.failed||0}</td></tr>`).join('') : '<tr><td colspan="4" style="color:#bbb;">No newsletters sent yet</td></tr>'}
+</tbody></table>
+<div class="footer">
+  <span>Chief Eben Adjetey · Chief & Company</span>
+  <span>Content Studio Analytics Export</span>
+</div>
+</body></html>`;
+
+  const win = window.open('','_blank');
+  win.document.write(html);
+  win.document.close();
+  win.focus();
+  setTimeout(() => win.print(), 600);
+});
+
+// ════════════════════════════════════════
+// NEWSLETTER SEND
+// ════════════════════════════════════════
+let nlArticles = [];
+
+document.getElementById('btn-newsletter-nav').addEventListener('click', () => {
+  document.querySelectorAll('.nav-btn-side').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-newsletter-nav').classList.add('active');
+  setPanel('newsletter');
+  initNlPanel();
+});
+
+async function openSendPanel(slug, section) {
+  document.querySelectorAll('.nav-btn-side').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-newsletter-nav').classList.add('active');
+  setPanel('newsletter');
+  await initNlPanel();
+  // Pre-select the article
+  const cb = document.querySelector(`#nl-article-list input[type=checkbox][value="${slug}"]`);
+  if (cb) { cb.checked = true; cb.dispatchEvent(new Event('change',{bubbles:true})); }
+  // Pre-fill subject from cached title
+  const art = nlArticles.find(a => a.slug === slug);
+  if (art?.title) {
+    document.getElementById('nl-subject').value = art.title;
+    document.getElementById('btn-send-nl').disabled = false;
+    updateNlPreview();
+  }
+}
+
+async function initNlPanel() {
+  // Load subs if needed
+  if (!subsData.length) await loadSubscribers();
+  const nlSubs = subsData.filter(s => s.source === 'newsletter');
+  const now = new Date();
+  const recent = nlSubs.filter(s => s.date && (now - new Date(s.date)) < 30*24*60*60*1000);
+  document.getElementById('nl-all-count').textContent = `${nlSubs.length} subscriber${nlSubs.length!==1?'s':''}`;
+  document.getElementById('nl-recent-count').textContent = `${recent.length} subscriber${recent.length!==1?'s':''}`;
+
+  // Recipient toggle
+  document.querySelectorAll('.nl-recip-option').forEach(opt => {
+    opt.onclick = () => {
+      document.querySelectorAll('.nl-recip-option').forEach(o => { o.classList.remove('selected'); o.querySelector('input').checked=false; });
+      opt.classList.add('selected'); opt.querySelector('input').checked = true;
+      updateNlPreview();
+    };
+  });
+
+  // Load articles if not cached
+  if (!nlArticles.length) {
+    document.getElementById('nl-article-list').innerHTML = '<div style="font-size:0.78rem;color:var(--ink-ghost);padding:0.5rem 0;">Loading articles…</div>';
+    const all = [];
+    for (const [sec, cfg] of Object.entries(SECTIONS)) {
+      try {
+        const files = await ghGetFiles(cfg.path);
+        for (const f of files.filter(x => x.name.endsWith('.md'))) {
+          try {
+            const r = await fetch(f.download_url);
+            const raw = await r.text();
+            const { meta } = parseFrontmatter(raw);
+            all.push({ slug: f.name.replace('.md',''), section: sec, title: meta.title || f.name.replace('.md',''), date: meta.date, excerpt: meta.excerpt||'' });
+          } catch(e) {}
+        }
+      } catch(e) {}
+    }
+    all.sort((a,b) => new Date(b.date||0)-new Date(a.date||0));
+    nlArticles = all;
+  }
+
+  document.getElementById('nl-article-list').innerHTML = nlArticles.length
+    ? nlArticles.map(a => `
+      <label class="nl-article-item">
+        <input type="checkbox" value="${escHtml(a.slug)}" data-title="${escHtml(a.title)}" data-excerpt="${escHtml(a.excerpt)}" data-section="${a.section}">
+        <div>
+          <div class="nl-article-title">${escHtml(a.title)}</div>
+          <div class="nl-article-meta">${a.section} · ${a.date ? new Date(a.date).toLocaleDateString('en-GB',{month:'short',year:'numeric'}) : '—'}</div>
+        </div>
+      </label>`).join('')
+    : '<div style="font-size:0.78rem;color:var(--ink-ghost);padding:0.5rem 0;">No content found in GitHub.</div>';
+
+  document.getElementById('nl-article-list').addEventListener('change', updateNlPreview);
+  document.getElementById('nl-subject').addEventListener('input', () => { updateNlSendBtn(); updateNlPreview(); });
+  document.getElementById('nl-body').addEventListener('input', updateNlPreview);
+  document.getElementById('nl-api-key').addEventListener('input', updateNlSendBtn);
+  updateNlPreview();
+}
+
+function updateNlSendBtn() {
+  const hasSubject = (document.getElementById('nl-subject')?.value||'').trim().length > 0;
+  const hasKey = (document.getElementById('nl-api-key')?.value||'').trim().length > 5;
+  const btn = document.getElementById('btn-send-nl');
+  if (btn) btn.disabled = !(hasSubject && hasKey);
+}
+
+function updateNlPreview() {
+  const subject = (document.getElementById('nl-subject')?.value||'').trim() || '(no subject yet)';
+  const body = (document.getElementById('nl-body')?.value||'').trim();
+  const checked = [...document.querySelectorAll('#nl-article-list input[type=checkbox]:checked')];
+  const recip = document.querySelector('.nl-recip-option.selected input')?.value || 'all';
+  const nlSubs = subsData.filter(s=>s.source==='newsletter');
+  const now = new Date();
+  const recipCount = recip === 'recent'
+    ? nlSubs.filter(s => s.date && (now-new Date(s.date)) < 30*24*60*60*1000).length
+    : nlSubs.length;
+
+  let preview = `TO: ${recipCount} subscriber${recipCount!==1?'s':''}\nSUBJECT: ${subject}\n`;
+  if (body) preview += `\n${body}\n`;
+  if (checked.length) { preview += `\nARTICLES:\n`; checked.forEach(c => { preview += `  · ${c.dataset.title}\n`; }); }
+  const pBox = document.getElementById('nl-preview');
+  if (pBox) pBox.textContent = preview;
+}
+
+document.getElementById('btn-send-nl').addEventListener('click', async () => {
+  const subject = (document.getElementById('nl-subject').value||'').trim();
+  const body = (document.getElementById('nl-body').value||'').trim();
+  const apiKey = (document.getElementById('nl-api-key').value||'').trim();
+  const reportTo = (document.getElementById('nl-report-to').value||'').trim();
+  const recip = document.querySelector('.nl-recip-option.selected input')?.value || 'all';
+  const checkedArticles = [...document.querySelectorAll('#nl-article-list input[type=checkbox]:checked')];
+
+  const nlSubs = subsData.filter(s=>s.source==='newsletter');
+  const now = new Date();
+  const recipients = recip === 'recent'
+    ? nlSubs.filter(s => s.date && (now-new Date(s.date)) < 30*24*60*60*1000)
+    : nlSubs;
+
+  if (!recipients.length) { showToast('No subscribers to send to', 'danger'); return; }
+  if (!confirm(`Send "${subject}" to ${recipients.length} subscriber${recipients.length!==1?'s':''}?`)) return;
+
+  const btn = document.getElementById('btn-send-nl');
+  const progressWrap = document.getElementById('nl-progress-wrap');
+  const bar = document.getElementById('nl-progress-bar');
+  const progressText = document.getElementById('nl-progress-text');
+  const log = document.getElementById('nl-log');
+  const statusEl = document.getElementById('nl-send-status');
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  progressWrap.classList.add('visible');
+  log.style.display = 'block';
+  log.innerHTML = '';
+  statusEl.textContent = '';
+
+  const articleBlocks = checkedArticles.map(c => `
+    <tr><td style="padding:14px 0;border-bottom:1px solid #e5e5e5;">
+      <div style="font-size:14px;font-weight:600;color:#0A0A0A;">${escHtml(c.dataset.title)}</div>
+      ${c.dataset.excerpt ? `<div style="font-size:12px;color:#666;margin-top:4px;line-height:1.6;">${escHtml(c.dataset.excerpt)}</div>` : ''}
+    </td></tr>`).join('');
+
+  let sent = 0, failed = 0;
+  const t0 = Date.now();
+
+  for (let i = 0; i < recipients.length; i++) {
+    const sub = recipients[i];
+    progressText.textContent = `Sending ${i+1} / ${recipients.length}…`;
+    bar.style.width = `${Math.round(((i+1)/recipients.length)*100)}%`;
+
+    const html = buildNlEmail(sub, subject, body, articleBlocks);
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method:'POST',
+        headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'},
+        body: JSON.stringify({ from:'Chief Eben Adjetey <onboarding@resend.dev>', to:sub.email, subject, html }),
+      });
+      if (res.ok) {
+        sent++;
+        log.innerHTML += `<div style="color:var(--success);">✓ ${escHtml(sub.email)}</div>`;
+      } else {
+        const e = await res.json(); failed++;
+        log.innerHTML += `<div style="color:var(--danger);">✗ ${escHtml(sub.email)}: ${escHtml(e.message||String(res.status))}</div>`;
+      }
+    } catch(e) {
+      failed++;
+      log.innerHTML += `<div style="color:var(--danger);">✗ ${escHtml(sub.email)}: ${escHtml(e.message)}</div>`;
+    }
+    log.scrollTop = log.scrollHeight;
+    await new Promise(r => setTimeout(r, 120));
+  }
+
+  const elapsed = Math.round((Date.now()-t0)/1000);
+  statusEl.textContent = `Done — ${sent} sent, ${failed} failed (${elapsed}s)`;
+  btn.disabled = false; btn.textContent = 'Send Newsletter →';
+  showToast(`${sent} emails delivered`, sent > 0 ? 'gold' : 'danger');
+
+  // Save to analytics
+  await saveNlRecord({ subject, date: new Date().toISOString(), sent, failed, recipients: recipients.length });
+
+  // Send report
+  if (reportTo && apiKey) {
+    await fetch('https://api.resend.com/emails', {
+      method:'POST',
+      headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'},
+      body: JSON.stringify({
+        from:'Chief Eben Adjetey <onboarding@resend.dev>',
+        to: reportTo,
+        subject: `Newsletter send report — "${subject}"`,
+        html: buildReportEmail(subject, sent, failed, recipients.length, elapsed),
+      }),
+    });
+    showToast('Send report emailed to you', 'gold');
+  }
+});
+
+function buildNlEmail(sub, subject, bodyText, articleBlocks) {
+  const fn = (sub.name||'').split(' ')[0] || 'there';
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f4f4f0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f0;padding:40px 0;"><tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#fff;border:1px solid #e5e5e5;">
+<tr><td style="background:#0A0A0A;padding:24px 40px;">
+  <table width="100%" cellpadding="0" cellspacing="0"><tr>
+    <td><span style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#fff;">Chief Eben Adjetey.</span></td>
+    <td align="right"><span style="font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#C9A84C;">Chief &amp; Company</span></td>
+  </tr></table>
+</td></tr>
+<tr><td style="background:#C9A84C;padding:9px 40px;">
+  <span style="font-size:10px;font-weight:700;letter-spacing:0.35em;text-transform:uppercase;color:#0A0A0A;">Newsletter</span>
+</td></tr>
+<tr><td style="padding:36px 40px 20px;">
+  <h1 style="margin:0 0 16px;font-family:Georgia,serif;font-size:22px;font-weight:700;color:#0A0A0A;line-height:1.2;">${escHtml(subject)}</h1>
+  ${bodyText ? `<p style="margin:0 0 16px;font-size:14px;line-height:1.8;color:#666;">${escHtml(bodyText).replace(/\n/g,'<br>')}</p>` : ''}
+</td></tr>
+${articleBlocks ? `<tr><td style="padding:0 40px 12px;">
+  <div style="font-size:10px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#bbb;margin-bottom:8px;">Latest from Chief Eben</div>
+  <table width="100%" cellpadding="0" cellspacing="0">${articleBlocks}</table>
+</td></tr>` : ''}
+<tr><td style="padding:20px 40px 36px;">
+  <p style="margin:0;font-size:12px;color:#bbb;line-height:1.6;">
+    You're receiving this because you subscribed at chiefeba.com.
+    <a href="https://chiefeba.com/#/contact" style="color:#8B6F2E;">Unsubscribe</a>
+  </p>
+</td></tr>
+<tr><td style="background:#0A0A0A;padding:20px 40px;">
+  <p style="margin:0;font-size:11px;color:#888;">Chief Eben Adjetey · Chief &amp; Company · Accra, Ghana</p>
+</td></tr>
+</table></td></tr></table></body></html>`;
+}
+
+function buildReportEmail(subject, sent, failed, total, elapsed) {
+  const now = new Date().toLocaleString('en-GB',{dateStyle:'full',timeStyle:'short'});
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+<body style="font-family:'Helvetica Neue',Arial,sans-serif;background:#f4f4f0;padding:40px;">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border:1px solid #e5e5e5;max-width:600px;">
+<tr><td style="background:#0A0A0A;padding:24px 40px;">
+  <span style="font-family:Georgia,serif;font-size:17px;font-weight:700;color:#fff;">Newsletter Send Report</span>
+</td></tr>
+<tr><td style="background:#C9A84C;padding:9px 40px;">
+  <span style="font-size:10px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#0A0A0A;">Chief &amp; Company · Content Studio</span>
+</td></tr>
+<tr><td style="padding:32px 40px;">
+  <h2 style="font-size:18px;font-family:Georgia,serif;margin:0 0 6px;color:#0A0A0A;">Send complete.</h2>
+  <p style="font-size:13px;color:#666;margin:0 0 24px;">Subject: <strong style="color:#0A0A0A;">${escHtml(subject)}</strong></p>
+  <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e5e5e5;border-collapse:collapse;">
+    <tr><td style="padding:12px 16px;background:#fafafa;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;border-bottom:1px solid #e5e5e5;">Total Recipients</td><td style="padding:12px 16px;font-size:16px;font-weight:700;border-bottom:1px solid #e5e5e5;">${total}</td></tr>
+    <tr><td style="padding:12px 16px;background:#fafafa;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;border-bottom:1px solid #e5e5e5;">Successfully Sent</td><td style="padding:12px 16px;font-size:16px;font-weight:700;color:#1a7a4a;border-bottom:1px solid #e5e5e5;">${sent}</td></tr>
+    <tr><td style="padding:12px 16px;background:#fafafa;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;border-bottom:1px solid #e5e5e5;">Failed</td><td style="padding:12px 16px;font-size:16px;font-weight:700;color:${failed>0?'#c0392b':'#bbb'};border-bottom:1px solid #e5e5e5;">${failed}</td></tr>
+    <tr><td style="padding:12px 16px;background:#fafafa;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#bbb;">Send Time</td><td style="padding:12px 16px;font-size:13px;">${elapsed}s · ${escHtml(now)}</td></tr>
+  </table>
+</td></tr>
+<tr><td style="background:#0A0A0A;padding:20px 40px;">
+  <p style="margin:0;font-size:11px;color:#888;">Chief Eben Adjetey · Sent via Content Studio</p>
+</td></tr>
+</table></body></html>`;
+}
+
+async function saveNlRecord(record) {
+  try {
+    if (!analyticsData.sends) analyticsData.sends = [];
+    analyticsData.sends.push(record);
+    const json = JSON.stringify(analyticsData, null, 2);
+    const body = { message:'Newsletter send record', content: btoa(unescape(encodeURIComponent(json))) };
+    if (analyticsSha) body.sha = analyticsSha;
+    const r = await fetch(`${ghBase()}/contents/${ANALYTICS_PATH}`, { method:'PUT', headers:ghHeaders(), body:JSON.stringify(body) });
+    if (r.ok) { const d = await r.json(); analyticsSha = d.content.sha; }
+  } catch(e) { console.warn('Save NL record failed:', e.message); }
+}
+
+// Reset newsletter form
+document.getElementById('btn-nl-reset').addEventListener('click', () => {
+  ['nl-subject','nl-body','nl-api-key','nl-report-to'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.querySelectorAll('#nl-article-list input[type=checkbox]').forEach(c => c.checked=false);
+  const log = document.getElementById('nl-log'); log.innerHTML=''; log.style.display='none';
+  document.getElementById('nl-progress-wrap').classList.remove('visible');
+  document.getElementById('nl-send-status').textContent = '';
+  document.getElementById('btn-send-nl').disabled = true;
+  updateNlPreview();
+});
+
 </script>
 </body>
 </html>
