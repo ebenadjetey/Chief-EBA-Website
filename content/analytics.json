@@ -3,5 +3,13 @@
     "bronco": 3,
     "the-thing-ive-never-heard-a-business-coach-say": 3
   },
-  "sends": []
+  "sends": [
+    {
+      "subject": "The thing I've never heard a business coach say out loud — but should",
+      "date": "2026-04-08T10:59:53.927Z",
+      "sent": 0,
+      "failed": 2,
+      "recipients": 2
+    }
+  ]
 }
