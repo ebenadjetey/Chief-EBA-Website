@@ -1064,7 +1064,7 @@ textarea.nl-input { resize: vertical; min-height: 120px; line-height: 1.6; }
           </div>
           <div class="nl-group">
             <div class="nl-label">Your Resend API Key *</div>
-            <input type="password" class="nl-input" id="nl-api-key" placeholder="re_xxxxxxxxxxxxxxxxxxxx" value="re_R4Ta5uxZ_APKU4SimVzDMLMZw9LqpikVR">
+            <input type="password" class="nl-input" id="nl-api-key" placeholder="re_xxxxxxxxxxxxxxxxxxxx">
             <small style="font-size:0.68rem;color:var(--ink-ghost);line-height:1.4;margin-top:2px;">Used only for this send — never stored. Free at resend.com (3,000/month).</small>
           </div>
           <div class="nl-group">
@@ -2275,17 +2275,24 @@ document.getElementById('btn-send-nl').addEventListener('click', async () => {
 
     const html = buildNlEmail(sub, subject, body, articleBlocks);
     try {
-      const res = await fetch('https://api.resend.com/emails', {
-        method:'POST',
-        headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'},
-        body: JSON.stringify({ from:'Chief Eben Adjetey <onboarding@resend.dev>', to:sub.email, subject, html }),
+      // Route through Netlify function — Resend blocks direct browser requests (CORS)
+      const res = await fetch('/.netlify/functions/send-newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          apiKey,
+          to: sub.email,
+          subject,
+          html,
+        }),
       });
-      if (res.ok) {
+      const result = await res.json();
+      if (res.ok && result.ok) {
         sent++;
         log.innerHTML += `<div style="color:var(--success);">✓ ${escHtml(sub.email)}</div>`;
       } else {
-        const e = await res.json(); failed++;
-        log.innerHTML += `<div style="color:var(--danger);">✗ ${escHtml(sub.email)}: ${escHtml(e.message||String(res.status))}</div>`;
+        failed++;
+        log.innerHTML += `<div style="color:var(--danger);">✗ ${escHtml(sub.email)}: ${escHtml(result.error || String(res.status))}</div>`;
       }
     } catch(e) {
       failed++;
@@ -2303,19 +2310,23 @@ document.getElementById('btn-send-nl').addEventListener('click', async () => {
   // Save to analytics
   await saveNlRecord({ subject, date: new Date().toISOString(), sent, failed, recipients: recipients.length });
 
-  // Send report
+  // Send report via Netlify function (same CORS fix)
   if (reportTo && apiKey) {
-    await fetch('https://api.resend.com/emails', {
-      method:'POST',
-      headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'},
-      body: JSON.stringify({
-        from:'Chief Eben Adjetey <onboarding@resend.dev>',
-        to: reportTo,
-        subject: `Newsletter send report — "${subject}"`,
-        html: buildReportEmail(subject, sent, failed, recipients.length, elapsed),
-      }),
-    });
-    showToast('Send report emailed to you', 'gold');
+    try {
+      await fetch('/.netlify/functions/send-newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          apiKey,
+          to: reportTo,
+          subject: `Newsletter send report — "${subject}"`,
+          html: buildReportEmail(subject, sent, failed, recipients.length, elapsed),
+        }),
+      });
+      showToast('Send report emailed to you', 'gold');
+    } catch(e) {
+      console.warn('Report email failed:', e.message);
+    }
   }
 });
 
