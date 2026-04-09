@@ -20,6 +20,13 @@
       "sent": 0,
       "failed": 2,
       "recipients": 2
+    },
+    {
+      "subject": "This Week",
+      "date": "2026-04-09T02:23:52.155Z",
+      "sent": 2,
+      "failed": 0,
+      "recipients": 2
     }
   ]
 }
